@@ -6,13 +6,13 @@ class CategoryData {
 
 	public function CategoryData(){
 		$this->name = "";
-		$this->lastname = "";
-		$this->email = "";
-		$this->image = "";
-		$this->password = "";
-		$this->Codigo = "";
-		$this->created_at = "NOW()";
+		$this->abreviation = "";
 		$this->codigo = "";
+		$this->code = "";
+		$this->id_category = "";
+		$this->subcategory = '';
+		$this->created_at = "NOW()";
+		
 
 	}
 
@@ -52,6 +52,12 @@ class CategoryData {
 		return Model::many($query[0],new CategoryData());
 	}
 
+	public static function getAllSub($id){
+		$sql = "SELECT * FROM subcategory WHERE id_category = ".$id;
+		$query = Executor::doit($sql);
+		return Model::many($query[0],new CategoryData());
+	}
+
 
 	public static function getLike($q){
 		$sql = "select * from ".self::$tablename." where name like '%$q%'";
@@ -59,14 +65,26 @@ class CategoryData {
 		return Model::many($query[0],new CategoryData());
 	}
 
-	public static function getNextCode($category){
-		$sql = "SELECT COUNT(category.id) as codigo
-		FROM product
+	public  function getNextCode($category,$subcategory){
+		
+		$sql = "SELECT * FROM subcategory
 		INNER JOIN category
-		ON category.id = product.category_id
-		WHERE category.id=1";
+		ON subcategory.id_category=category.id
+		WHERE subcategory.code=".$subcategory." and category.id=".$category;
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new CategoryData());
+		//return $sql;
+	}
+
+	public  function getCode($subcategory){
+		
+		$sql = "SELECT * FROM subcategory
+		INNER JOIN category
+		ON subcategory.id_category=category.id
+		WHERE subcategory.code=".$subcategory." and category.id=".$category;
+		$query = Executor::doit($sql);
+		return Model::many($query[0],new CategoryData());
+		//return $sql;
 	}
 
 

@@ -24,10 +24,11 @@ $states = StateData::getAll();
   </div>
   
   <div class="form-group col-lg-6">
-    <label for="inputEmail1" class="col-lg-2 control-label">Codigo de Barras*</label>
+    <label for="inputEmail1" class="col-lg-2 control-label">Codigo*</label>
     <div class="col-md-4">
-      <input type="text" style='font-size:30px;font-weight:bolder;text-align: center;background-color: #ecf0f5;' name="barcode" id="product_code" class="form-control" id="barcode" placeholder="Codigo de Barras del Producto">
+      <input readonly type="text" style='font-size:30px;font-weight:bolder;text-align: center;background-color: #ecf0f5;' name="barcode" id="product_code" class="form-control" id="barcode" placeholder="Codigo de Barras del Producto">
     </div>
+    <i>Elegir primero la categoria y subcategoria para poder generar codigo automaticamente</i>
   </div>
   
   <div class="form-group col-lg-6" >
@@ -36,15 +37,18 @@ $states = StateData::getAll();
     <select  name="category_id" id="category_id" class="form-control" onchange="codenext(this.value)">
     <option value="">-- NINGUNA --</option>
     <?php foreach($categories as $category):?>
+     
       <option value="<?php echo $category->id;?>"><?php echo $category->name;?></option>
     <?php endforeach;?>
       </select>    </div>
   </div>
-  <div class="form-group col-lg-6">
-    <label for="inputEmail1" class="col-lg-2 control-label">Imagen</label>
+  <div class="form-group col-lg-6" >
+    <label for="inputEmail1" class="col-lg-2 control-label">SubCategoria</label>
     <div class="col-md-10">
-      <input type="file" name="image" id="image" placeholder="">
-    </div>
+    <select  name="subcategory_id" id="subcategory_id" class="form-control" onchange="codeFinal(this.value)">
+    <option value="">-- NINGUNA --</option>
+   
+      </select>    </div>
   </div>
   
 
@@ -172,11 +176,7 @@ $states = StateData::getAll();
         }
     })
 
-    <?php $codes = CategoryData::getNextCode(1);
-      ?>
-      <?php foreach($codes as $code):?>
-      <?php echo $code->codigo?>
-    <?php endforeach;?>
+    
 });
 
 </script>
@@ -224,19 +224,65 @@ $states = StateData::getAll();
 			}
 		} 
 
+    function codeFinal(value2){
+     
+      var parametros1 = {"Categoria":  $("#category_id").val(),
+                        "SubCategoria":  value2
+      };
+      
+        $.ajax({
+                data:  parametros1,
+                url:   'index.php?action=nextcode',
+                type:  'post',
+                dataType: 'json',
+                success:  function (response) {
+                  console.log(response);
+                        $("#product_code").val(response[0].abreviation+response[0].code+response[0].codigo);
+                        $.ajax({
+                data:  parametros1,
+                url:   'index.php?action=nextcode',
+                type:  'post',
+                dataType: 'json',
+                success:  function (response) {
+                  console.log(response);
+                        $("#product_code").val(response[0].abreviation+response[0].code+response[0].codigo);
+                        
+                },
+                error: function(error) {
+                  console.log("error en Funcion codeFinal");
+                  console.log(error);
+    }
+        });
+                },
+                error: function(error) {
+                  console.log("error en Funcion codeFinal");
+                  console.log(error);
+    }
+        });
+   
+     
+      
+    }
     function codenext(value1){
      
-      var parametros = {
-                "Categoria" : value1
-               
-        };
-        $.ajax({
+      var parametros = {"Categoria": value1};
+        
+       $.ajax({
                 data:  parametros,
-                url:   'core/app/view/GetCode.php',
+                url:   'index.php?action=getcode',
                 type:  'post',
-                
+                dataType: 'json',
                 success:  function (response) {
-                        $("#description").val(response);
+                 
+                  $("#subcategory_id").html(' <option value="">-- NINGUNA --</option>');
+                  for (let index = 0; index < response.length; index++) {
+                    console.log(response[index]);
+                    $("#subcategory_id").append(' <option value="'+response[index].code+'">'+response[index].name+'</option>');
+                  
+                    
+                  }
+
+                        
                 }
         });
    
