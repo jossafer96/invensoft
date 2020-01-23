@@ -76,7 +76,7 @@ class CategoryData {
 		//return $sql;
 	}
 
-	public  function getCode($subcategory){
+	public  function getCode($category,$subcategory){
 		
 		$sql = "SELECT * FROM subcategory
 		INNER JOIN category
