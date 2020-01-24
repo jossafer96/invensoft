@@ -77,7 +77,7 @@ class CategoryData {
 		//return $sql;
 	}
 
-	public  function getCode($subcategory){
+	public  function getCode($category,$subcategory){
 		
 		$sql = "SELECT COUNT(product.category_id_sub) AS cantidad,
 		category_id_sub.id AS category_id
