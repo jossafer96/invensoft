@@ -8,9 +8,10 @@ class CategoryData {
 		$this->name = "";
 		$this->abreviation = "";
 		$this->codigo = "";
-		$this->code = "";
-		$this->id_category = "";
+		$this->id = "";
+		$this->category_id = "";
 		$this->subcategory = '';
+		$this->cantidad = '';
 		$this->created_at = "NOW()";
 		
 
@@ -53,7 +54,7 @@ class CategoryData {
 	}
 
 	public static function getAllSub($id){
-		$sql = "SELECT * FROM subcategory WHERE id_category = ".$id;
+		$sql = "SELECT * FROM category_id_sub WHERE id_category = ".$id;
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new CategoryData());
 	}
@@ -67,10 +68,10 @@ class CategoryData {
 
 	public  function getNextCode($category,$subcategory){
 		
-		$sql = "SELECT * FROM subcategory
+		$sql = "SELECT * FROM category_id_sub
 		INNER JOIN category
-		ON subcategory.id_category=category.id
-		WHERE subcategory.code=".$subcategory." and category.id=".$category;
+		ON category_id_sub.id_category=category.id
+		WHERE category_id_sub.id=".$subcategory." and category.id=".$category;
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new CategoryData());
 		//return $sql;
@@ -78,10 +79,15 @@ class CategoryData {
 
 	public  function getCode($subcategory){
 		
-		$sql = "SELECT * FROM subcategory
+		$sql = "SELECT COUNT(product.category_id_sub) AS cantidad,
+		category_id_sub.id AS category_id
+	  FROM product
+		INNER JOIN category_id_sub
+		  ON product.category_id_sub = category_id_sub.id
 		INNER JOIN category
-		ON subcategory.id_category=category.id
-		WHERE subcategory.code=".$subcategory." and category.id=".$category;
+		  ON product.category_id = category.id
+		  AND category_id_sub.id_category = category.id
+	  WHERE product.category_id_sub = ".$subcategory ;
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new CategoryData());
 		//return $sql;

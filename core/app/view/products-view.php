@@ -63,9 +63,8 @@ if(count($products)>0){
     <?php echo $product->asing; ?></td>
 		</td>
 		<td><?php echo $product->name; ?></td>
-    <td><?php
-
-        ?>
+    <td>
+    <?php if($product->unit_id!=null){echo $product->getUnit()->name_unit;}else{ echo "<center>----</center>"; }  ?>
     </td>
 		<td>L. <?php echo number_format($product->price_in,2,'.',','); ?></td>
 		<td><?php echo $product->description ?></td>
@@ -128,8 +127,7 @@ var rows = [
       "id": "<?php echo $product->id; ?>",
       "code": "<?php echo $product->barcode; ?>",
       "name": "<?php echo $product->name; ?>",
-      "price_in": "$ <?php echo number_format($product->price_in,2,'.',',');?>",
-      "price_out": "$ <?php echo number_format($product->price_out,2,'.',',');?>",
+      "price_in": "$ <?php echo number_format($product->price_in,2,'.',',');?>"
       },
  <?php endforeach; ?>
 ];

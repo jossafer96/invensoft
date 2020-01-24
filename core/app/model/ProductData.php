@@ -15,16 +15,21 @@ class ProductData {
 		$this->date_warranty = "";
 		$this->user_id = "";
 		$this->category_id = "";
+		$this->unit_id = "";
+		$this->stock = "";
+		$this->asign = "";
 		$this->created_at = "NOW()";
 		
 	}
 
 	public function getCategory(){ return CategoryData::getById($this->category_id);}
+	public function getUnit(){ return unitsData::getById($this->unit_id);}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (name, barcode, description, inventary_min, inventary_in, price_in, state, funding, stock, date_expire, date_warranty, user_id, category_id, created_at)";
-		$sql .= "value (\"$this->name\",\"$this->barcode\",\"$this->description\",\"$this->inventary_min\",\"$this->inventary_in\",\"$this->price_in\",$this->state,\"$this->funding\",\"$this->stock\",$this->date_expire,$this->date_warranty,$this->user_id,$this->category_id,NOW())";
-		return Executor::doit($sql);
+		$sql = "insert into ".self::$tablename." (name, barcode, description, inventary_min, inventary_in, price_in, state, funding, stock, date_expire, date_warranty, user_id, category_id, unit_id, stock, asign, created_at)";
+		$sql .= "value (\"$this->name\",\"$this->barcode\",\"$this->description\",\"$this->inventary_min\",\"$this->inventary_in\",\"$this->price_in\",$this->state,\"$this->funding\",\"$this->stock\",$this->date_expire,$this->date_warranty,$this->user_id,$this->category_id,$this->unit_id,$this->stock,$this->asign,NOW())";
+		//return Executor::doit($sql);
+		return $sql;
 	}
 	public function add_with_image(){
 		$sql = "insert into ".self::$tablename." (name, image, barcode, description, inventary_min, inventary_in, price_in, state, funding, stock, date_expire, date_warranty, user_id, category_id, created_at)";

@@ -1,6 +1,6 @@
 <?php
 $Subcategory_id = $_POST["SubCategoria"];
-$category = CategoryData::getAllSub($category_id);
+$category = CategoryData::getCode($Subcategory_id);
 echo json_encode($category);
 
 ?>

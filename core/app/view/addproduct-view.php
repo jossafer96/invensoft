@@ -7,13 +7,19 @@ if(count($_POST)>0){
   
   $category_id="NULL";
   if($_POST["category_id"]!=""){ $category_id=$_POST["category_id"];}
-  
   $product->category_id=$category_id;
+
+  $subcategory_id="NULL";
+  if($_POST["subcategory_id"]!=""){ $subcategory_id=$_POST["subcategory_id"];}
+  $product->subcategory_id=$subcategory_id;
+ 
   $product->description = $_POST["description"];
   $product->price_in = $_POST["price_in"];
   $product->state = $_POST["state"];
   $product->funding = $_POST["funding"];
-
+  $product->stock = $_POST["stock"];
+  $product->unit_id = $_POST["unit"];
+  $product->asign = $_POST["asing"];
   $date_expire="\"\"";
   if($_POST["date_expire"]!=""){ $date_expire=$_POST["date_expire"];}
   $product->date_expire=$date_expire;

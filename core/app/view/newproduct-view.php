@@ -1,7 +1,7 @@
 <section class="content">
     <?php 
 $categories = CategoryData::getAll();
-
+$units = unitsData::getAll();
 $responsable = PersonData::getAll();
 $stocks = StockData::getAll();
 $states = StateData::getAll();
@@ -85,7 +85,7 @@ $states = StateData::getAll();
   <div class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">Almacen</label>
     <div class="col-md-10">
-    <select name="category_id" class="form-control">
+    <select name="stock" class="form-control">
     <option value="">-- SELECCIONE UNO --</option>
     <?php foreach($stocks as $stock):?>
       <option value="<?php echo $stock->id;?>"><?php echo $stock->name;?></option>
@@ -93,11 +93,16 @@ $states = StateData::getAll();
       </select>    
     </div>
   </div>
-  <div class="form-group col-lg-6">
-    <label for="inputEmail1" class="col-lg-2 control-label">Unidad</label>
-    <div class="col-md-10">
-      <input type="text" name="unit" required class="form-control" id="unit" placeholder="Unidad o Programa al que esta asignado">
-    </div>
+  <div class="form-group col-lg-6" >
+    <label for="inputEmail1" class="col-lg-3 control-label">Unidad/Programa</label>
+    <div class="col-md-9">
+    <select name="unit" class="form-control">
+    <option value="">-- SELECCIONE UNO --</option>
+    <?php foreach($units as $unit):?>
+      <option value="<?php echo $unit->unit_id;?>"><?php echo $unit->name_unit;?></option>
+    <?php endforeach;?>
+      </select>    
+      </div>
   </div>
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Responsable</label>
@@ -236,27 +241,40 @@ $states = StateData::getAll();
                 type:  'post',
                 dataType: 'json',
                 success:  function (response) {
-                  console.log(response);
-                        $("#product_code").val(response[0].abreviation+response[0].code+response[0].codigo);
-                        $.ajax({
-                data:  parametros1,
-                url:   'index.php?action=nextcode',
-                type:  'post',
-                dataType: 'json',
-                success:  function (response) {
-                  console.log(response);
-                        $("#product_code").val(response[0].abreviation+response[0].code+response[0].codigo);
+                  
+                       //$("#product_code").val(response[0].abreviation+response[0].id+response[0].codigo);
                         
+                        $.ajax({
+                          data:  parametros1,
+                          url:   'index.php?action=code',
+                          type:  'post',
+                          dataType: 'json',
+                          success:  function (response1) {
+                           
+                            if (response1[0].category_id<10) {
+                              var codeCategory= '0'+response1[0].category_id;
+                            }else{
+                              var codeCategory =response1[0].category_id;
+                            }
+                            if (response1[0].cantidad<10) {
+                              var codenext= '0'+response1[0].cantidad;
+                            }else{
+                              var codenext =response1[0].cantidad;
+                            }
+                            $("#product_code").val(response[0].abreviation+codeCategory+codenext);
+                        
+                          },
+                          error: function(error) {
+                            console.log("error en Funcion codeFinal 2");
+                            
+                          }
+                        });
+
+
                 },
                 error: function(error) {
-                  console.log("error en Funcion codeFinal");
-                  console.log(error);
-    }
-        });
-                },
-                error: function(error) {
-                  console.log("error en Funcion codeFinal");
-                  console.log(error);
+                  console.log("error en Funcion codeFinal 1");
+                  
     }
         });
    
@@ -276,8 +294,8 @@ $states = StateData::getAll();
                  
                   $("#subcategory_id").html(' <option value="">-- NINGUNA --</option>');
                   for (let index = 0; index < response.length; index++) {
-                    console.log(response[index]);
-                    $("#subcategory_id").append(' <option value="'+response[index].code+'">'+response[index].name+'</option>');
+                   
+                    $("#subcategory_id").append(' <option value="'+response[index].id+'">'+response[index].name+'</option>');
                   
                     
                   }
