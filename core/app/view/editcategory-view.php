@@ -11,9 +11,17 @@
 
 
   <div class="form-group">
-    <label for="inputEmail1" class="col-lg-2 control-label">Nombre*</label>
-    <div class="col-md-6">
-      <input type="text" name="name" value="<?php echo $user->name;?>" class="form-control" id="name" placeholder="Nombre">
+  <label for="inputEmail1" class="col-lg-2 control-label">Nombre*</label>
+    <div class="col-md-10">
+      <input type="text" value="<?php echo $user->name;?>" style="width: 40%;" name="name" required class="form-control" id="name" placeholder="Nombre">
+      
+    </div>
+    <br>
+    <br>
+    <label for="inputEmail1" class="col-lg-2 control-label">Abreviacion*</label>
+    <div class="col-md-10">
+      
+      <input type="text" value="<?php echo $user->abreviation;?>" style="width: 40%;" name="abreviation" required class="form-control" id="abreviation" placeholder="Abreviacion">
     </div>
   </div>
 

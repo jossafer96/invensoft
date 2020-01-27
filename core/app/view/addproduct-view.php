@@ -40,6 +40,7 @@ if(count($_POST)>0){
   
   
   
+  
 
 
   if(isset($_FILES["image"])){
@@ -57,11 +58,11 @@ if(count($_POST)>0){
   }
   else{
     
-  $prod= $product->add();
+ $prod= $product->add();
 
   }
-  print_r ($prod);
-  print_r ($product);
+  //print_r ($prod);
+  //print_r ($product);
 
 
 
@@ -77,7 +78,7 @@ $op->is_oficial=1;
 //$op->add();
 }
 
-//print "<script>window.location='index.php?view=products';</script>";
+print "<script>window.location='index.php?view=products';</script>";
 
 
 }

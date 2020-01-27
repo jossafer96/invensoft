@@ -237,6 +237,7 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
               <ul class="treeview-menu">
                 <li><a href="./?view=products">Productos</a></li>
                 <li><a href="./?view=categories">Categorias</a></li>
+                <li><a href="./?view=subcategories">SubCategorias</a></li>
                 <li><a href="./?view=clients">Clientes</a></li>
                 <li><a href="./?view=providers">Proveedores</a></li>
               </ul>

@@ -1,7 +1,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Categorias
+            SubCategorias
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -21,7 +21,7 @@
 <br>
 		<?php
 
-		$users = CategoryData::getAll();
+		$users = CategoryData::getSubAll();
 		if(count($users)>0){
 			// si hay usuarios
 			?>
@@ -35,8 +35,9 @@
 			<table class="table table-bordered datatable table-hover">
 			<thead>
 			<th>Ver</th>
+			<th>Codigo</th>
 			<th>Nombre</th>
-			<th>Abreviacion</th>
+			<th>Categoria</th>
 			<th>Acciones</th>
 			</thead>
 			<?php
@@ -45,8 +46,16 @@
 				<tr>
 				<td style="width:30px;"><a href="index.php?view=productbycategory&id=<?php echo $user->id;?>" class="btn btn-default btn-xs"><i class="fa fa-th-list"></i> Productos</a> 
 				</td>
+				<td><?php 
+					if ($user->id<10) {
+						$codigo="0".$user->id;
+					}else{
+						$codigo=$user->id;
+					}
+				
+				echo $codigo ?></td>
 				<td><?php echo $user->name ?></td>
-				<td><?php echo $user->abreviation ?></td>
+				<td><?php echo $user->name_category ?></td>
 				<td style="width:130px;"><a href="index.php?view=editcategory&id=<?php echo $user->id;?>" class="btn btn-warning btn-xs">Editar</a> <a href="index.php?view=delcategory&id=<?php echo $user->id;?>" class="btn btn-danger btn-xs">Eliminar</a></td>
 				</tr>
 				<?php

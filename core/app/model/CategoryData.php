@@ -11,6 +11,7 @@ class CategoryData {
 		$this->id = "";
 		$this->category_id = "";
 		$this->subcategory = '';
+		$this->name_category = '';
 		$this->cantidad = '';
 		$this->created_at = "NOW()";
 		
@@ -18,8 +19,8 @@ class CategoryData {
 	}
 
 	public function add(){
-		$sql = "insert into category (name,created_at) ";
-		$sql .= "value (\"$this->name\",$this->created_at)";
+		$sql = "insert into category (name,abreviation,created_at) ";
+		$sql .= "value (\"$this->name\",$this->abreviation,$this->created_at)";
 		Executor::doit($sql);
 	}
 
@@ -34,7 +35,7 @@ class CategoryData {
 
 // partiendo de que ya tenemos creado un objecto CategoryData previamente utilizamos el contexto
 	public function update(){
-		$sql = "update ".self::$tablename." set name=\"$this->name\" where id=$this->id";
+		$sql = "update ".self::$tablename." set name=\"$this->name\",abreviation=\"$this->abreviation\" where id=$this->id";
 		Executor::doit($sql);
 	}
 
@@ -59,6 +60,12 @@ class CategoryData {
 		return Model::many($query[0],new CategoryData());
 	}
 
+	public static function getSubAll(){
+		$sql = "SELECT A.id,A.name,B.name AS name_category FROM category_id_sub A INNER JOIN category B ON A.id_category=B.id";
+		$query = Executor::doit($sql);
+		return Model::many($query[0],new CategoryData());
+	}
+
 
 	public static function getLike($q){
 		$sql = "select * from ".self::$tablename." where name like '%$q%'";
@@ -77,7 +84,7 @@ class CategoryData {
 		//return $sql;
 	}
 
-	public  function getCode($category,$subcategory){
+	public  function getCode($subcategory){
 		
 		$sql = "SELECT COUNT(product.category_id_sub) AS cantidad,
 		category_id_sub.id AS category_id

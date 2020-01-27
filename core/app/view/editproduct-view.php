@@ -1,8 +1,11 @@
 <section class="content">
 <?php
 $product = ProductData::getById($_GET["id"]);
-$categories = CategoryData::getAll();
 
+$categories = CategoryData::getAll();
+$stocks = StockData::getAll();
+$states = StateData::getAll();
+$units = unitsData::getAll();
 if($product!=null):
 ?>
 <div class="row">
@@ -35,21 +38,30 @@ if($product!=null):
   <div class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">Categoria</label>
     <div class="col-md-10">
-    <select name="category_id" class="form-control">
+    <select name="category_id" id="category_id" class="form-control" onchange="codenext(this.value)">
     <option value="">-- NINGUNA --</option>
     <?php foreach($categories as $category):
-      if ($product->category_id=$category->id) {?>
+      if ($product->category_id==$category->id) {?>
       <option value="<?php echo $category->id;?>" selected><?php echo $category->name;?></option>
     <?php }else{ ?>
        <option value="<?php echo $category->id;?>"><?php echo $category->name;?></option>
       <?php } endforeach;?>
       </select>    </div>
   </div>
-  <div class="form-group col-lg-6">
-    <label for="inputEmail1" class="col-lg-2 control-label">Imagen</label>
+  <div class="form-group col-lg-6" >
+    <label for="inputEmail1" class="col-lg-2 control-label">SubCategoria</label>
     <div class="col-md-10">
-      <input type="file" name="image" id="image" placeholder="">
-    </div>
+    <select name="subcategory_id" id="subcategory_id" class="form-control" onchange="codeFinal(this.value)">
+    <option value="">-- NINGUNA --</option>
+    <?php 
+    $subcategories = CategoryData::getAllSub($product->category_id);
+    foreach($subcategories as $subcategory):
+      if ($product->category_id_sub==$subcategory->id) {?>
+      <option value="<?php echo $subcategory->id;?>" selected><?php echo $subcategory->name;?></option>
+    <?php }else{ ?>
+       <option value="<?php echo $subcategory->id;?>"><?php echo $subcategory->name;?></option>
+      <?php } endforeach;?>
+      </select>    </div>
   </div>
   
 
@@ -66,27 +78,59 @@ if($product!=null):
       <input type="text" value="<?php echo $product->price_in;?>" name="price_in" required class="form-control" id="price_in" placeholder="Precio de compra">
     </div>
   </div>
-  <div class="form-group col-lg-6">
+  <div class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">Estado*</label>
     <div class="col-md-10">
-      <input type="text" name="state" required class="form-control" id="state" placeholder="Estado del Equipo/Producto">
-    </div>
+    <select name="state" class="form-control">
+    <option value="">-- SELECCIONE UNO --</option>
+    <?php foreach($states as $state):
+    if ($product->state==$state->id) {?>
+      <option value="<?php echo $state->id;?>" selected><?php echo $state->name_state;?></option>
+    <?php }else{ ?>
+      <option value="<?php echo $state->id;?>"><?php echo $state->name_state;?></option>
+    <?php } endforeach;?>
+      </select>    
+      </div>
   </div>
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Fondos*</label>
     <div class="col-md-10">
-      <input type="text" name="fund" required class="form-control" id="fund" placeholder="Fondos utilizados">
+      <input type="text" name="funding" value="<?php echo $product->funding;?>" required class="form-control" id="fund" placeholder="Fondos utilizados">
     </div>
   </div>
   <div class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">Almacen</label>
     <div class="col-md-10">
-    <select name="category_id" class="form-control">
-    <option value="">-- NINGUNA --</option>
-    <?php foreach($categories as $category):?>
-      <option value="<?php echo $category->id;?>"><?php echo $category->name;?></option>
-    <?php endforeach;?>
-      </select>    </div>
+    <select name="stock" class="form-control">
+    <option value="">-- SELECCIONE UNO --</option>
+    <?php foreach($stocks as $stock):
+     if ($product->stock==$stock->id) {?>
+      <option value="<?php echo $stock->id;?>" selected><?php echo $stock->name;?></option>
+    <?php }else{ ?>
+      <option value="<?php echo $stock->id;?>"><?php echo $stock->name;?></option>
+    <?php } endforeach;?>
+      </select>    
+    </div>
+  </div>
+  <div class="form-group col-lg-6" >
+    <label for="inputEmail1" class="col-lg-3 control-label">Unidad/Programa</label>
+    <div class="col-md-9">
+    <select name="unit" class="form-control">
+    <option value="">-- SELECCIONE UNO --</option>
+    <?php foreach($units as $unit):
+     if ($product->unit_id==$unit->unit_id) {?>
+      <option value="<?php echo $unit->unit_id;?>" selected><?php echo $unit->name_unit;?></option>
+    <?php }else{ ?>
+      <option value="<?php echo $unit->unit_id;?>"><?php echo $unit->name_unit;?></option>
+    <?php } endforeach;?>
+      </select>    
+      </div>
+  </div>
+  <div class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Responsable</label>
+    <div class="col-md-10">
+      <input type="text" name="asing" value="<?php echo $product->asing;?>" required class="form-control" id="asing" placeholder="Persona asignada">
+    </div>
   </div>
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class=" col-lg-2 control-label">Fecha Vencimiento/Caducidad</label>
@@ -95,7 +139,7 @@ if($product!=null):
 		<input class='form' type="radio" value="1" name="habilitarDeshabilitar_date_venc" onchange="habilitar(this.value);" > SI tiene fecha de Vencimiento/Caducidad 
 	<div>
   <label  class=" col-lg-8 control-label">Fecha de vencimiento</label>
-    <input type="date" name="date_venc" id="date_venc" class='form-control'>
+    <input type="date" name="date_expire" id="date_expire" class='form-control'>
     
 	</div>
     </div>
@@ -107,7 +151,7 @@ if($product!=null):
 		<input class='form' type="radio" value="1" name="habilitarDeshabilitar_date_warr" onchange="habilitar(this.value);" > SI tiene Garantia 
 	<div>
   <label  class=" col-lg-10 control-label">Fecha de finalizacion de Garantia</label>
-    <input type="date" name="date_warr" id="date_warr" class='form-control'>
+    <input type="date" name="date_warranty" id="date_warranty" class='form-control'>
     
 	</div>
     </div>
@@ -120,7 +164,7 @@ if($product!=null):
     <input class='' type="radio" value="2" name="habilitarDeshabilitar_min_inv" onchange="habilitar(this.value);" checked> Es producto unico<br>
     <input class='form' type="radio" value="1" name="habilitarDeshabilitar_min_inv" onchange="habilitar(this.value);" > No es Unico 
 	<div>
-    <input type="text" name="min_inv" id="min_inv" class='form-control' placeholder="Minimo de Equipo/Producto antes mostrar alerta">
+    <input type="text" name="inventary_min" id="inventary_min" class='form-control' placeholder="Minimo de Equipo/Producto antes mostrar alerta">
     
 	</div>
     </div>
@@ -129,7 +173,7 @@ if($product!=null):
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Inventario inicial:</label>
     <div class="col-md-10">
-      <input type="text" name="num_inv" class="form-control" id="num_inv" placeholder="Numero de Equipo/Producto Inicial">
+      <input type="text" name="inventary_in" class="form-control" id="inventary_in" placeholder="Numero de Equipo/Producto Inicial">
     </div>
   </div>
 
@@ -150,4 +194,127 @@ if($product!=null):
 	</div>
 </div>
 <?php endif; ?>
+<script>
+  document.getElementById("date_expire").disabled=true;
+ function habilitar(value)
+		{
+
+			if(value=="1")
+			{
+				// habilitamos
+				document.getElementById("date_expire").disabled=false;
+			}else if(value=="2"){
+				// deshabilitamos
+				document.getElementById("date_expire").disabled=true;
+			}
+		} 
+    document.getElementById("date_warranty").disabled=true;
+ function habilitar(value)
+		{
+
+			if(value=="1")
+			{
+				// habilitamos
+				document.getElementById("date_warranty").disabled=false;
+			}else if(value=="2"){
+				// deshabilitamos
+				document.getElementById("date_warranty").disabled=true;
+			}
+		} 
+    document.getElementById("inventary_min").disabled=true;
+    document.getElementById("inventary_in").disabled=true;
+ function habilitar(value)
+		{
+
+			if(value=="1")
+			{
+				// habilitamos
+				document.getElementById("inventary_min").disabled=false;
+        document.getElementById("inventary_in").disabled=false;
+			}else if(value=="2"){
+				// deshabilitamos
+				document.getElementById("inventary_min").disabled=true;
+        document.getElementById("inventary_in").disabled=true;
+			}
+		} 
+
+    function codeFinal(value2){
+     
+      var parametros1 = {"Categoria":  $("#category_id").val(),
+                        "SubCategoria":  value2
+      };
+      
+        $.ajax({
+                data:  parametros1,
+                url:   'index.php?action=nextcode',
+                type:  'post',
+                dataType: 'json',
+                success:  function (response) {
+                  
+                       //$("#product_code").val(response[0].abreviation+response[0].id+response[0].codigo);
+                        
+                        $.ajax({
+                          data:  parametros1,
+                          url:   'index.php?action=code',
+                          type:  'post',
+                          dataType: 'json',
+                          success:  function (response1) {
+                           
+                            if (response1[0].category_id<10) {
+                              var codeCategory= '0'+response1[0].category_id;
+                            }else{
+                              var codeCategory =response1[0].category_id;
+                            }
+                            if (response1[0].cantidad<10) {
+                              var codenext= '0'+response1[0].cantidad;
+                            }else{
+                              var codenext =response1[0].cantidad;
+                            }
+                            $("#product_code").val(response[0].abreviation+codeCategory+codenext);
+                        
+                          },
+                          error: function(error) {
+                            console.log("error en Funcion codeFinal 2");
+                            
+                          }
+                        });
+
+
+                },
+                error: function(error) {
+                  console.log("error en Funcion codeFinal 1");
+                  
+    }
+        });
+   
+     
+      
+    }
+    function codenext(value1){
+     
+      var parametros = {"Categoria": value1};
+        
+       $.ajax({
+                data:  parametros,
+                url:   'index.php?action=getcode',
+                type:  'post',
+                dataType: 'json',
+                success:  function (response) {
+                 
+                  $("#subcategory_id").html(' <option value="">-- NINGUNA --</option>');
+                  for (let index = 0; index < response.length; index++) {
+                   
+                    $("#subcategory_id").append(' <option value="'+response[index].id+'">'+response[index].name+'</option>');
+                  
+                    
+                  }
+
+                        
+                }
+        });
+   
+     
+      
+    }
+</script>
 </section>

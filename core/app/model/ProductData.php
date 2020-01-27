@@ -5,19 +5,20 @@ class ProductData {
 	public function ProductData(){
 		$this->name = "";
 		$this->barcode = "";
+		$this->category_id = "";
+		$this->category_id_sub = "";
 		$this->description = "";
-		$this->inventary_min = "";
-		$this->inventary_in = "";
 		$this->price_in = "";
 		$this->state = "";
 		$this->funding = "";
+		$this->stock = "";
+		$this->unit_id = "";
+		$this->asing = "";
 		$this->date_expire = "";
 		$this->date_warranty = "";
+		$this->inventary_min = "";
+		$this->inventary_in = "";
 		$this->user_id = "";
-		$this->category_id = "";
-		$this->unit_id = "";
-		$this->stock = "";
-		$this->asign = "";
 		$this->created_at = "NOW()";
 		
 	}
@@ -26,10 +27,10 @@ class ProductData {
 	public function getUnit(){ return unitsData::getById($this->unit_id);}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (name, barcode, description, inventary_min, inventary_in, price_in, state, funding, stock, date_expire, date_warranty, user_id, category_id, unit_id, stock, asign, created_at)";
-		$sql .= "value (\"$this->name\",\"$this->barcode\",\"$this->description\",\"$this->inventary_min\",\"$this->inventary_in\",\"$this->price_in\",$this->state,\"$this->funding\",\"$this->stock\",$this->date_expire,$this->date_warranty,$this->user_id,$this->category_id,$this->unit_id,$this->stock,$this->asign,NOW())";
-		//return Executor::doit($sql);
-		return $sql;
+		$sql = "insert into ".self::$tablename." (name, barcode, description, inventary_min, inventary_in, price_in, state, funding, stock, date_expire, date_warranty, user_id, category_id, unit_id, asing,category_id_sub, created_at)";
+		$sql .= "value (\"$this->name\",\"$this->barcode\",\"$this->description\",\"$this->inventary_min\",\"$this->inventary_in\",\"$this->price_in\",$this->state,\"$this->funding\",\"$this->stock\",$this->date_expire,$this->date_warranty,$this->user_id,$this->category_id,$this->unit_id,\"$this->asign\",$this->subcategory_id,NOW())";
+		return Executor::doit($sql);
+		//return $sql;
 	}
 	public function add_with_image(){
 		$sql = "insert into ".self::$tablename." (name, image, barcode, description, inventary_min, inventary_in, price_in, state, funding, stock, date_expire, date_warranty, user_id, category_id, created_at)";
@@ -49,8 +50,9 @@ class ProductData {
 
 // partiendo de que ya tenemos creado un objecto ProductData previamente utilizamos el contexto
 	public function update(){
-		$sql = "update ".self::$tablename." set barcode=\"$this->barcode\",name=\"$this->name\",price_in=\"$this->price_in\",price_out=\"$this->price_out\",unit=\"$this->unit\",presentation=\"$this->presentation\",category_id=$this->category_id,inventary_min=\"$this->inventary_min\",description=\"$this->description\",is_active=\"$this->is_active\" where id=$this->id";
+		$sql = "update ".self::$tablename." set name=\"$this->name\",barcode=\"$this->barcode\",category_id=$this->category_id,category_id_sub=$this->category_id_sub,description=\"$this->description\",price_in=$this->price_in,state=$this->state,funding=\"$this->funding\",stock=$this->stock,is_active=$this->is_active,unit_id=$this->unit_id,asing=\"$this->asing\",date_expire=\"$this->date_expire\",date_warranty=\"$this->date_warranty\",inventary_min=$this->inventary_min,inventary_in=$this->inventary_in,user_responsable=\"$this->user_responsable\" where id=$this->id";
 		Executor::doit($sql);
+		
 	}
 
 	public function del_category(){
@@ -70,7 +72,7 @@ class ProductData {
 	}
 
 	public static function getById($id){
-		$sql = "select * from " .self::$tablename." INNER JOIN units ON product.unit=units.unit_id where id=$id";
+		$sql = "select * from " .self::$tablename." where id=$id";
 		$query = Executor::doit($sql);
 		return Model::one($query[0],new ProductData());
 
