@@ -4,13 +4,15 @@ class unitsData {
 
 	public function unitsData(){
 		$this->name_unit = "";
+		$this->description = "";
 		
     }
     
     public function add(){
-		$sql = "insert into units (name_unit) ";
-		$sql .= "value ($this->name_unit)";
+		$sql = "insert into units (name_unit,description) ";
+		$sql .= "value (\"$this->name_unit\",\"$this->description\")";
 		Executor::doit($sql);
+		//print_r($sql);
 	}
 
 	public static function delByunit_id($unit_id){
@@ -24,7 +26,7 @@ class unitsData {
 
 // partiendo de que ya tenemos creado un objecto CategoryData previamente utilizamos el contexto
 	public function update(){
-		$sql = "update ".self::$tablename." set name=\"$this->name\" where unit_id=$this->unit_id";
+		$sql = "update ".self::$tablename." set name_unit=\"$this->name_unit\",description=\"$this->description\" where unit_id=$this->unit_id";
 		Executor::doit($sql);
 	}
 

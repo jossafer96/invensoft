@@ -1,5 +1,5 @@
 <?php
-// funcion que se encarga de obtener los datos del formulario de new product
+//funcion que se encarga de obtener los datos del formulario de new product
 if(count($_POST)>0){
   $product = new ProductData();
   $product->barcode = $_POST["barcode"];
@@ -12,30 +12,40 @@ if(count($_POST)>0){
   $subcategory_id="NULL";
   if($_POST["subcategory_id"]!=""){ $subcategory_id=$_POST["subcategory_id"];}
   $product->subcategory_id=$subcategory_id;
- 
-  $product->description = $_POST["description"];
+  $product->brand = $_POST["brand"];
+  $product->model = $_POST["model"];
+  $product->serial = $_POST["serial"];
+
+  if(isset($_POST["description"])){ 
+    $description=$_POST["description"];
+  };
+  if (isset($_POST["description_1"])) {
+    $description=$_POST["description_1"];
+  };
+
+  $product->description = $description;
   $product->price_in = $_POST["price_in"];
   $product->state = $_POST["state"];
   $product->funding = $_POST["funding"];
   $product->stock = $_POST["stock"];
   $product->unit_id = $_POST["unit"];
-  $product->asign = $_POST["asing"];
+  $product->user_responsable = $_POST["asing"];
   $date_expire="\"\"";
-  if($_POST["date_expire"]!=""){ $date_expire=$_POST["date_expire"];}
+  if(isset($_POST["date_expire"])){ $date_expire=$_POST["date_expire"];}
   $product->date_expire=$date_expire;
 
   $date_warranty="\"\"";
-  if($_POST["date_warranty"]!=""){ $date_warranty=$_POST["date_warranty"];}
+  if(isset($_POST["date_warranty"])){ $date_warranty=$_POST["date_warranty"];}
   $product->date_warranty=$date_warranty;
   
   $product->user_id = $_SESSION["user_id"];
   
   $inventary_min="\"\"";
-  if($_POST["inventary_min"]!=""){ $inventary_min=$_POST["inventary_min"];}
+  if(isset($_POST["inventary_min"])){ $inventary_min=$_POST["inventary_min"];}
   $product->inventary_min=$inventary_min;
 
   $inventary_in="\"\"";
-  if($_POST["inventary_in"]!=""){ $inventary_in=$_POST["inventary_in"];}
+  if(isset($_POST["inventary_in"])){ $inventary_in=$_POST["inventary_in"];}
   $product->inventary_in=$inventary_in;
   
   
@@ -61,22 +71,34 @@ if(count($_POST)>0){
  $prod= $product->add();
 
   }
-  //print_r ($prod);
+  //print_r($_POST["description"]);
+  //print_r($_POST["description_1"]);
+  //print_r ($description);
   //print_r ($product);
+  //print_r ($prod);
 
 
 
-if($_POST["inventary_in"]!="" || $_POST["inventary_in"]!="0"){
- $op = new OperationData();
- $op->product_id = $prod[1] ;
- $op->stock_id = StockData::getPrincipal()->id;
- $op->operation_type_id=OperationTypeData::getByName("entrada")->id;
- $op->price_in =$_POST["price_in"];
- $op->q= $_POST["inventary_in"];
- $op->sell_id="NULL";
-$op->is_oficial=1;
-//$op->add();
+if($_POST["name"]!="" || $_POST["barcode"]!=""){
+    $op = new OperationData();
+    $op->product_id = $prod[1] ;
+    $op->user = $_SESSION["user_id"];
+    $op->stock_id = $_POST["stock"];
+   
+    if(isset($_POST["inventary_in"])){ 
+      $in=$_POST["inventary_in"];
+    }else{
+      $in=1;
+    };
+    $op->description_operation = $in." Nuevo(s) producto en inventario";
+    $op->quantity= $in;
+    $op->price_in =$_POST["price_in"];
+    $op->operation_type_id=OperationTypeData::getByName("Nuevo producto")->id;
+    $op->sell_id="NULL";
+    $op->is_oficial=1;
+  $op->add();
 }
+//print_r($op);
 
 print "<script>window.location='index.php?view=products';</script>";
 

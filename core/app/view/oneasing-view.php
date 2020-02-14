@@ -1,46 +1,63 @@
-<section class="content">
+<section class="content" >
+<?php if(isset($_GET["id"]) && $_GET["id"]!=""):?>
+<?php
+
+$operation = ProductData::getById($_GET["id"]);
+$accounts = PasswordData::getByProductId($_GET["id"]);
+?>
+<?php endif; ?>
 <div class="btn-group pull-right">
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="report/onesell-word.php?id=<?php echo $_GET["id"];?>">Word 2007 (.docx)</a></li>
-<li><a onclick="thePDF()" id="makepdf" class=""><i class="fa fa-download"></i> Descargar PDF</a>
+    
+<li><a style="cursor: pointer" href="index.php?view=createasing&id=<?php echo $operation->id; ?>" id="makepdf" class=""><i class="fa fa-download"></i> Descargar PDF</a>
   </ul>
 </div>
-<h1>Resumen de Asignacion</h1>
-<?php if(isset($_GET["id"]) && $_GET["id"]!=""):?>
-<?php
+<div id="docasing" style="    margin: 100px;margin-top: 50px;border: 1px solid;padding: 30px;">
+<h3>Resumen de Asignacion</h3>
 
-$operation = ProductData::getById($_GET["id"]);
 
-?>
 
 <div class="box box-primary">
 <table class="table table-bordered">
 <?php if($operation->id!=""):
 $client = $operation;
 ?>
+
+
+
+
 <tr>
-  <td style="width:150px;">Asignado a</td>
-  <td><?php echo $client->asing;?></td>
+  <td> <b>Asignado a</b> </td>
+  <td> <b> Responsable</b></td>
+  <td> <b> Unidad</b></td>
+  <td> <b> Fecha de Entrega </b></td>
+  
+ 
+ 
 </tr>
 
 <tr>
-  <td>Responsable</td>
+<td><b><?php echo $client->asing;?></b></td>
   <td><?php echo $client->user_responsable;?></td>
+  <td>Seguridad</td>
+  <td><?php echo  date('d-m-Y H:i:s');?></td>
 </tr>
 <?php endif; ?>
 </table>
 </div>
 <br>
+
+<h3>Detalles</h3>
 <div class="box box-primary">
 <table class="table table-bordered table-hover">
   <thead>
     <th>Codigo</th>
-    <th>Cantidad</th>
-    <th>Nombre del Producto</th>
-    <th>Precio Unitario</th>
+    <th>Equipo/Producto</th>
+    <th>Responsable</th>
+    <th>Detalles</th>
    
 
   </thead>
@@ -49,160 +66,100 @@ $client = $operation;
     $op  = $operation;
 ?>
 <tr>
-  <td><?php echo $op->id ;?></td>
-  <td><?php echo 1 ;?></td>
+  <td><?php echo $op->barcode ;?></td>
   <td><?php echo $op->name ;?></td>
-  <td>$ <?php echo number_format($op->price_out,2,".",",") ;?></td>
+  <td><?php echo $op->user_responsable ;?></td>
+  
+  <td>
+    <b>Marca: </b><?php  echo $op->brand;?><br><br>
+    <b>Modelo: </b><?php  echo $op->model;?><br><br>
+    <b>S/N: </b><?php  echo $op->serial;?><br><br>
+    <b>Descripcion adicional: </b><?php  echo $op->description;?>
+  </td>
   
 </tr>
 
 </table>
+<br>
+</div>
+<h3>Cuentas/Contraseñas</h3>
+<div class="box box-primary">
+<table class="table table-bordered table-hover">
+  <thead>
+    <th>Tipo de cuenta</th>
+    <th>Cuenta</th>
+    <th>Contraseña</th>
+    
+   
+
+  </thead>
+<?php
+  
+   
+   
+    foreach($accounts as $account):
+?>
+<tr>
+  <td><?php echo $account->name_type ;?></td>
+  <td><?php echo $account->description ;?></td>
+  <td><?php echo $account->password ;?></td>
+  
+  
+</tr>
+<?php endforeach;?>
+</table>
+</div>
 </div>
 <br><br>
 
 
+</section>
 
 
 
 
+<script>
+    function demoFromHTML() {
+        var pdf = new jsPDF('p', 'pt', 'letter');
+        // source can be HTML-formatted string, or a reference
+        // to an actual DOM element from which the text will be scraped.
+        source = $('#docasing')[0];
 
-<script type="text/javascript">
-        function thePDF() {
+        // we support special element handlers. Register them with jQuery-style 
+        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+        // There is no support for any other type of selectors 
+        // (class, of compound) at this time.
+        specialElementHandlers = {
+            // element with id of "bypass" - jQuery style selector
+            '#bypassme': function (element, renderer) {
+                // true = "handled elsewhere, bypass text extraction"
+                return true
+            }
+        };
+        margins = {
+            top: 40,
+            bottom: 60,
+            left: 40,
+            width: 522
+        };
+        // all coords and widths are in jsPDF instance's declared units
+        // 'inches' in this case
+        pdf.fromHTML(
+            source, // HTML string or DOM elem ref.
+            margins.left, // x coord
+            margins.top, { // y coord
+                'width': margins.width, // max width of content on PDF
+                'elementHandlers': specialElementHandlers
+            },
 
-var columns = [
-//    {title: "Reten", dataKey: "reten"},
-    {title: "Codigo", dataKey: "code"}, 
-    {title: "Cantidad", dataKey: "q"}, 
-    {title: "Nombre del Producto", dataKey: "product"}, 
-    {title: "Precio unitario", dataKey: "pu"}, 
-    {title: "Total", dataKey: "total"}, 
-//    ...
-];
-
-
-var columns2 = [
-//    {title: "Reten", dataKey: "reten"},
-    {title: "", dataKey: "clave"}, 
-    {title: "", dataKey: "valor"}, 
-//    ...
-];
-
-var rows = [
-  <?php foreach($operations as $operation):
-  $product  = $operation->getProduct();
-  ?>
-
-    {
-      "code": "<?php echo $product->id; ?>",
-      "q": "<?php echo $operation->q; ?>",
-      "product": "<?php echo $product->name; ?>",
-      "pu": "$ <?php echo number_format($operation->price_out,2,".",","); ?>",
-      "total": "$ <?php echo number_format($operation->q*$operation->price_out,2,".",","); ?>",
-      },
- <?php endforeach; ?>
-];
-
-var rows2 = [
-<?php if($sell->person_id!=""):
-$person = $sell->getPerson();
-?>
-
-    {
-      "clave": "Cliente",
-      "valor": "<?php echo $person->name." ".$person->lastname; ?>",
-      },
-      <?php endif; ?>
-    {
-      "clave": "Atendido por",
-      "valor": "<?php echo $user->name." ".$user->lastname; ?>",
-      },
-
-];
-
-var rows3 = [
-
-    {
-      "clave": "Descuento",
-      "valor": "$ <?php echo number_format($sell->discount,2,'.',',');; ?>",
-      },
-    {
-      "clave": "Subtotal",
-      "valor": "$ <?php echo number_format($sell->total,2,'.',',');; ?>",
-      },
-    {
-      "clave": "Total",
-      "valor": "$ <?php echo number_format($sell->total-$sell->discount,2,'.',',');; ?>",
-      },
-];
-
-
-// Only pt supported (not mm or in)
-var doc = new jsPDF('p', 'pt');
-        doc.setFontSize(26);
-        doc.text("NOTA DE VENTA", 40, 65);
-        doc.setFontSize(14);
-        doc.text("Fecha: <?php echo $sell->created_at; ?>", 40, 80);
-//        doc.text("Operador:", 40, 150);
-//        doc.text("Header", 40, 30);
-  //      doc.text("Header", 40, 30);
-
-doc.autoTable(columns2, rows2, {
-    theme: 'grid',
-    overflow:'linebreak',
-    styles: {
-        fillColor: [100, 100, 100]
-    },
-    columnStyles: {
-        id: {fillColor: 255}
-    },
-    margin: {top: 100},
-    afterPageContent: function(data) {
-//        doc.text("Header", 40, 30);
+            function (dispose) {
+                // dispose: object with X, Y of the last line add to the PDF 
+                //          this allow the insertion of new lines after html
+                pdf.save('Test.pdf');
+            }, margins
+        );
     }
-});
-
-
-doc.autoTable(columns, rows, {
-    theme: 'grid',
-    overflow:'linebreak',
-    styles: {
-        fillColor: [100, 100, 100]
-    },
-    columnStyles: {
-        id: {fillColor: 255}
-    },
-    margin: {top: doc.autoTableEndPosY()+15},
-    afterPageContent: function(data) {
-//        doc.text("Header", 40, 30);
-    }
-});
-
-doc.autoTable(columns2, rows2, {
-    theme: 'grid',
-    overflow:'linebreak',
-    styles: {
-        fillColor: [100, 100, 100]
-    },
-    columnStyles: {
-        id: {fillColor: 255}
-    },
-    margin: {top: doc.autoTableEndPosY()+15},
-    afterPageContent: function(data) {
-//        doc.text("Header", 40, 30);
-    }
-});
-//doc.setFontsize
-//img = new Image();
-//img.src = "liberacion2.jpg";
-//doc.addImage(img, 'JPEG', 40, 10, 610, 100, 'monkey'); // Cache the image using the alias 'monkey'
-doc.setFontSize(20);
-doc.setFontSize(12);
-doc.text("Generado por el Sistema de inventario", 40, doc.autoTableEndPosY()+25);
-doc.save('sell-<?php echo date("d-m-Y h:i:s",time()); ?>.pdf');
-//doc.output("datauri");
-
-        }
-    </script>
+</script>
 
 <script>
   $(document).ready(function(){
@@ -213,7 +170,4 @@ doc.save('sell-<?php echo date("d-m-Y h:i:s",time()); ?>.pdf');
 
 
 
-<?php else:?>
-  501 Internal Error
-<?php endif; ?>
-</section>
+

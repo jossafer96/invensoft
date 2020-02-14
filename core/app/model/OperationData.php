@@ -12,10 +12,11 @@ class OperationData {
 	}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (price_in,price_out,stock_id,product_id,q,operation_type_id,sell_id,created_at,description_operation,user_operation) ";
-		$sql .= "value ($this->price_in,$this->price_out,$this->stock_id,\"$this->product_id\",\"$this->q\",$this->operation_type_id,$this->sell_id,$this->created_at,\"$this->description_operation\",$this->user)";
+		$sql = "insert into ".self::$tablename." (price_in,stock_id,product_id,q,operation_type_id,sell_id,created_at,description_operation,user_operation) ";
+		$sql .= "value ($this->price_in,$this->stock_id,\"$this->product_id\",\"$this->quantity\",$this->operation_type_id,$this->sell_id,$this->created_at,\"$this->description_operation\",$this->user)";
 		//echo "<script type='text/javascript'>alert('$sql');</script>";
 		return Executor::doit($sql);
+		
 	}
 
 	public function add_cotization(){
@@ -73,7 +74,7 @@ class OperationData {
 	}
 
 	public static function getHistory(){
-		$sql = "SELECT operation.id, product.name, operation.description_operation, CAST(operation.created_at AS VARCHAR(11)) as created_at,product.barcode, CONCAT(user.name,user.lastname) as user_operation FROM operation INNER JOIN operation_type ON operation.operation_type_id=operation_type.id INNER JOIN product ON operation.product_id=product.id INNER JOIN user ON operation.user_operation=user.id ORDER BY operation.id DESC";
+		$sql = "SELECT operation.id, product.name, operation.description_operation, CAST(operation.created_at AS VARCHAR(11)) as created_at,product.barcode, CONCAT(user.name,user.lastname) as user_operation FROM operation INNER JOIN operation_type ON operation.operation_type_id=operation_type.id INNER JOIN product ON operation.product_id=product.id INNER JOIN user ON operation.user_operation=user.id ORDER BY operation.id ASC";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new OperationData());
 
@@ -126,7 +127,7 @@ public static function getPPByDateOfficial($start,$end){
 	public static function getQByStock($product_id,$stock_id){
 		$q=0;
 		$operations = self::getAllByProductIdAndStock($product_id,$stock_id);
-		$input_id = OperationTypeData::getByName("entrada")->id;
+		$input_id = OperationTypeData::getByName("Nuevo Producto")->id;
 		$output_id = OperationTypeData::getByName("salida")->id;
 		foreach($operations as $operation){
 				if($operation->operation_type_id==$input_id){ $q+=$operation->q; }
@@ -289,7 +290,15 @@ public static function getPPByDateOfficial($start,$end){
 	}
 
 ////////////////////////////////////////////////////////////////////////////
-
+public static function getInfPDF($product_id){
+	$sql = "SELECT operation.id as operation_id, operation.created_at as date_operation, operation.product_id 
+	as product_id, product.name as name, product.barcode as barcode, product.asing as asing, 
+	product.user_responsable as user_responsable, user.name as user_operation FROM operation INNER JOIN 
+	product ON operation.product_id=product.id INNER JOIN user ON operation.user_operation=user.id where 
+	operation.id= (SELECT MAX(operation.id) FROM operation where operation.product_id=".$product_id.")";
+	$query = Executor::doit($sql);
+	return Model::many($query[0],new OperationData());
+}
 
 }
 

@@ -55,20 +55,18 @@ $_SESSION["errors"] = $errors;
 		foreach($cart as  $c){
 			// asignar equipo y cambiarlo en la Base de Datos
 			$op1 = new ProductData();
-			$resposable=PersonData::getById($_POST["responsable_id"]);
-			$user1= $resposable->name.' '.$resposable->lastname;
+			$resposable=$_POST["responsable_id"];
 			$op1->id = $c["product_id"] ;
-			$op1->user_responsable= $user1;
+			$op1->user_responsable= $resposable;
 			$s = $op1->update_user_responsable();
 
 
 
 			//Crear un registro de la operacion realizada.
-			$description_operation_start= 'Asignacion de equipo a '.$user1;
+			$description_operation_start= 'Asignacion de equipo a '.$_POST["responsable_id"];
 			$product = ProductData::getById($c["product_id"]);
 			$op = new OperationData();
 			$op->price_in = $product->price_in;
-			$op->price_out = $product->price_out;
 			$op->product_id = $c["product_id"] ;
 			$op->operation_type_id='7';
 			$op->description_operation=$description_operation_start;
@@ -76,7 +74,7 @@ $_SESSION["errors"] = $errors;
 			$op->stock_id = StockData::getPrincipal()->id;
 			$op->q= $c["q"];
 			$op->sell_id='null';
-			print_r($op);
+			//print_r($op);
 			$add = $op->add();
 			
 	

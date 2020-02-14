@@ -7,7 +7,8 @@ foreach ($operations as $op) {
 }*/
 
 $product = ProductData::getById($_GET["id"]);
-$product->del();
+$product->disable();
+
 
 Core::redir("./index.php?view=products");
 ?>

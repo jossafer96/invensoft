@@ -23,6 +23,13 @@
       
       <input type="text" value="<?php echo $user->abreviation;?>" style="width: 40%;" name="abreviation" required class="form-control" id="abreviation" placeholder="Abreviacion">
     </div>
+    <br>
+    <br>
+    <label for="inputEmail1" class="col-lg-2 control-label">Descripcion</label>
+    <div class="col-md-10">
+      
+      <input type="text" value="<?php echo $user->description;?>" style="width: 40%;" name="description"  class="form-control" id="description" placeholder="Abreviacion">
+    </div>
   </div>
 
   <div class="form-group">

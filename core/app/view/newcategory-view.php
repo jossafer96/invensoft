@@ -21,6 +21,13 @@
       
       <input type="text" style="width: 40%;" name="abreviation" required class="form-control" id="abreviation" placeholder="Abreviacion">
     </div>
+    <br>
+    <br>
+    <label for="inputEmail1" class="col-lg-2 control-label">Descripcion</label>
+    <div class="col-md-10">
+      
+      <input type="text" style="width: 40%;" name="description" required class="form-control" id="description" placeholder=" Breve descripcion">
+    </div>
   </div>
 
   <div class="form-group">
@@ -28,6 +35,7 @@
       <button type="submit" class="btn btn-primary">Agregar Categoria</button>
     </div>
   </div>
+  <strong>* Obligatorio</strong>
 </form>
 </td>
 </tr>

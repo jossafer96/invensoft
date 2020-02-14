@@ -229,15 +229,7 @@ $product = ProductData::getById($p["product_id"]);
 <div class="col-md-3">
     <label class="control-label">Asingnado a</label>
     <div class="col-lg-12">
-    <?php 
-$clients = PersonData::getClients();
-    ?>
-    <select name="responsable_id" id="responsable_id" class="form-control">
-    <option value="">-- NINGUNO --</option>
-    <?php foreach($clients as $client):?>
-    	<option value="<?php echo $client->id;?>"><?php echo $client->name." ".$client->lastname;?></option>
-    <?php endforeach;?>
-    	</select>
+    <input type="text" name="responsable_id" id="responsable_id" class="form-control">
     </div>
   </div>
   <div class='col-md-6'>

@@ -15,7 +15,7 @@
 <div class="row">
 	<div class="col-md-12">
 <div class="btn-group pull-right">
-	<a href="index.php?view=newcategory" class="btn btn-default"><i class='fa fa-th-list'></i> Nueva Categoria</a>
+	<a href="index.php?view=newsubcategory" class="btn btn-default"><i class='fa fa-th-list'></i> Nueva SubCategoria</a>
 </div>
 <div class="clearfix"></div>
 <br>
@@ -27,7 +27,7 @@
 			?>
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Categorias</h3>
+    <h3 class="box-title">SubCategorias</h3>
 
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -44,7 +44,7 @@
 			foreach($users as $user){
 				?>
 				<tr>
-				<td style="width:30px;"><a href="index.php?view=productbycategory&id=<?php echo $user->id;?>" class="btn btn-default btn-xs"><i class="fa fa-th-list"></i> Productos</a> 
+				<td style="width:30px;"><a href="index.php?view=productbysubcategory&id=<?php echo $user->id;?>&id2=<?php echo $user->id_category;?>" class="btn btn-default btn-xs"><i class="fa fa-th-list"></i> Productos</a> 
 				</td>
 				<td><?php 
 					if ($user->id<10) {
@@ -56,7 +56,7 @@
 				echo $codigo ?></td>
 				<td><?php echo $user->name ?></td>
 				<td><?php echo $user->name_category ?></td>
-				<td style="width:130px;"><a href="index.php?view=editcategory&id=<?php echo $user->id;?>" class="btn btn-warning btn-xs">Editar</a> <a href="index.php?view=delcategory&id=<?php echo $user->id;?>" class="btn btn-danger btn-xs">Eliminar</a></td>
+				<td style="width:130px;"><a href="index.php?view=editsubcategory&id=<?php echo $user->id;?>&id2=<?php echo $user->id_category;?>" class="btn btn-warning btn-xs">Editar</a> <a href="index.php?view=delsubcategory&id=<?php echo $user->id;?>&id2=<?php echo $user->id_category;?>" class="btn btn-danger btn-xs">Eliminar</a></td>
 				</tr>
 				<?php
 

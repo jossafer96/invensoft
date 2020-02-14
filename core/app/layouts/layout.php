@@ -26,6 +26,42 @@
 
     </style>
 
+    <style>
+      .spinner{
+        margin: 40%;
+    margin-top: 35vh;
+    width: 80px;
+    height: 80px;
+    border: 8px solid rgba(201, 91, 88, 0);
+    border-left-color: #8e2d39;
+			border-radius: 50px;
+			animation: spin 1s infinite linear;
+		}
+		@keyframes spin{
+			to {
+				transform: rotate(360deg);
+			}
+    }
+    .ss_input {
+  position: absolute;
+  background-color: transparent;
+  width: 100%;
+  border: 0;
+}
+
+.select-search {
+ width: 35%;
+  position: relative;
+  z-index: 2;
+}
+
+.select-search > select {
+  width: 100%;
+  position: relative;
+  z-index: -1;
+}
+    </style>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -47,6 +83,7 @@
   </head>
 
   <body class="<?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>  skin-blue sidebar-mini <?php else:?>login-page<?php endif; ?>" >
+    
     <div class="wrapper">
       <!-- Main Header -->
       <?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>
@@ -238,6 +275,8 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
                 <li><a href="./?view=products">Productos</a></li>
                 <li><a href="./?view=categories">Categorias</a></li>
                 <li><a href="./?view=subcategories">SubCategorias</a></li>
+                <li><a href="./?view=programs">Unidad/Programa</a></li>
+                <li><a href="./?view=password">Cuentas/Contraseñas</a></li>
                 <li><a href="./?view=clients">Clientes</a></li>
                 <li><a href="./?view=providers">Proveedores</a></li>
               </ul>
@@ -313,7 +352,14 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
 
       <!-- Content Wrapper. Contains page content -->
       <?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>
-      <div class="content-wrapper">
+        
+      <div  class="content-wrapper">
+      <div id="loader" style="margin: 0;padding: 0;display:none;align-items: center;justify-content: center;height: 100vh; background: #00000059;z-index: 1;position: absolute;display: ;width: 100%;
+    ;">
+          <div class="spinner">
+
+          </div>
+        </div>
         <?php View::load("index");?>
       </div><!-- /.content-wrapper -->
 
@@ -404,8 +450,8 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
     <!-- AdminLTE App -->
     <script src="plugins/dist/js/app.js" type="text/javascript"></script>
     
-    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="plugins/datatables/jquery.dataTables.js"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.js"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){

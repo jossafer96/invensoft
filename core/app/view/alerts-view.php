@@ -5,8 +5,8 @@ if(Core::$user->kind==3){ Core::redir("./?view=sell"); }
 ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>INVENSOFT</h1>
-          <h4>Almacen principal: <?php echo StockData::getPrincipal()->name;  ?></h4>
+          <h1>Alertas</h1>
+          <h4>Almacen: <?php echo StockData::getPrincipal()->name;  ?></h4>
         </section>
 
         <!-- Main content -->
@@ -61,8 +61,8 @@ if(count($products)>0){
   <thead>
     <th >Codigo</th>
     <th>Nombre del producto</th>
-    <th>Precio Entrada</th>
-    <th>Precio Salida</th>
+    <th>Precio de Compra</th>
+    <th>Ubicacion</th>
     <th>En Stock</th>
     <th></th>
   </thead>
@@ -76,8 +76,8 @@ foreach($products as $product):
   <tr class="<?php if($q==0){ echo "danger"; }else if($q<=$product->inventary_min/2){ echo "danger"; } else if($q<=$product->inventary_min){ echo "warning"; } ?>">
     <td><?php echo $product->barcode; ?></td>
     <td><?php echo $product->name; ?></td>
-    <td>$ <?php echo number_format($product->price_in,2,'.',','); ?></td>
-    <td>$ <?php echo number_format($product->price_out,2,'.',','); ?></td>
+    <td>L <?php echo number_format($product->price_in,2,'.',','); ?></td>
+    <td>A<?php echo $product->stock; ?></td>
     <td><?php echo $q; ?></td>
     <td>
     <?php if($q==0){ echo "<span class='label label-danger'>No hay existencias.</span>";}else if($q<=$product->inventary_min/2){ echo "<span class='label label-danger'>Quedan muy pocas existencias.</span>";} else if($q<=$product->inventary_min){ echo "<span class='label label-warning'>Quedan pocas existencias.</span>";} ?>

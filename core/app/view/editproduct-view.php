@@ -38,11 +38,13 @@ if($product!=null):
   <div class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">Categoria</label>
     <div class="col-md-10">
-    <select name="category_id" id="category_id" class="form-control" onchange="codenext(this.value)">
+    <select name="category_id" id="category_id" class="form-control" onchange="codenext(this.value);pagoOnChange(this.value);">
     <option value="">-- NINGUNA --</option>
     <?php foreach($categories as $category):
       if ($product->category_id==$category->id) {?>
+      <script type="text/javascript">pagoOnChange(<?php echo $category->id;?>);</script>
       <option value="<?php echo $category->id;?>" selected><?php echo $category->name;?></option>
+     
     <?php }else{ ?>
        <option value="<?php echo $category->id;?>"><?php echo $category->name;?></option>
       <?php } endforeach;?>
@@ -66,12 +68,45 @@ if($product!=null):
   
 
   
-  <div class="form-group col-lg-12">
+  <div id="ndescription" class="form-group col-lg-12">
     <label for="inputEmail1" class="col-lg-1 control-label">Descripcion</label>
     <div class="col-md-10">
       <textarea rows="8" value="" name="description" class="form-control" id="description" placeholder="Descripcion del Producto"><?php echo $product->description;?></textarea>
     </div>
   </div>
+
+  <div id="ndetails"  style="display:none;margin:0;padding:0;" class=" col-lg-12">
+
+  <div class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Marca*</label>
+    <div class="col-md-10">
+      <input type="text" value="<?php echo $product->brand;?>" name="brand"  class="form-control" id="brand" placeholder="Marca">
+    </div>
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Modelo*</label>
+    <div class="col-md-10">
+      <input type="text" value="<?php echo $product->model;?>" name="model"  class="form-control" id="model" placeholder="Modelo">
+    </div>
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">S/N*</label>
+    <div class="col-md-10">
+      <input type="text" value="<?php echo $product->serial;?>" name="serial"  class="form-control" id="serial" placeholder="Numero de serie">
+    </div>
+  </div>
+
+  <div  class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Descripcion</label>
+    <div class="col-md-10">
+      <textarea rows="3"  name="description_1" class="form-control" id="description_1" placeholder="Descripcion del Producto"><?php echo $product->description;?></textarea>
+    </div>
+  </div>
+
+  </div>
+
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Precio*</label>
     <div class="col-md-10">
@@ -129,7 +164,7 @@ if($product!=null):
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Responsable</label>
     <div class="col-md-10">
-      <input type="text" name="asing" value="<?php echo $product->asing;?>" required class="form-control" id="asing" placeholder="Persona asignada">
+      <input type="text" name="asing" value="<?php echo $product->user_responsable;?>" required class="form-control" id="asing" placeholder="Persona asignada">
     </div>
   </div>
   <div class="form-group col-lg-6">
@@ -316,5 +351,20 @@ if($product!=null):
      
       
     }
+
+    function pagoOnChange(sel) {
+      if (sel==1||sel==4||sel==5){
+        $("#ndescription").hide("slow");
+           $("#ndetails").show("slow");
+      
+
+      }else{
+
+        $("#ndetails").hide("slow");
+        $("#ndescription").show("slow");
+      }
+}
+var id_cat=$( "#category_id" ).val();
+pagoOnChange(id_cat);
 </script>
 </section>

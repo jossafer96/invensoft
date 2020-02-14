@@ -19,8 +19,9 @@ if(count($products)>0){
 	<thead>
 		<th>Codigo</th>
 		<th>Nombre</th>
-		<th>Unidad</th>
-		<th>Precio unitario</th>
+		<th>Descripcion</th>
+		<th>Precio de compra</th>
+		<th>Fondo de compra</th>
 		<th>En inventario</th>
 		<th>Cantidad</th>
 	</thead>
@@ -33,10 +34,11 @@ $q= OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
 	if($q>0):?>
 		
 	<tr class="<?php if($q<=$product->inventary_min){ echo "danger"; }?>">
-		<td style="width:80px;"><?php echo $product->id; ?></td>
+		<td style="width:80px;"><b><?php echo $product->barcode; ?></b></td>
 		<td><?php echo $product->name; ?></td>
-		<td><?php echo $product->unit; ?></td>
-		<td><b>$<?php echo $product->price_out; ?></b></td>
+		<td><?php echo $product->description; ?></td>
+		<td><b>L. <?php echo $product->price_in; ?></b></td>
+		<td><b><?php echo $product->funding; ?></b></td>
 		<td>
 			<?php echo $q; ?>
 		</td>

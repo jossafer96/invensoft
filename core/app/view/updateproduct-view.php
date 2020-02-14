@@ -13,40 +13,47 @@ if(count($_POST)>0){
 	$subcategory_id="NULL";
 	if($_POST["subcategory_id"]!=""){ $subcategory_id=$_POST["subcategory_id"];}
 	$product->subcategory_id=$subcategory_id;
-   
-	$product->description = $_POST["description"];
+	$product->brand = $_POST["brand"];
+	$product->model = $_POST["model"];
+	$product->serial = $_POST["serial"];
+  
+	if(isset($_POST["description"])){ 
+	  $description=$_POST["description"];
+	};
+	if (isset($_POST["description_1"])) {
+	  $description=$_POST["description_1"];
+	};
+  
+	$product->description = $description;
 	$product->price_in = $_POST["price_in"];
 	$product->state = $_POST["state"];
 	$product->funding = $_POST["funding"];
 	$product->stock = $_POST["stock"];
 	$product->unit_id = $_POST["unit"];
-	$product->asign = $_POST["asing"];
+	$product->user_responsable = $_POST["asing"];
 	$date_expire="\"\"";
-	if($_POST["date_expire"]!=""){ $date_expire=$_POST["date_expire"];}
+	if(isset($_POST["date_expire"])){ $date_expire=$_POST["date_expire"];}
 	$product->date_expire=$date_expire;
   
 	$date_warranty="\"\"";
-	if($_POST["date_warranty"]!=""){ $date_warranty=$_POST["date_warranty"];}
+	if(isset($_POST["date_warranty"])){ $date_warranty=$_POST["date_warranty"];}
 	$product->date_warranty=$date_warranty;
 	
 	$product->user_id = $_SESSION["user_id"];
 	
 	$inventary_min="\"\"";
-	if($_POST["inventary_min"]!=""){ $inventary_min=$_POST["inventary_min"];}
+	if(isset($_POST["inventary_min"])){ $inventary_min=$_POST["inventary_min"];}
 	$product->inventary_min=$inventary_min;
   
 	$inventary_in="\"\"";
-	if($_POST["inventary_in"]!=""){ $inventary_in=$_POST["inventary_in"];}
+	if(isset($_POST["inventary_in"])){ $inventary_in=$_POST["inventary_in"];}
 	$product->inventary_in=$inventary_in;
-  	$is_active=1;
-  //if(isset($_POST["is_active"])){ $is_active=1;}
-
-  $product->is_active=$is_active;
+	
   
 
 	
 	$product->update();
-	//print_r($product);
+	//print_r($product->update());
 
 	if(isset($_FILES["image"])){
 		$image = new Upload($_FILES["image"]);

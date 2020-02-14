@@ -1,4 +1,6 @@
-<section class="content">
+
+<section class="content " >
+
     <?php 
 $categories = CategoryData::getAll();
 $units = unitsData::getAll();
@@ -26,7 +28,7 @@ $states = StateData::getAll();
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Codigo*</label>
     <div class="col-md-4">
-      <input readonly type="text" style='font-size:30px;font-weight:bolder;text-align: center;background-color: #ecf0f5;' name="barcode" id="product_code" class="form-control" id="barcode" placeholder="Codigo de Barras del Producto">
+      <input readonly type="text" style='font-size:30px;font-weight:bolder;text-align: center;background-color: #ecf0f5;' name="barcode" id="product_code" class="form-control" id="barcode" placeholder="------">
     </div>
     <i>Elegir primero la categoria y subcategoria para poder generar codigo automaticamente</i>
   </div>
@@ -34,30 +36,61 @@ $states = StateData::getAll();
   <div class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">Categoria</label>
     <div class="col-md-10">
-    <select  name="category_id" id="category_id" class="form-control" onchange="codenext(this.value)">
+    <select  name="category_id" id="category_id" class="form-control" onchange="codenext(this.value);pagoOnChange(this);">
     <option value="">-- NINGUNA --</option>
     <?php foreach($categories as $category):?>
-     
       <option value="<?php echo $category->id;?>"><?php echo $category->name;?></option>
     <?php endforeach;?>
-      </select>    </div>
+      </select>    
+      </div>
   </div>
-  <div class="form-group col-lg-6" >
+  <div  class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">SubCategoria</label>
     <div class="col-md-10">
     <select  name="subcategory_id" id="subcategory_id" class="form-control" onchange="codeFinal(this.value)">
     <option value="">-- NINGUNA --</option>
-   
-      </select>    </div>
+    </select>    
+    </div>
   </div>
   
 
   
-  <div class="form-group col-lg-12">
+  <div id="ndescription"  class="form-group col-lg-12">
     <label for="inputEmail1" class="col-lg-1 control-label">Descripcion</label>
     <div class="col-md-10">
       <textarea rows="8" name="description" class="form-control" id="description" placeholder="Descripcion del Producto"></textarea>
     </div>
+  </div>
+  <div id="ndetails"  style="display:none;margin:0;padding:0;" class=" col-lg-12">
+
+  <div class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Marca*</label>
+    <div class="col-md-10">
+      <input type="text" name="brand"  class="form-control" id="brand" placeholder="Marca">
+    </div>
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Modelo*</label>
+    <div class="col-md-10">
+      <input type="text" name="model"  class="form-control" id="model" placeholder="Modelo">
+    </div>
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">S/N*</label>
+    <div class="col-md-10">
+      <input type="text" name="serial"  class="form-control" id="serial" placeholder="Numero de serie">
+    </div>
+  </div>
+
+  <div  class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Descripcion</label>
+    <div class="col-md-10">
+      <textarea rows="3" name="description_1" class="form-control" id="description_1" placeholder="Descripcion del Producto"></textarea>
+    </div>
+  </div>
+
   </div>
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Precio*</label>
@@ -113,8 +146,8 @@ $states = StateData::getAll();
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class=" col-lg-2 control-label">Fecha Vencimiento/Caducidad</label>
     <div class=" col-lg-8" style="float:right;background-color:#ecf0f5;    padding: 10px;">
-    <input class='' type="radio" value="2" name="habilitarDeshabilitar_date_venc" onchange="habilitar(this.value);" checked> NO tiene fecha de Vencimiento/Caducidad <br>
-		<input class='form' type="radio" value="1" name="habilitarDeshabilitar_date_venc" onchange="habilitar(this.value);" > SI tiene fecha de Vencimiento/Caducidad 
+    <input class='' type="radio" value="2" name="habilitarDeshabilitar_date_venc" onchange="habilitar1(this.value);" checked> NO tiene fecha de Vencimiento/Caducidad <br>
+		<input class='form' type="radio" value="1" name="habilitarDeshabilitar_date_venc" onchange="habilitar1(this.value);" > SI tiene fecha de Vencimiento/Caducidad 
 	<div>
   <label  class=" col-lg-8 control-label">Fecha de vencimiento</label>
     <input type="date" name="date_expire" id="date_expire" class='form-control'>
@@ -125,8 +158,8 @@ $states = StateData::getAll();
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class=" col-lg-2 control-label">Garantia</label>
     <div class=" col-lg-8" style="float:right;background-color:#ecf0f5;    padding: 10px;">
-    <input class='' type="radio" value="2" name="habilitarDeshabilitar_date_warr" onchange="habilitar(this.value);" checked> NO tiene Garantia<br>
-		<input class='form' type="radio" value="1" name="habilitarDeshabilitar_date_warr" onchange="habilitar(this.value);" > SI tiene Garantia 
+    <input class='' type="radio" value="2" name="habilitarDeshabilitar_date_warr" onchange="habilitar2(this.value);" checked> NO tiene Garantia<br>
+		<input class='form' type="radio" value="1" name="habilitarDeshabilitar_date_warr" onchange="habilitar2(this.value);" > SI tiene Garantia 
 	<div>
   <label  class=" col-lg-10 control-label">Fecha de finalizacion de Garantia</label>
     <input type="date" name="date_warranty" id="date_warranty" class='form-control'>
@@ -139,8 +172,8 @@ $states = StateData::getAll();
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class=" col-lg-4 control-label">Minima en Inventario</label>
     <div class=" col-lg-8" style="float:right;background-color:#ecf0f5;padding: 10px;">
-    <input class='' type="radio" value="2" name="habilitarDeshabilitar_min_inv" onchange="habilitar(this.value);" checked> Es producto unico<br>
-    <input class='form' type="radio" value="1" name="habilitarDeshabilitar_min_inv" onchange="habilitar(this.value);" > No es Unico 
+    <input class='' type="radio" value="2" name="habilitarDeshabilitar_min_inv" onchange="habilitar3(this.value);" checked> Es producto unico<br>
+    <input class='form' type="radio" value="1" name="habilitarDeshabilitar_min_inv" onchange="habilitar3(this.value);" > No es Unico 
 	<div>
     <input type="text" name="inventary_min" id="inventary_min" class='form-control' placeholder="Minimo de Equipo/Producto antes mostrar alerta">
     
@@ -187,7 +220,7 @@ $states = StateData::getAll();
 </script>
 <script>
   document.getElementById("date_expire").disabled=true;
- function habilitar(value)
+ function habilitar1(value)
 		{
 
 			if(value=="1")
@@ -200,7 +233,7 @@ $states = StateData::getAll();
 			}
 		} 
     document.getElementById("date_warranty").disabled=true;
- function habilitar(value)
+ function habilitar2(value)
 		{
 
 			if(value=="1")
@@ -214,7 +247,7 @@ $states = StateData::getAll();
 		} 
     document.getElementById("inventary_min").disabled=true;
     document.getElementById("inventary_in").disabled=true;
- function habilitar(value)
+ function habilitar3(value)
 		{
 
 			if(value=="1")
@@ -240,6 +273,11 @@ $states = StateData::getAll();
                 url:   'index.php?action=nextcode',
                 type:  'post',
                 dataType: 'json',
+                beforeSend: function() {
+                            
+                            $("#loader").show();
+                            
+                          },
                 success:  function (response) {
                   
                        //$("#product_code").val(response[0].abreviation+response[0].id+response[0].codigo);
@@ -249,6 +287,7 @@ $states = StateData::getAll();
                           url:   'index.php?action=code',
                           type:  'post',
                           dataType: 'json',
+                          
                           success:  function (response1) {
                            
                             if (response1[0].category_id<10) {
@@ -262,7 +301,8 @@ $states = StateData::getAll();
                               var codenext =response1[0].cantidad;
                             }
                             $("#product_code").val(response[0].abreviation+codeCategory+codenext);
-                        
+                            $("#loader").hide();
+                            
                           },
                           error: function(error) {
                             console.log("error en Funcion codeFinal 2");
@@ -290,6 +330,7 @@ $states = StateData::getAll();
                 url:   'index.php?action=getcode',
                 type:  'post',
                 dataType: 'json',
+                /**/
                 success:  function (response) {
                  
                   $("#subcategory_id").html(' <option value="">-- NINGUNA --</option>');
@@ -299,7 +340,7 @@ $states = StateData::getAll();
                   
                     
                   }
-
+                  //$("#loader").hide();
                         
                 }
         });
@@ -307,5 +348,18 @@ $states = StateData::getAll();
      
       
     }
+
+    function pagoOnChange(sel) {
+      if (sel.value==1||sel.value==4||sel.value==5){
+        $("#ndescription").hide("slow");
+           $("#ndetails").show("slow");
+      
+
+      }else{
+
+        $("#ndetails").hide("slow");
+        $("#ndescription").show("slow");
+      }
+}
 </script>
 </section>
