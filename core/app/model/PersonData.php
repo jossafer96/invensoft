@@ -9,13 +9,15 @@ class PersonData {
 		$this->email = "";
 		$this->image = "";
 		$this->password = "";
+		$this->program = "";
+		$this->position = "";
 		$this->created_at = "NOW()";
 		$this->credit_limit = "NULL";
 	}
 
 	public function add_client(){
-		$sql = "insert into person (no,name,lastname,address1,email1,phone1,is_active_access,password,kind,credit_limit,has_credit,created_at) ";
-		$sql .= "value (\"$this->no\",\"$this->name\",\"$this->lastname\",\"$this->address1\",\"$this->email1\",\"$this->phone1\",\"$this->is_active_access\",\"$this->password\",1,\"$this->credit_limit\",$this->has_credit,$this->created_at)";
+		$sql = "insert into person (no,name,lastname,address1,email1,phone1,is_active_access,password,kind,position,program,created_at) ";
+		$sql .= "value (\"$this->no\",\"$this->name\",\"$this->lastname\",\"$this->address1\",\"$this->email1\",\"$this->phone1\",\"$this->is_active_access\",\"$this->password\",1,\"$this->position\",$this->program,$this->created_at)";
 		Executor::doit($sql);
 	}
 
@@ -48,7 +50,7 @@ class PersonData {
 	}
 
 	public function update_client(){
-		$sql = "update ".self::$tablename." set no=\"$this->no\",name=\"$this->name\",email1=\"$this->email1\",address1=\"$this->address1\",lastname=\"$this->lastname\",phone1=\"$this->phone1\",is_active_access=\"$this->is_active_access\",password=\"$this->password\",has_credit=\"$this->has_credit\",credit_limit=\"$this->credit_limit\" where id=$this->id";
+		$sql = "update ".self::$tablename." set no=\"$this->no\",name=\"$this->name\",email1=\"$this->email1\",address1=\"$this->address1\",lastname=\"$this->lastname\",phone1=\"$this->phone1\",is_active_access=\"$this->is_active_access\",password=\"$this->password\",position=\"$this->position\",program=$this->program where id=$this->id";
 		Executor::doit($sql);
 	}
 
@@ -84,7 +86,7 @@ class PersonData {
 
 	}
 
-	public static function getClients(){
+	public static function getColaborators(){
 		$sql = "select * from ".self::$tablename." where kind=1 order by name,lastname";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new PersonData());

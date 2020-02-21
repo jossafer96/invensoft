@@ -37,16 +37,17 @@
 $products = ProductData::getAllActive();
 if(count($products)>0){
 ?>
-<div class="box">
+<div id="box" class="box" style="display:none">
   <div class="box-header">
     <h3 class="box-title">Productos</h3>
 
   </div><!-- /.box-header -->
   <div class="box-body " >
 <div class="box-body" >
-<table class="table table-bordered datatable table-hover" style="background-color: #aaaaaa8c;">
+<table id="example"  class="uk-table uk-table-hover uk-table-striped">
   
 	<thead >
+  <th style="padding-right: 50px;">N°</th>
     <th style="padding-right: 50px;">Codigo</th>
     <th style="padding-right: 100px;">Equipo/Producto</th>
     <th style="padding-right: 250px;">Descripcion</th>
@@ -61,8 +62,13 @@ if(count($products)>0){
     <th style="padding-right: 100px;">Asignado</th>
 		<th>Acciones</th>
 	</thead>
-	<?php foreach($products as $product):?>
+  
+  <?php
+   $x=1;
+   foreach($products as $product):
+   ?>
 	<tr>
+  <td><?php echo $x; ?></td>
     <td style="font-weight: bolder;cursor:pointer"><a onclick="Abrirmodal(<?php echo $product->id; ?>);"><?php echo $product->barcode; ?></a></td>
     <td><?php echo $product->name; ?></td>
     <td><?php echo $product->description ?></td>
@@ -92,7 +98,9 @@ if(count($products)>0){
 		<a href="index.php?view=delproduct&id=<?php echo $product->id; ?>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
 		</td>
 	</tr>
-  <?php endforeach;?>
+  <?php 
+    $x+=1;
+endforeach;?>
   
 </table>
 </div>
@@ -116,7 +124,7 @@ if(count($products)>0){
 </div>
 
 
-<!-- Modal -->
+<!-- PRIMER MODAL -->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog" >
     
@@ -124,9 +132,11 @@ if(count($products)>0){
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">DETALLES</h4>
+          <h3 class="modal-title">Detalles</h3>
         </div>
         <div class="modal-body">
+        <div class="panel box box-success">
+        <div class="box-body ">
         <div class="form-group col-lg-6" style="font-size: 15px;">
           <label for="inputEmail1" style="font-weight: 100; font-style: italic;" class="col-lg-2">Nombre:</label>
           <div class="col-md-8" style="float: right">
@@ -186,7 +196,90 @@ if(count($products)>0){
           <div class="col-md-8" style="float: right">
             <label id="expire_modal" class="control-label" style="font-size: 25px;"></label>
           </div>
+        </div>           
         </div>
+        
+        </div>
+        
+
+
+  
+  <!-- START ACCORDION & CAROUSEL-->
+  <h2 class="page-header">Anexos</h2>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box box-solid">
+                
+                <div class="box-body">
+                  <div class="box-group" id="accordion">
+                    <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                    <div class="panel box box-primary">
+                      <div class="box-header with-border">
+                        <h4 class="box-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            Historial de Operaciones
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseOne" class="panel-collapse collapse in">
+                      <div class="box-body no-padding">
+                    			<table class="table table-bordered table-hover">
+                    			<thead>
+                    			<th>N°</th>
+                    			<th>Cantidad</th>
+                          <th>Tipo</th>
+                          <th>Usuario</th>
+                    			<th>Fecha</th>
+                    			<th>Acciones</th>
+                    			</thead>
+                    			<tbody id="tableHistory">
+                    			</tbody>
+                    			</table>
+                      </div><!-- /.box-body -->
+                      </div>
+                    </div>
+                    <div class="panel box box-danger">
+                      <div class="box-header with-border">
+                        <h4 class="box-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            Cuentas Vinculadas
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseTwo" class="panel-collapse collapse">
+                      <div class="box-body no-padding">
+                    			<table class="table table-bordered table-hover">
+                    			<thead>
+                    			<th>N°</th>
+                    			<th>Tipo de cuenta</th>
+                          <th>Descripcion</th>
+                          <th>Contraseña</th>
+                    			</thead>
+                    			<tbody id="tablePassword">
+                    			</tbody>
+                    			</table>
+                      </div><!-- /.box-body -->
+                      </div>
+                    </div>
+                    <div class="panel box box-warning">
+                      <div class="box-header with-border">
+                        <h4 class="box-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            Asignaciones
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="box-body">
+                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.col -->
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -200,10 +293,114 @@ if(count($products)>0){
 
 
 <script type="text/javascript">
-$(document).ready(function(){
-    
+$(document).ready(function() {
+    $('#example').DataTable();
+    $('#box').show();
+} );
+
+
+function Eliminar(id,product) {
+  x = confirm("Estas seguro que quieres eliminar esta operacion?");
+				if(x==true){
+          
+                
+					window.location = "index.php?view=deleteoperationdetaills&pid="+product+"&opid="+id+";";
+				}
+}
+
+function GetUserName(id,num) {
+  $.ajax({
+                          data:  { id: id,mode:3 },
+                          url:   'index.php?action=getproduct',
+                          type:  'post',
+                          dataType: 'json',
+                          
+                          success:  function (response) {
+                            $('#username'+num).empty();
+                            $('#username'+num).append(response.name+" "+response.lastname);
+                        
+
+                           
+                          },
+                          error: function(error) {
+                            console.log("error en Funcion getHistory");
+                            
+                          }
+                        });
+}  
+
+function getHistory(id) {
+  $( "#tableHistory" ).empty();
+  $.ajax({
+                          data:  { id: id,mode:2 },
+                          url:   'index.php?action=getproduct',
+                          type:  'post',
+                          dataType: 'json',
+                          
+                          success:  function (response) {
+                            console.log(response);
+                            for (let index = 0; index < response.length; index++) {
+                              $( "#tableHistory" ).append(
+                              `<tr>
+                              <td>`+(index+1)+`</td>
+			                        <td>`+response[index].q+`</td>
+                              <td>`+response[index].description_operation+`</td>
+                              <td id="username`+(index+1)+`">`+GetUserName(response[index].user_operation,(index+1))+`</td>
+			                        <td>`+response[index].created_at+`</td>
+                              <td style="width:40px;">
+                              <a href="#" id="oper-`+response[index].id+`" class="btn tip btn-xs btn-danger" onclick="Eliminar(`+response[index].id+`,`+response[index].product_id+`)">
+                                <i class="glyphicon glyphicon-trash"></i>
+                              </a> 
+                              </td>
+                              </tr>`);
+                              
+                            }
+                           
+                          },
+                          error: function(error) {
+                            console.log("error en Funcion getHistory");
+                            
+                          }
+                        });
+
+ 
+
   
-});  
+}
+
+function getPassword(id) {
+  $( "#tablePassword" ).empty();
+  $.ajax({
+                          data:  { id: id,mode:4 },
+                          url:   'index.php?action=getproduct',
+                          type:  'post',
+                          dataType: 'json',
+                          
+                          success:  function (response) {
+                            console.log(response);
+                            for (let index = 0; index < response.length; index++) {
+                              $( "#tablePassword" ).append(
+                              `<tr>
+                              <td>`+(index+1)+`</td>
+			                        <td>`+response[index].name_type+`</td>
+                              <td>`+response[index].description+`</td>
+			                        <td>`+response[index].password+`</td>
+                              
+                              </tr>`);
+                              
+                            }
+                           
+                          },
+                          error: function(error) {
+                            console.log("error en Funcion getHistory");
+                            
+                          }
+                        });
+
+ 
+
+  
+}
 
 function Abrirmodal(id) {
   $( "#name_modal" ).empty();
@@ -218,13 +415,13 @@ function Abrirmodal(id) {
   $( "#expire_modal" ).empty();
 
   $.ajax({
-                          data:  { id: id },
+                          data:  { id: id,mode:1 },
                           url:   'index.php?action=getproduct',
                           type:  'post',
                           dataType: 'json',
                           
                           success:  function (response) {
-                            console.log(response);
+                            //console.log(response);
                             $( "#name_modal" ).append(response.name);
                             $( "#barcode_modal" ).append(response.barcode);
                             $( "#brand_modal" ).append(response.brand);
@@ -243,7 +440,8 @@ function Abrirmodal(id) {
                             }else{
                               $( "#expire_modal" ).append("No tiene");
                             };
-                           
+                            getHistory(response.id);
+                            getPassword(response.id)
                             
                           },
                           error: function(error) {

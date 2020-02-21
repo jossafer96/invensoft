@@ -7,15 +7,12 @@ $accounts = PasswordData::getByProductId($_GET["id"]);
 ?>
 <?php endif; ?>
 <div class="btn-group pull-right">
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    <i class="fa fa-download"></i> Descargar <span class="caret"></span>
+  <button type="button" class="btn btn-default " data-toggle="dropdown"  onclick="location.href='index.php?view=createasing&id=<?php echo $operation->id; ?>'">
+    <i class="fa fa-download" ></i> Descargar <span class="caret"></span>
   </button>
-  <ul class="dropdown-menu" role="menu">
-    
-<li><a style="cursor: pointer" href="index.php?view=createasing&id=<?php echo $operation->id; ?>" id="makepdf" class=""><i class="fa fa-download"></i> Descargar PDF</a>
-  </ul>
+ 
 </div>
-<div id="docasing" style="    margin: 100px;margin-top: 50px;border: 1px solid;padding: 30px;">
+<div id="docasing" style="margin: 100px;margin-top: 50px;border: 1px solid;padding: 30px;">
 <h3>Resumen de Asignacion</h3>
 
 
@@ -119,6 +116,9 @@ $client = $operation;
 
 
 <script>
+    function Imprimir() {
+    print();
+  }
     function demoFromHTML() {
         var pdf = new jsPDF('p', 'pt', 'letter');
         // source can be HTML-formatted string, or a reference

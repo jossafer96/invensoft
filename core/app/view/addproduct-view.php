@@ -91,7 +91,7 @@ if($_POST["name"]!="" || $_POST["barcode"]!=""){
       $in=1;
     };
     $op->description_operation = $in." Nuevo(s) producto en inventario";
-    $op->quantity= $in;
+    $op->q = $in;
     $op->price_in =$_POST["price_in"];
     $op->operation_type_id=OperationTypeData::getByName("Nuevo producto")->id;
     $op->sell_id="NULL";

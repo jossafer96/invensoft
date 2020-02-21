@@ -34,7 +34,61 @@ $iva_val = ConfigurationData::getByPreffix("imp-val")->val;
   border-radius:20px;
 }
 
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.ui-autocomplete-input-has-clear {
+  padding-right: 24px;
+}
+
+.ui-autocomplete-input-has-clear::-ms-clear {
+  display: none;
+}
+
+.ui-autocomplete-clear {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  cursor: pointer;
+}
+
 </style>
+<script>
+  $( function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
+
 <section class="content">
 
 
@@ -226,11 +280,12 @@ $product = ProductData::getById($p["product_id"]);
     </div>
   </div>
 
-<div class="col-md-3">
+  <div class="col-md-3">
     <label class="control-label">Asingnado a</label>
-    <div class="col-lg-12">
-    <input type="text" name="responsable_id" id="responsable_id" class="form-control">
-    </div>
+    <div class="ui-widget">
+	<label for="tags">Tags: </label>
+	<input id="tags" />
+</div>
   </div>
   <div class='col-md-6'>
   <div class="form-group">

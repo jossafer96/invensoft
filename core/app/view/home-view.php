@@ -56,7 +56,7 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3><?php echo count(PersonData::getClients());?><sup style="font-size: 20px"></sup></h3>
+                  <h3><?php echo count(PersonData::getColaborators());?><sup style="font-size: 20px"></sup></h3>
                   <p>Colaboradores</p>
                 </div>
                 <div class="icon">

@@ -1,15 +1,15 @@
 <section class="content">
 <div class="row">
 	<div class="col-md-12">
-	<h1>Nuevo Cliente</h1>
+	<h1>Nuevo Colaborador/Empleado</h1>
 	<br>
 <div class="box box-primary"><br>
 		<form class="form-horizontal" method="post" id="addproduct" action="index.php?view=addclient" role="form">
 
   <div class="form-group">
-    <label for="inputEmail1" class="col-lg-2 control-label">RFC/RUT*</label>
+    <label for="inputEmail1" class="col-lg-2 control-label">N° Identidad*</label>
     <div class="col-md-6">
-      <input type="text" name="no" class="form-control" id="no" placeholder="RFC/RUT">
+      <input type="text" name="no" class="form-control" id="no" placeholder="0000-0000-00000">
     </div>
   </div>
 
@@ -46,6 +46,19 @@
   </div>
 
   <div class="form-group">
+    <label for="inputEmail1" class="col-lg-2 control-label">Programa*</label>
+    <div class="col-md-6">
+      <input type="text" name="program" class="form-control" id="no" placeholder="Programa al que pertenece">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputEmail1" class="col-lg-2 control-label">Cargo</label>
+    <div class="col-md-6">
+      <input type="text" name="position" class="form-control" id="no" placeholder="Cargo que tiene">
+    </div>
+  </div>
+  <!--<div class="form-group">
     <label for="inputEmail1" class="col-lg-2 control-label" >Activar Credito</label>
     <div class="col-md-6">
 <div class="checkbox">
@@ -60,7 +73,7 @@
     <div class="col-md-6">
       <input type="text" name="credit_limit" class="form-control" id="" placeholder="Limite de credito">
     </div>
-  </div>
+  </div>-->
 
   <div class="form-group">
     <label for="inputEmail1" class="col-lg-2 control-label" >Activar Acceso</label>
@@ -75,7 +88,7 @@
   <div class="form-group">
     <label for="inputEmail1" class="col-lg-2 control-label">Password</label>
     <div class="col-md-6">
-      <input type="password" name="password" class="form-control" id="phone1" placeholder="Password">
+      <input type="password" name="password" class="form-control"  placeholder="Password">
     </div>
     </div>
 
@@ -83,7 +96,7 @@
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <button type="submit" class="btn btn-primary">Agregar Cliente</button>
+      <button type="submit" class="btn btn-primary">Agregar Colaborador</button>
     </div>
   </div>
 </form>

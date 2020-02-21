@@ -12,12 +12,16 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons 2.0.0 -->
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- Theme style -->
     <link href="plugins/dist/css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <link href="plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
     <link href="plugins/dist/css/skins/skin-blue.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
     <style media="screen">
     .login-box-body{
       border: solid 2px;
@@ -27,6 +31,11 @@
     </style>
 
     <style>
+    .uk-grid{
+    
+    
+    overflow-x: auto;
+}
       .spinner{
         margin: 40%;
     margin-top: 35vh;
@@ -68,7 +77,7 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-          <script src="plugins/jquery/jquery-2.1.4.min.js"></script>
+        
 <script src="plugins/morris/raphael-min.js"></script>
 <script src="plugins/morris/morris.js"></script>
   <link rel="stylesheet" href="plugins/morris/morris.css">
@@ -277,7 +286,7 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
                 <li><a href="./?view=subcategories">SubCategorias</a></li>
                 <li><a href="./?view=programs">Unidad/Programa</a></li>
                 <li><a href="./?view=password">Cuentas/Contraseñas</a></li>
-                <li><a href="./?view=clients">Clientes</a></li>
+                <li><a href="./?view=clients">Colaborador/Empleado</a></li>
                 <li><a href="./?view=providers">Proveedores</a></li>
               </ul>
             </li>
@@ -444,7 +453,8 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
     <!-- REQUIRED JS SCRIPTS -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+   
+  
     <!-- Bootstrap 3.3.2 JS -->
     <script src="plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- AdminLTE App -->
@@ -494,9 +504,12 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
     <!-- jQuery UI 1.11.1 -->
     <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
     <!-- Slimscroll -->
-       
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
     <script src="plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+    
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.uikit.min.js" type="text/javascript"></script>
     <!-- Page specific script -->
     <script type="text/javascript">
       $(function () {

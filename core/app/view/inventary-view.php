@@ -1,6 +1,12 @@
 <?php
 $stock = StockData::getById($_GET["stock"]);
 ?>
+<style>
+  .btn-xs {
+    padding: 5px 10px !important;
+    
+}
+</style>
 <section class="content">
 <div class="row">
 	<div class="col-md-12">
@@ -41,7 +47,7 @@ if(count($products)>0){
 		<th>Por Recibir</th>
 		<th>Disponible</th>
 		<th>Por Entregar</th>
-		<th></th>
+		<th>Acciones</th>
 	</thead>
 	<?php foreach($products as $product):
 	$r=OperationData::getRByStock($product->id,$_GET["stock"]);
@@ -60,8 +66,9 @@ if(count($products)>0){
 		<td>
 			<?php echo $d; ?>
 		</td>
-		<td style="width:93px;">
-<!--		<a href="index.php?view=input&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-circle-arrow-up"></i> Alta</a>-->
+		<td style="width:300px;text-align: center;">
+<a href="index.php?view=input&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-circle-arrow-up"></i> Alta</a>
+<a href="index.php?view=input&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-circle-arrow-down"></i> Baja</a>
 		<a href="index.php?view=history&product_id=<?php echo $product->id; ?>&stock=<?php echo $_GET["stock"];?>" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-time"></i> Historial</a>
 		</td>
 	</tr>

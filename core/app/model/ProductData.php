@@ -33,7 +33,7 @@ class ProductData {
 
 	public function add(){
 		$sql = "insert into ".self::$tablename." (name, barcode, description, inventary_min, inventary_in, price_in, state, funding, stock, date_expire, date_warranty, user_id, category_id, user_responsable, asing,category_id_sub, created_at, brand, model, serial, unit_id)";
-		$sql .= "value (\"$this->name\",\"$this->barcode\",\"$this->description\",\"$this->inventary_min\",\"$this->inventary_in\",\"$this->price_in\",$this->state,\"$this->funding\",\"$this->stock\",\"$this->date_expire\",\"$this->date_warranty\",$this->user_id,$this->category_id,\"$this->user_responsable\",\"$this->asign\",$this->subcategory_id,NOW(),\"$this->brand\",\"$this->model\",\"$this->serial\",$this->unit_id)";
+		$sql .= "value (\"$this->name\",\"$this->barcode\",\"$this->description\",\"$this->inventary_min\",\"$this->inventary_in\",\"$this->price_in\",$this->state,\"$this->funding\",\"$this->stock\",\"$this->date_expire\",\"$this->date_warranty\",$this->user_id,$this->category_id,\"$this->user_responsable\",\"$this->asing\",$this->subcategory_id,NOW(),\"$this->brand\",\"$this->model\",\"$this->serial\",$this->unit_id)";
 		return Executor::doit($sql);
 		//return $sql;
 	}
@@ -109,7 +109,7 @@ class ProductData {
 	}
 
 	public static function getAllActive(){
-		$sql = "select * from ".self::$tablename." where is_active=1";
+		$sql = "select * from ".self::$tablename." where is_active=1 ORDER BY id DESC";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new ProductData());
 	}

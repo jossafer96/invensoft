@@ -3,6 +3,7 @@ class OperationData {
 	public static $tablename = "operation";
 
 	public function OperationData(){
+		$this->id = "";
 		$this->name = "";
 		$this->product_id = "";
 		$this->q = "";
@@ -13,7 +14,7 @@ class OperationData {
 
 	public function add(){
 		$sql = "insert into ".self::$tablename." (price_in,stock_id,product_id,q,operation_type_id,sell_id,created_at,description_operation,user_operation) ";
-		$sql .= "value ($this->price_in,$this->stock_id,\"$this->product_id\",\"$this->quantity\",$this->operation_type_id,$this->sell_id,$this->created_at,\"$this->description_operation\",$this->user)";
+		$sql .= "value ($this->price_in,$this->stock_id,\"$this->product_id\",$this->q,$this->operation_type_id,$this->sell_id,$this->created_at,\"$this->description_operation\",$this->user)";
 		//echo "<script type='text/javascript'>alert('$sql');</script>";
 		return Executor::doit($sql);
 		
@@ -166,7 +167,7 @@ public static function getPPByDateOfficial($start,$end){
 	}
 
 	public static function getAllByProductId($product_id){
-		$sql = "select * from ".self::$tablename."INNER JOIN units ON product.unit=units.unit_id where product_id=$product_id  order by created_at desc";
+		$sql = "select * from ".self::$tablename." where product_id=$product_id  order by created_at asc";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new OperationData());
 	}

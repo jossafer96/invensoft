@@ -18,22 +18,22 @@
 <br>
 		<?php
 
-		$users = PersonData::getClients();
+		$users = PersonData::getColaborators();
 		if(count($users)>0){
 			// si hay usuarios
 			?>
 <div class="box box-primary">
 <div class="box-body">
-			<table class="table table-bordered datatable table-hover">
+			<table id="example"  class="uk-table uk-table-hover uk-table-striped">
 			<thead>
-			<th>RFC/RUT</th>
+			<th>N° Identidad</th>
 			<th>Nombre completo</th>
 			<th>Direccion</th>
 			<th>Email</th>
 			<th>Telefono</th>
-			<th>Credito</th>
-			<th>Limite</th>
-			<th></th>
+			<th>Programa/Direccion</th>
+			<th>Posicion</th>
+			<th>Acciones</th>
 			</thead>
 			<?php
 			foreach($users as $user){
@@ -44,8 +44,10 @@
 				<td><?php echo $user->address1; ?></td>
 				<td><?php echo $user->email1; ?></td>
 				<td><?php echo $user->phone1; ?></td>
-				<td><?php if($user->has_credit){ echo "<i class='fa fa-check'></i>"; }; ?></td>
-				<td><?php echo $user->credit_limit; ?></td>
+				<td><?php 
+				$programs = unitsData::getById($user->program);
+				echo $programs->name_unit; ?></td>
+				<td><?php echo $user->position; ?></td>
 				<td style="width:130px;">
 				<a href="index.php?view=editclient&id=<?php echo $user->id;?>" class="btn btn-warning btn-xs">Editar</a>
 				<a href="index.php?view=delclient&id=<?php echo $user->id;?>" class="btn btn-danger btn-xs">Eliminar</a>
@@ -71,6 +73,10 @@
 </section>
 
 <script type="text/javascript">
+$(document).ready(function() {
+    $('#example').DataTable();
+    
+} );
         function thePDF() {
 var doc = new jsPDF('p', 'pt');
         doc.setFontSize(26);
