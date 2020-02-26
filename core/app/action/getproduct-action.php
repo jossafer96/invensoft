@@ -25,5 +25,17 @@ if($action==4){
     echo json_encode($password);
 };
 
+if($action==5){
+    $id = $_POST["id"];
+    $asings = AsingsData::getAllById($id);
+    echo json_encode($asings);
+};
+
+if($action==6){
+    $id = $_POST["id"];
+    $user = PersonData::getById($id);
+    echo json_encode($user);
+};
+
 
 ?>

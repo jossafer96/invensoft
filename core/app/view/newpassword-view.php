@@ -1,3 +1,11 @@
+<style>
+  .ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+</style>
 <section class="content">
 <?php 
 $types = AccountTypeData::getAll();
@@ -40,13 +48,10 @@ $products = ProductData::getAll();
     <br>
     <label for="inputEmail1" class="col-lg-2 control-label">Aplicar a*</label>
     <div class="col-md-10 select-search" >
-    <input class="ss_input form-control" type="text" data-select-search="product_id" >
-    <select  name="product_id" id="product_id" class="form-control" >
-    <option value="">-- Elige el equipo --</option>
-    <?php foreach($products as $product):?>
-      <option value="<?php echo $product->id;?>"><?php echo $product->barcode;?></option>
-    <?php endforeach;?>
-      </select>  
+    <div class="ui-widget" style="font-size: 1.8em;">
+      <input id="product_name" name="product_name" style="width: 100%;font-size: 0.7em;" />
+      <input type="hidden" name="product_id" id="product_id">
+    </div> 
       
     </div>
     <br>
@@ -55,7 +60,7 @@ $products = ProductData::getAll();
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <button type="submit" class="btn btn-primary">Agregar Programa</button>
+      <button type="submit" class="btn btn-success">Agregar Cuenta/Contraseña</button>
     </div>
   </div>
   <strong>* Obligatorio</strong>
@@ -67,6 +72,35 @@ $products = ProductData::getAll();
 	</div>
 </div>
 </section>
+<script>
+  $(document).ready(function(){
+    <?php
+		$products = ProductData::getAllActive();
+		?>
+function log( message ) {
+      $( "#product_id" ).val(message);
+     
+    }
+
+    var availableProducts = [
+  <?php foreach($products as $product):
+
+    echo "{label: '".$product->barcode." - ".$product->name."', id: '".$product->id."'},";
+
+  endforeach; ?>
+];
+$( "#product_name" ).autocomplete({
+  source: availableProducts,
+      minLength: 2,
+      select: function( event, ui ) {
+        log(  ui.item.id );
+      }
+    });
+  });
+
+
+
+  </script>
 <script>
   var $search = $('[data-select-search]');
     var $select = '#'+$($search).data('selectSearch');

@@ -18,11 +18,10 @@ if(count($_POST)>0){
 	$product->serial = $_POST["serial"];
   
 	if(isset($_POST["description"])){ 
-	  $description=$_POST["description"];
-	};
-	if (isset($_POST["description_1"])) {
-	  $description=$_POST["description_1"];
-	};
+		$description=$_POST["description"];
+	  }else if (isset($_POST["description_1"])) {
+		$description=$_POST["description_1"];
+	  };
   
 	$product->description = $description;
 	$product->price_in = $_POST["price_in"];

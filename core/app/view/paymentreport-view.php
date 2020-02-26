@@ -1,5 +1,5 @@
 <?php
-$clients = PersonData::getClients();
+$clients = PersonData::getColaborators();
 ?>
 
 <section class="content">

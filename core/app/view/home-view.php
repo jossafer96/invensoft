@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
 <?php
 
 if(Core::$user->kind==3){ Core::redir("./?view=sell"); }
@@ -43,7 +45,7 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
               <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h3><?php echo count(ProductData::getAll()); ?></h3>
+                  <h3 style="color: white;"><?php echo count(ProductData::getAll()); ?></h3>
                   <p>Equipo/Productos</p>
                 </div>
                 <div class="icon">
@@ -56,7 +58,7 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3><?php echo count(PersonData::getColaborators());?><sup style="font-size: 20px"></sup></h3>
+                  <h3 style="color: white;"><?php echo count(PersonData::getColaborators());?><sup style="font-size: 20px"></sup></h3>
                   <p>Colaboradores</p>
                 </div>
                 <div class="icon">
@@ -70,7 +72,7 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3><?php echo count(UserData::getAll()); ;?></h3>
+                  <h3 style="color: white;"><?php echo count(UserData::getAll());?></h3>
                   <p>Usuarios Registrados</p>
                 </div>
                 <div class="icon">
@@ -84,7 +86,7 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
               <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
-                  <h3><?php  
+                  <h3 style="color: white;"><?php  
                         $operations = OperationData::getAll();
                          echo count($operations);
                         ?>

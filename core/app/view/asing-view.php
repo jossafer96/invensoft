@@ -55,6 +55,12 @@ label {
   text-align: center;
   cursor: pointer;
 }
+.ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
 
 </style>
 
@@ -232,7 +238,7 @@ $product = ProductData::getById($p["product_id"]);
 	<td><?php echo $product->name; ?></td>
 	<td><b> <?php echo $product->asing ?></b></td>
 	<td> <?php echo $product->user_responsable ?></td>
-	<td style="width:30px;"><a href="index.php?view=clearcart&product_id=<?php echo $product->id; ?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancelar</a></td>
+	<td style="width:30px;"><a href="index.php?view=clearcartasing&product_id=<?php echo $product->id; ?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancelar</a></td>
 </tr>
 
 <?php endforeach; ?>
@@ -242,7 +248,7 @@ $product = ProductData::getById($p["product_id"]);
 <h2>Resumen</h2>
 <div class="row">
 <div class="col-md-3">
-    <label class="control-label">Almacen de Ubicacion</label>
+    <label class="">Almacen de Ubicacion</label>
     <div class="col-lg-12">
     <h4 class=""><?php 
     echo StockData::getPrincipal()->name;
@@ -250,14 +256,14 @@ $product = ProductData::getById($p["product_id"]);
     </div>
   </div>
 
-  <div class="col-md-3">
-    <label class="control-label">Asingnado a</label>
-    <div class="ui-widget">
-	<label for="tags">Tags: </label>
-	<input id="tags" />
+  <div class="col-md-5">
+    <label class="">Asingnado a</label>
+    <div class="ui-widget" style="font-size: 1.8em;">
+  <input id="responsable_name" name="responsable_name" style="width: 100%" />
+  <input type="hidden" name="responsable_id" id="responsable_id">
 </div>
   </div>
-  <div class='col-md-6'>
+  <div class='col-md-4'>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <div class="checkbox">
@@ -303,3 +309,32 @@ $product = ProductData::getById($p["product_id"]);
 
 </div>
 </section>
+<script>
+  $(document).ready(function(){
+    <?php
+		$users = PersonData::getColaborators();
+		?>
+function log( message ) {
+      $( "#responsable_id" ).val(message);
+      //alert(message);
+    }
+
+    var availableColaborators = [
+  <?php foreach($users as $product):
+
+    echo "{label: '".$product->name." ".$product->lastname."', id: '".$product->id."'},";
+
+  endforeach; ?>
+];
+$( "#responsable_name" ).autocomplete({
+  source: availableColaborators,
+      minLength: 2,
+      select: function( event, ui ) {
+        log(  ui.item.id );
+      }
+    });
+  });
+
+
+
+  </script>

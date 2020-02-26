@@ -14,7 +14,7 @@ if(Core::$user->kind==3){ Core::redir("./?view=sell"); }
 
   <?php
   $found=false;
-$products = ProductData::getAll();
+$products = ProductData::getAllNoUnique();
 //print_r($products);
 foreach($products as $product){
   $q= OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
@@ -146,8 +146,7 @@ $q= OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
       "id": "<?php echo $product->id; ?>",
       "name": "<?php echo $product->name; ?>",
       "price_in": "$ <?php echo number_format($product->price_in,2,'.',',');?>",
-      "price_out": "$ <?php echo number_format($product->price_out,2,'.',',');?>",
-      "q": "<?php echo $q;?>",
+      "q": "<?php echo $q;?>"
       },
  <?php endif; ?>
  <?php endforeach; ?>

@@ -18,8 +18,7 @@ if(count($_POST)>0){
 
   if(isset($_POST["description"])){ 
     $description=$_POST["description"];
-  };
-  if (isset($_POST["description_1"])) {
+  }else if (isset($_POST["description_1"])) {
     $description=$_POST["description_1"];
   };
 
@@ -43,9 +42,13 @@ if(count($_POST)>0){
   $inventary_min="\"\"";
   if(isset($_POST["inventary_min"])){ $inventary_min=$_POST["inventary_min"];}
   $product->inventary_min=$inventary_min;
-
+  $is_unique=1;
   $inventary_in="\"\"";
-  if(isset($_POST["inventary_in"])){ $inventary_in=$_POST["inventary_in"];}
+  if(isset($_POST["inventary_in"])){ 
+    $inventary_in=$_POST["inventary_in"];
+    $is_unique=0;
+  }
+  $product->is_unique=$is_unique;
   $product->inventary_in=$inventary_in;
   
   

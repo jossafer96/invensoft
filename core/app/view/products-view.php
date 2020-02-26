@@ -1,4 +1,6 @@
         <!-- Content Header (Page header) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
         <section class="content-header">
           <h1>
             Productos
@@ -50,16 +52,17 @@ if(count($products)>0){
   <th style="padding-right: 50px;">N°</th>
     <th style="padding-right: 50px;">Codigo</th>
     <th style="padding-right: 100px;">Equipo/Producto</th>
-    <th style="padding-right: 250px;">Descripcion</th>
+    <th style="padding-right: 100px;">Asignado</th>
+    <th style="padding-right: 100px;">Unidad/Proyecto</th>
+    <th style="padding-right: 100px;">Precio</th>
+    <th style="padding-right: 100px;">Fondos</th>
+    <th style="padding-right: 100px;">Categoria</th>
     <th style="padding-right: 100px;">Marca</th>
     <th style="padding-right: 100px;">Modelo</th>
     <th style="padding-right: 100px;">S/N</th>
-    <th style="padding-right: 100px;">Precio</th>
-    <th style="padding-right: 100px;">Categoria</th>
-    <th style="padding-right: 100px;">Unidad/Proyecto</th>
-    <th style="padding-right: 100px;">Fondos</th>
     <th style="padding-right: 100px;">Responsable</th>
-    <th style="padding-right: 100px;">Asignado</th>
+    <th style="padding-right: 250px;">Descripcion</th>
+    
 		<th>Acciones</th>
 	</thead>
   
@@ -71,18 +74,15 @@ if(count($products)>0){
   <td><?php echo $x; ?></td>
     <td style="font-weight: bolder;cursor:pointer"><a onclick="Abrirmodal(<?php echo $product->id; ?>);"><?php echo $product->barcode; ?></a></td>
     <td><?php echo $product->name; ?></td>
-    <td><?php echo $product->description ?></td>
-    <td><?php echo $product->brand ?></td>
-    <td><?php echo $product->model ?></td>
-    <td><?php echo $product->serial ?></td>
-    <td>L. <?php echo number_format($product->price_in,2,'.',','); ?></td>
-    <td>
-     <?php if($product->category_id!=null){
-                  echo $product->getCategory()->name;
-              }else{ 
-                  echo "<center>----</center>"; 
-              };?>
-    </td>  
+    <td><?php 
+        if ($product->asing!=0) {
+          $id_asing=$product->asing;
+          $user = PersonData::getById($id_asing);
+          echo $user->name." ".$user->lastname;
+        }elseif ($product->asing==0) {
+         echo 'Disponible';
+        }
+    ?></td>
     <td>
     <?php if($product->unit_id!=null){
       echo $product->getUnit()->name_unit;
@@ -90,9 +90,20 @@ if(count($products)>0){
       echo "<center>----</center>"; 
       };?>
     </td>
-		<td><?php  echo $product->funding;?></td>
+    <td>L. <?php echo number_format($product->price_in,2,'.',','); ?></td>
+    <td><?php  echo $product->funding;?></td>
+    <td>
+     <?php if($product->category_id!=null){
+                  echo $product->getCategory()->name;
+              }else{ 
+                  echo "<center>----</center>"; 
+              };?>
+    </td>
+    <td><?php echo $product->brand ?></td>
+    <td><?php echo $product->model ?></td>
+    <td><?php echo $product->serial ?></td>
     <td><?php echo $product->user_responsable; ?></td>
-    <td><?php echo $product->asing; ?></td>
+    <td><?php echo $product->description ?></td>
 		<td style="width:90px;">
 		<a href="index.php?view=editproduct&id=<?php echo $product->id; ?>" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
 		<a href="index.php?view=delproduct&id=<?php echo $product->id; ?>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
@@ -271,7 +282,18 @@ endforeach;?>
                       </div>
                       <div id="collapseThree" class="panel-collapse collapse">
                         <div class="box-body">
-                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        <table class="table table-bordered table-hover">
+                    			<thead>
+                    			<th>N°</th>
+                    			<th>Colaborador</th>
+                          <th>Descripcion</th>
+                          <th>Fecha Inicio</th>
+                          <th>Fecha Fin</th>
+                          <th>Activo</th>
+                    			</thead>
+                    			<tbody id="tableAsings">
+                    			</tbody>
+                    			</table>
                         </div>
                       </div>
                     </div>
@@ -328,7 +350,23 @@ function GetUserName(id,num) {
                           }
                         });
 }  
-
+function GetUser(id) {
+  $.ajax({
+                          data:  { id: id,mode:6 },
+                          url:   'index.php?action=getproduct',
+                          type:  'post',
+                          dataType: 'json',
+                          
+                          success:  function (response) {
+                            $('#user-'+id).empty();
+                            $('#user-'+id).append(response.name+" "+response.lastname);
+                          },
+                          error: function(error) {
+                            console.log("error en Funcion getHistory");
+                            
+                          }
+                        });
+}  
 function getHistory(id) {
   $( "#tableHistory" ).empty();
   $.ajax({
@@ -402,6 +440,53 @@ function getPassword(id) {
   
 }
 
+function getAsings(id) {
+  $( "#tableAsings" ).empty();
+  $.ajax({
+                          data:  { id: id,mode:5 },
+                          url:   'index.php?action=getproduct',
+                          type:  'post',
+                          dataType: 'json',
+                          
+                          success:  function (response) {
+                            console.log(response);
+                            for (let index = 0; index < response.length; index++) {
+                              if (response[index].finish_at==null) {
+                                var finish='Actual';
+                              }else{
+                                var finish=response[index].finish_at;
+                              }
+
+                              if (response[index].is_active==1) {
+                                var active='<i class="glyphicon glyphicon-ok"></i>';
+                              }else{
+                                var active='';
+                              }
+                              
+                              $( "#tableAsings" ).append(
+                              `<tr>
+                              <td>`+(index+1)+`</td>
+			                        <td id=user-`+response[index].user_id+`>`+GetUser(response[index].user_id)+`</td>
+                              <td>`+response[index].description+`</td>
+			                        <td>`+response[index].created_at+`</td>
+                              <td>`+finish+`</td>
+                              <td>`+active+`</td>
+                              </tr>`);
+                              
+                            }
+                           
+                          },
+                          error: function(error) {
+                            console.log("error en Funcion getHistory");
+                            
+                          }
+                        });
+
+ 
+
+  
+}
+
 function Abrirmodal(id) {
   $( "#name_modal" ).empty();
   $( "#barcode_modal" ).empty();
@@ -442,7 +527,7 @@ function Abrirmodal(id) {
                             };
                             getHistory(response.id);
                             getPassword(response.id)
-                            
+                            getAsings(response.id)
                           },
                           error: function(error) {
                             console.log("error en Funcion Abrirmodal");

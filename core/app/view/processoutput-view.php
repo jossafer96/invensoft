@@ -5,9 +5,9 @@ if(count($_POST)>0){
  $op = new OperationData();
  $op->product_id = $_POST["product_id"] ;
  $op->user = $_SESSION["user_id"];
- $op->description_operation = $_POST["q"]." Productos agregados en inventario";
- $op->operation_type_id=OperationTypeData::getByName("Entrada")->id;
-if(OperationTypeData::getByName("Entrada")->name=="Entrada"){
+ $op->description_operation = $_POST["q"]." Productos dados de baja del inventario";
+ $op->operation_type_id=OperationTypeData::getByName("Salida")->id;
+if(OperationTypeData::getByName("Salida")->name=="Salida"){
 	$op->sell_id="NULL";
 }
  $op->q= $_POST["q"];

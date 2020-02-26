@@ -53,7 +53,7 @@
 				<td><?php echo $user->description ?></td>
 				<td style="text-align: center;">
 					<input style="width: auto;" value="<?php echo $user->password ?>" type="password" name="" id="password<?php echo $user->id?>"> 
-					<span class="checkbox">
+					<span class="checkbox" style="display: contents;">
 					<a id="check<?php echo $user->id?>"  class="btn btn-success btn-xs" onClick="isChecked(<?php echo $user->id?>);">Ver</a>   
 					</span>
 				</td>

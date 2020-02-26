@@ -60,10 +60,44 @@ $_SESSION["errors"] = $errors;
 			$op1->user_responsable= $resposable;
 			$s = $op1->update_user_responsable();
 
+			//crea registro de la asignacion
+			
+			
+			if (count(AsingsData::getAllById($c["product_id"]))>0) {
+				$productUlt = AsingsData::getUlt($c["product_id"]);
+				$asing = new AsingsData();
+				$asing->is_active=0;
+				$asing->id=$productUlt->id;
+				$asing->user_id=$productUlt->user_id;
+				$asing->product_id=$productUlt->product_id;
+				
+				$asing->finish_at="NOW()";
+				$update= $asing->update();
+				$asing1 = new AsingsData();
+				$asing1->description="";
+				$asing1->product_id=$c["product_id"];
+				$asing1->created_at="NOW()";
+				$asing1->finish_at="NULL";
+				$asing1->is_active=1;
+				$asing1->user_id=$_POST["responsable_id"];
+				$new= $asing1->add();
+				//print_r($new);
+			};
+			if (count(AsingsData::getAllById($c["product_id"]))==0) {
+				$asing = new AsingsData();
+				$asing->description="";
+				$asing->product_id=$c["product_id"];
+				$asing->created_at="NOW()";
+				$asing->finish_at="NULL";
+				$asing->is_active=1;
+				$asing->user_id=$_POST["responsable_id"];
+				$new= $asing->add();
+				//print_r($new);
+			};
 
 
 			//Crear un registro de la operacion realizada.
-			$description_operation_start= 'Asignacion de equipo a '.$_POST["responsable_id"];
+			$description_operation_start= 'Asignacion de equipo a '.$_POST["responsable_name"];
 			$product = ProductData::getById($c["product_id"]);
 			$op = new OperationData();
 			$op->price_in = $product->price_in;

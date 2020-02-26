@@ -104,7 +104,6 @@ if($product!=null):
       <textarea rows="3"  name="description_1" class="form-control" id="description_1" placeholder="Descripcion del Producto"><?php echo $product->description;?></textarea>
     </div>
   </div>
-
   </div>
 
   <div class="form-group col-lg-6">
@@ -113,6 +112,7 @@ if($product!=null):
       <input type="text" value="<?php echo $product->price_in;?>" name="price_in" required class="form-control" id="price_in" placeholder="Precio de compra">
     </div>
   </div>
+
   <div class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">Estado*</label>
     <div class="col-md-10">
@@ -127,6 +127,7 @@ if($product!=null):
       </select>    
       </div>
   </div>
+
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Fondos*</label>
     <div class="col-md-10">
@@ -161,33 +162,53 @@ if($product!=null):
       </select>    
       </div>
   </div>
+
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Responsable</label>
     <div class="col-md-10">
       <input type="text" name="asing" value="<?php echo $product->user_responsable;?>" required class="form-control" id="asing" placeholder="Persona asignada">
     </div>
   </div>
+
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class=" col-lg-2 control-label">Fecha Vencimiento/Caducidad</label>
     <div class=" col-lg-8" style="float:right;background-color:#ecf0f5;    padding: 10px;">
-    <input class='' type="radio" value="2" name="habilitarDeshabilitar_date_venc" onchange="habilitar(this.value);" checked> NO tiene fecha de Vencimiento/Caducidad <br>
-		<input class='form' type="radio" value="1" name="habilitarDeshabilitar_date_venc" onchange="habilitar(this.value);" > SI tiene fecha de Vencimiento/Caducidad 
+    <input class='' type="radio" value="2" name="habilitarDeshabilitar_date_venc" onchange="habilitar(this.value);" 
+    <?php 
+    if ($product->date_expire==0000-00-00 || $product->date_expire==NULL) {
+      echo 'checked';
+    };?> > NO tiene fecha de Vencimiento/Caducidad <br>
+    <input class='form' type="radio" value="1" name="habilitarDeshabilitar_date_venc" onchange="habilitar(this.value);"
+    <?php 
+    if ($product->date_expire!=0000-00-00 ) {
+      echo 'checked';
+    };?>
+    > SI tiene fecha de Vencimiento/Caducidad 
 	<div>
   <label  class=" col-lg-8 control-label">Fecha de vencimiento</label>
-    <input type="date" name="date_expire" id="date_expire" class='form-control'>
-    
+    <input value="<?php echo $product->date_expire;?>" type="date" name="date_expire" id="date_expire" class='form-control'>
 	</div>
     </div>
   </div>
+
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class=" col-lg-2 control-label">Garantia</label>
     <div class=" col-lg-8" style="float:right;background-color:#ecf0f5;    padding: 10px;">
-    <input class='' type="radio" value="2" name="habilitarDeshabilitar_date_warr" onchange="habilitar(this.value);" checked> NO tiene Garantia<br>
-		<input class='form' type="radio" value="1" name="habilitarDeshabilitar_date_warr" onchange="habilitar(this.value);" > SI tiene Garantia 
+    <input class='' type="radio" value="2" name="habilitarDeshabilitar_date_warr" onchange="habilitar(this.value);" 
+    <?php 
+    if ($product->date_warranty==0000-00-00 || $product->date_warranty==NULL) {
+      echo 'checked';
+    };?>
+    > NO tiene Garantia<br>
+    <input class='form' type="radio" value="1" name="habilitarDeshabilitar_date_warr" onchange="habilitar(this.value);" 
+    <?php 
+    if ($product->date_warranty!=0000-00-00) {
+      echo 'checked';
+    };?>
+    > SI tiene Garantia 
 	<div>
   <label  class=" col-lg-10 control-label">Fecha de finalizacion de Garantia</label>
-    <input type="date" name="date_warranty" id="date_warranty" class='form-control'>
-    
+    <input value="<?php echo $product->date_warranty;?>" type="date" name="date_warranty" id="date_warranty" class='form-control'>
 	</div>
     </div>
   </div>
@@ -196,19 +217,31 @@ if($product!=null):
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class=" col-lg-4 control-label">Minima en Inventario</label>
     <div class=" col-lg-8" style="float:right;background-color:#ecf0f5;padding: 10px;">
-    <input class='' type="radio" value="2" name="habilitarDeshabilitar_min_inv" onchange="habilitar(this.value);" checked> Es producto unico<br>
-    <input class='form' type="radio" value="1" name="habilitarDeshabilitar_min_inv" onchange="habilitar(this.value);" > No es Unico 
-	<div>
-    <input type="text" name="inventary_min" id="inventary_min" class='form-control' placeholder="Minimo de Equipo/Producto antes mostrar alerta">
+    <input class='' type="radio" value="2" name="habilitarDeshabilitar_min_inv" onchange="habilitar(this.value);" 
+    <?php 
+    if ($product->is_unique==1) {
+      echo 'checked';
+    };?>
+    > Es producto unico
+    <br>
+    <input  class='form' type="radio" value="1" name="habilitarDeshabilitar_min_inv" onchange="habilitar(this.value);"
+    <?php 
+    if ($product->is_unique!=1) {
+      echo 'checked';
+    };?>
+    > 
+    No es Unico 
+	  <div>
+    <input value="<?php echo $product->inventary_min;?>" type="text" name="inventary_min" id="inventary_min" class='form-control' placeholder="Minimo de Equipo/Producto antes mostrar alerta">
     
 	</div>
     </div>
   </div>
-
+  
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Inventario inicial:</label>
     <div class="col-md-10">
-      <input type="text" name="inventary_in" class="form-control" id="inventary_in" placeholder="Numero de Equipo/Producto Inicial">
+      <input value="<?php echo $product->inventary_in;?>" type="text" name="inventary_in" class="form-control" id="inventary_in" placeholder="Numero de Equipo/Producto Inicial">
     </div>
   </div>
 
@@ -229,7 +262,10 @@ if($product!=null):
 	</div>
 </div>
 <?php endif; ?>
+
 <script>
+
+  
   document.getElementById("date_expire").disabled=true;
  function habilitar(value)
 		{
@@ -366,5 +402,33 @@ if($product!=null):
 }
 var id_cat=$( "#category_id" ).val();
 pagoOnChange(id_cat);
+<?php 
+    if ($product->is_unique!=1) {?>
+      document.getElementById("inventary_min").disabled=false;
+      document.getElementById("inventary_in").disabled=false;
+   <?php  };?>
+   <?php 
+    if ($product->is_unique==1) {?>
+      document.getElementById("inventary_min").disabled=true;
+      document.getElementById("inventary_in").disabled=true;
+   <?php  };?>
+   <?php 
+    if ($product->date_expire==0000-00-00) {?>
+      document.getElementById("date_expire").disabled=true;
+
+   <?php  };?>
+   <?php 
+    if ($product->date_expire!=0000-00-00) {?>
+      document.getElementById("date_expire").disabled=false;
+   <?php  };?>
+   <?php 
+    if ($product->date_warranty==0000-00-00) {?>
+      document.getElementById("date_warranty").disabled=true;
+
+   <?php  };?>
+   <?php 
+    if ($product->date_warranty!=0000-00-00) {?>
+      document.getElementById("date_warranty").disabled=false;
+   <?php  };?>
 </script>
 </section>

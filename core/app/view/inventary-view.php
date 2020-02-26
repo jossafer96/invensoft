@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
 <?php
 $stock = StockData::getById($_GET["stock"]);
 ?>
@@ -68,7 +70,7 @@ if(count($products)>0){
 		</td>
 		<td style="width:300px;text-align: center;">
 <a href="index.php?view=input&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-circle-arrow-up"></i> Alta</a>
-<a href="index.php?view=input&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-circle-arrow-down"></i> Baja</a>
+<a href="index.php?view=output&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-circle-arrow-down"></i> Baja</a>
 		<a href="index.php?view=history&product_id=<?php echo $product->id; ?>&stock=<?php echo $_GET["stock"];?>" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-time"></i> Historial</a>
 		</td>
 	</tr>

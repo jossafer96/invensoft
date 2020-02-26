@@ -12,6 +12,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons 2.0.0 -->
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- Theme style -->
@@ -20,8 +21,7 @@
     <link href="plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
     <link href="plugins/dist/css/skins/skin-blue.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
+   
     <style media="screen">
     .login-box-body{
       border: solid 2px;
@@ -215,7 +215,7 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
                             
                             <?php
                             $found=0;
-                            $products = ProductData::getAll();
+                            $products = ProductData::getAllNoUnique();
                             foreach($products as $product){
                               $q= OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
                               if( $q==0 ||  $q<=$product->inventary_min){
@@ -294,7 +294,7 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
             <li class="treeview">
               <a href="#"><i class='fa fa-briefcase'></i> <span>Finanzas</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="./?view=credit">Credito</a></li>
+                <!--<li><a href="./?view=credit">Credito</a></li>-->
                 <li><a href="./?view=balance">Balance</a></li>
                 <li><a href="./?view=spends">Gastos</a></li>
                 <li><a href="./?view=smallbox&opt=all">Caja Chica</a></li>
@@ -363,7 +363,7 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
       <?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>
         
       <div  class="content-wrapper">
-      <div id="loader" style="margin: 0;padding: 0;display:none;align-items: center;justify-content: center;height: 100vh; background: #00000059;z-index: 1;position: absolute;display: ;width: 100%;
+      <div id="loader" style="margin: 0;padding: 0;display:none;align-items: center;justify-content: center;height: 100vh; background: #00000059;z-index: 1;position: absolute;width: 100%;
     ;">
           <div class="spinner">
 
@@ -453,7 +453,7 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
     <!-- REQUIRED JS SCRIPTS -->
 
     <!-- jQuery 2.1.4 -->
-   
+  
   
     <!-- Bootstrap 3.3.2 JS -->
     <script src="plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

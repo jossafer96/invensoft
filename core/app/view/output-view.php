@@ -11,7 +11,7 @@ $product = ProductData::getById($_GET['product_id']);
     
 
 
-<br><form class="form-horizontal" method="post" action="index.php?view=processinput" role="form">
+<br><form class="form-horizontal" method="post" action="index.php?view=processoutput" role="form">
 <div class="form-group">
     <label for="inputEmail1" class="col-lg-2 control-label">Codigo</label>
     <div class="col-lg-10">
@@ -64,7 +64,7 @@ $product = ProductData::getById($_GET['product_id']);
   </div>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-circle-arrow-up"></i> Alta en inventario</button>
+      <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-circle-arrow-up"></i> Baja en inventario</button>
     </div>
   </div>
 </form>

@@ -14,9 +14,10 @@ class OperationData {
 
 	public function add(){
 		$sql = "insert into ".self::$tablename." (price_in,stock_id,product_id,q,operation_type_id,sell_id,created_at,description_operation,user_operation) ";
-		$sql .= "value ($this->price_in,$this->stock_id,\"$this->product_id\",$this->q,$this->operation_type_id,$this->sell_id,$this->created_at,\"$this->description_operation\",$this->user)";
+		$sql .= "value ($this->price_in,$this->stock_id,$this->product_id,$this->q,$this->operation_type_id,$this->sell_id,$this->created_at,\"$this->description_operation\",$this->user)";
 		//echo "<script type='text/javascript'>alert('$sql');</script>";
 		return Executor::doit($sql);
+		//print_r($sql);
 		
 	}
 
@@ -113,11 +114,18 @@ public static function getPPByDateOfficial($start,$end){
 	public static function getQ($product_id){
 		$q=0;
 		$operations = self::getAllByProductId($product_id);
-		$input_id = OperationTypeData::getByName("entrada")->id;
-		$output_id = OperationTypeData::getByName("salida")->id;
+		$input_id = OperationTypeData::getByName("Entrada")->id;
+		$new_id = OperationTypeData::getByName("Nuevo producto")->id;
+		$output_id = OperationTypeData::getByName("Salida")->id;
 		foreach($operations as $operation){
-				if($operation->operation_type_id==$input_id){ $q+=$operation->q; }
-				else if($operation->operation_type_id==$output_id){  $q+=(-$operation->q); }
+				if($operation->operation_type_id==$input_id){ 
+					$q+=$operation->q; 
+				}else if($operation->operation_type_id==$new_id){  
+					$q+=$operation->q;
+				}
+				else if($operation->operation_type_id==$output_id){  
+					$q+=(-$operation->q); 
+				}
 		}
 		// print_r($data);
 		return $q;
@@ -128,11 +136,18 @@ public static function getPPByDateOfficial($start,$end){
 	public static function getQByStock($product_id,$stock_id){
 		$q=0;
 		$operations = self::getAllByProductIdAndStock($product_id,$stock_id);
-		$input_id = OperationTypeData::getByName("Nuevo Producto")->id;
+		$input_id = OperationTypeData::getByName("Entrada")->id;
+		$new_id = OperationTypeData::getByName("Nuevo Producto")->id;
 		$output_id = OperationTypeData::getByName("salida")->id;
 		foreach($operations as $operation){
-				if($operation->operation_type_id==$input_id){ $q+=$operation->q; }
-				else if($operation->operation_type_id==$output_id){  $q+=(-$operation->q); }
+				if($operation->operation_type_id==$input_id){ 
+					$q+=$operation->q; 
+				}else if($operation->operation_type_id==$new_id){  
+					$q+=$operation->q;
+				}
+				else if($operation->operation_type_id==$output_id){
+					  $q+=(-$operation->q); 
+					}
 		}
 		// print_r($data);
 		return $q;
