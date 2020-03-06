@@ -76,7 +76,7 @@ class OperationData {
 	}
 
 	public static function getHistory(){
-		$sql = "SELECT operation.id, product.name, operation.description_operation, CAST(operation.created_at AS VARCHAR(11)) as created_at,product.barcode, CONCAT(user.name,user.lastname) as user_operation FROM operation INNER JOIN operation_type ON operation.operation_type_id=operation_type.id INNER JOIN product ON operation.product_id=product.id INNER JOIN user ON operation.user_operation=user.id ORDER BY operation.id ASC";
+		$sql = "SELECT operation.id, product.name, operation.description_operation, CAST(operation.created_at AS VARCHAR(11)) as created_at,product.barcode, CONCAT(user.name,user.lastname) as user_operation FROM operation INNER JOIN operation_type ON operation.operation_type_id=operation_type.id INNER JOIN product ON operation.product_id=product.id INNER JOIN user ON operation.user_operation=user.id ORDER BY operation.id DESC";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new OperationData());
 
@@ -195,6 +195,7 @@ public static function getPPByDateOfficial($start,$end){
 
 	public static function getAllByProductIdCutIdOficial($product_id,$cut_id){
 		$sql = "select * from ".self::$tablename." where product_id=$product_id and cut_id=$cut_id order by created_at desc";
+		$query = Executor::doit($sql);
 		return Model::many($query[0],new OperationData());
 	}
 
@@ -208,8 +209,9 @@ public static function getPPByDateOfficial($start,$end){
 
 	public static function getAllByProductIdCutIdYesF($product_id,$cut_id){
 		$sql = "select * from ".self::$tablename." where product_id=$product_id and cut_id=$cut_id order by created_at desc";
+		$query = Executor::doit($sql);
 		return Model::many($query[0],new OperationData());
-		return $array;
+		
 	}
 
 ////////////////////////////////////////////////////////////////////
@@ -268,7 +270,7 @@ public static function getPPByDateOfficial($start,$end){
 ////////////////////////////////////////////////////////////////////
 	public static function getInputQ($product_id,$cut_id){
 		$q=0;
-		return Model::many($query[0],new OperationData());
+		//return Model::many($query[0],new OperationData());
 		$operations = self::getInputByProductId($product_id);
 		$input_id = OperationTypeData::getByName("entrada")->id;
 		$output_id = OperationTypeData::getByName("salida")->id;

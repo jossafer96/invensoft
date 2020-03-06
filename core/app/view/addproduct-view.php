@@ -18,16 +18,18 @@ if(count($_POST)>0){
 
   if(isset($_POST["description"])){ 
     $description=$_POST["description"];
-  }else if (isset($_POST["description_1"])) {
+  }
+  if (isset($_POST["description_1"])) {
     $description=$_POST["description_1"];
   };
 
   $product->description = $description;
+  $product->comment = $_POST["comment"];
   $product->price_in = $_POST["price_in"];
   $product->state = $_POST["state"];
   $product->funding = $_POST["funding"];
   $product->stock = $_POST["stock"];
-  $product->unit_id = $_POST["unit"];
+  $product->unit_id = 'NULL';
   $product->user_responsable = $_POST["asing"];
   $date_expire="\"\"";
   if(isset($_POST["date_expire"])){ $date_expire=$_POST["date_expire"];}
@@ -56,29 +58,29 @@ if(count($_POST)>0){
   
 
 
-  if(isset($_FILES["image"])){
-    $image = new Upload($_FILES["image"]);
-    if($image->uploaded){
-      $image->Process("storage/products/");
-      if($image->processed){
-        $product->image = $image->file_dst_name;
-        //$prod = $product->add_with_image();
-      }
-    }else{
-
-  $prod= $product->add();
-    }
+  if($_FILES["file"]['name']!=""){
+    
+    $file = new Upload();
+    $file_url = $file->File($_FILES["file"],$_POST["barcode"]);
+    $product->file_url=$file_url;
+    //echo '<pre>';
+    //print_r($file_url);
+    //echo '</pre>';
   }
   else{
     
- $prod= $product->add();
+    $product->file_url="NULL";
 
   }
   //print_r($_POST["description"]);
   //print_r($_POST["description_1"]);
   //print_r ($description);
-  //print_r ($product);
+  //echo '<pre>';
+ //print_r ($product);
+  //echo '</pre>';
   //print_r ($prod);
+  //$product->add();
+  $prod= $product->add();
 
 
 

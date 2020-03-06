@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
 <?php
 
 if(Core::$user->kind==3){ Core::redir("./?view=sell"); }
@@ -5,8 +7,8 @@ if(Core::$user->kind==3){ Core::redir("./?view=sell"); }
 ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>Alertas</h1>
-          <h4>Almacen: <?php echo StockData::getPrincipal()->name;  ?></h4>
+          
+          <h2 style="margin-bottom: 0px" class="box-title">Alerta de Inventario - <?php echo StockData::getPrincipal()->name; ?></h2>
         </section>
 
         <!-- Main content -->
@@ -52,32 +54,38 @@ if(count($products)>0){
 
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Alerta de Inventario - <?php echo StockData::getPrincipal()->name; ?></h3>
+   
 
   </div><!-- /.box-header -->
   <div class="box-body">
 
 <table class="table table-bordered table-hover datatable">
   <thead>
+  <th >N°</th>
     <th >Codigo</th>
     <th>Nombre del producto</th>
+    <th>Descripcion</th>
     <th>Precio de Compra</th>
     <th>Ubicacion</th>
     <th>En Stock</th>
-    <th></th>
+    <th>Alerta</th>
   </thead>
   <?php
+  $n=0;
 foreach($products as $product):
+  $n+=1;
 //  $q=OperationData::getQ($product->id);
   $q= OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
 
   ?>
   <?php if( $q==0 ||  $q<=$product->inventary_min):?>
   <tr class="<?php if($q==0){ echo "danger"; }else if($q<=$product->inventary_min/2){ echo "danger"; } else if($q<=$product->inventary_min){ echo "warning"; } ?>">
-    <td><?php echo $product->barcode; ?></td>
+  <td><?php echo $n; ?></td>  
+  <td><?php echo $product->barcode; ?></td>
     <td><?php echo $product->name; ?></td>
+    <td><?php echo $product->description; ?></td>
     <td>L <?php echo number_format($product->price_in,2,'.',','); ?></td>
-    <td>A<?php echo $product->stock; ?></td>
+    <td>Almacen <?php echo StockData::getById($product->stock)->name; ?></td>
     <td><?php echo $q; ?></td>
     <td>
     <?php if($q==0){ echo "<span class='label label-danger'>No hay existencias.</span>";}else if($q<=$product->inventary_min/2){ echo "<span class='label label-danger'>Quedan muy pocas existencias.</span>";} else if($q<=$product->inventary_min){ echo "<span class='label label-warning'>Quedan pocas existencias.</span>";} ?>

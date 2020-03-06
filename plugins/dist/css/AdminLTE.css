@@ -5667,3 +5667,73 @@ fieldset[disabled] .btn-vk.active {
         white-space: normal!important;
     }
 }
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 3px;
+}
+
+.overlay>.fa {
+    position: absolute;
+    top: 29%;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -15px;
+    color: #000;
+    font-size: 100px;
+}
+
+.spinner {
+    margin: 50%;
+    margin-top: 50vh;
+    width: 80px;
+    height: 80px;
+    border: 10px solid rgba(199, 143, 141, 0.41);
+    border-left-color: #8e2d39;
+    border-radius: 50px;
+    animation: spin 1s infinite linear;
+}
+
+span.nounderline:link {
+    text-decoration: none;
+}
+
+.login-box-body {
+    border: solid 2px;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.uk-grid {
+    overflow-x: auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.ss_input {
+    position: absolute;
+    background-color: transparent;
+    width: 100%;
+    border: 0;
+}
+
+.select-search {
+    width: 35%;
+    position: relative;
+    z-index: 2;
+}
+
+.select-search>select {
+    width: 100%;
+    position: relative;
+    z-index: -1;
+}

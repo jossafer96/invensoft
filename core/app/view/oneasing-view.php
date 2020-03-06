@@ -37,9 +37,22 @@ $client = $operation;
 </tr>
 
 <tr>
-<td><b><?php echo $client->asing;?></b></td>
-  <td><?php echo $client->user_responsable;?></td>
-  <td>Seguridad</td>
+<td><b><?php $person = personData::getById($client->asing);
+		echo $person->name." ".$person->lastname; ?></b></td>
+  <td><?php       if (is_numeric($client->user_responsable)) {
+        $user2 = PersonData::getById($client->user_responsable);
+        echo $user2->name." ".$user2->lastname;
+      }else {
+    echo $client->user_responsable;}?></td>
+  <td>    <?php 
+        if ($client->asing!=0) {
+          $id_asing=$client->asing;
+          $user1 = PersonData::getById($id_asing);
+          echo $user1->getUnit()->name_unit;
+        }elseif ($client->asing==0) {
+         echo 'Sin definir';
+        }
+    ?></td>
   <td><?php echo  date('d-m-Y H:i:s');?></td>
 </tr>
 <?php endif; ?>
@@ -65,7 +78,11 @@ $client = $operation;
 <tr>
   <td><?php echo $op->barcode ;?></td>
   <td><?php echo $op->name ;?></td>
-  <td><?php echo $op->user_responsable ;?></td>
+  <td><?php       if (is_numeric($op->user_responsable)) {
+        $user2 = PersonData::getById($op->user_responsable);
+        echo $user2->name." ".$user2->lastname;
+      }else {
+    echo $op->user_responsable;}?></td>
   
   <td>
     <b>Marca: </b><?php  echo $op->brand;?><br><br>

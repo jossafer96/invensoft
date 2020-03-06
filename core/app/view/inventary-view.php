@@ -45,10 +45,12 @@ if(count($products)>0){
   <table class="table table-bordered datatable table-hover">
 	<thead>
 		<th>Codigo</th>
-		<th>Nombre</th>
+    <th>Nombre</th>
+    <th>Comentarios</th>
+    <th>Es unico</th>
 		<th>Por Recibir</th>
 		<th>Disponible</th>
-		<th>Por Entregar</th>
+		
 		<th>Acciones</th>
 	</thead>
 	<?php foreach($products as $product):
@@ -56,22 +58,37 @@ if(count($products)>0){
 	$q=OperationData::getQByStock($product->id,$_GET["stock"]);
 	$d=OperationData::getDByStock($product->id,$_GET["stock"]);
 	?>
-	<tr class="<?php if($q<=$product->inventary_min/2){ echo "danger";}else if($q<=$product->inventary_min){ echo "warning";}?>">
-		<td><?php echo $product->barcode; ?></td>
-		<td><?php echo $product->name; ?></td>
-		<td>
+  <tr class="<?php if ($product->is_unique!=1) {
+    if($q<=$product->inventary_min/2){ 
+      echo "danger";
+      }else if($q<=$product->inventary_min){ 
+        echo "warning";
+        }
+  }
+  ?>">
+		<td><b><?php echo $product->barcode; ?></b></td>
+    <td><?php echo $product->name; ?></td>
+    <td><?php echo $product->comment; ?></td>
+    <td style="text-align: center;"><?php if ($product->is_unique==1) {
+    echo '<i class="glyphicon glyphicon-ok"></i>';
+  }else{
+    echo '<i class="glyphicon glyphicon-remove"></i>';
+  }?>
+  </td>
+		<td style="text-align: center;">
 			<?php echo $r; ?>
 		</td>
-		<td>
-			<?php echo $q; ?>
+		<td style="text-align: center;"><b>
+      <?php echo $q; ?>
+      </b>
 		</td>
-		<td>
-			<?php echo $d; ?>
-		</td>
-		<td style="width:300px;text-align: center;">
+		
+    <td style="width:300px;text-align: center;">
+    <?php if(Core::$user->kind==3||Core::$user->kind==1){?> 
 <a href="index.php?view=input&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-circle-arrow-up"></i> Alta</a>
 <a href="index.php?view=output&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-circle-arrow-down"></i> Baja</a>
-		<a href="index.php?view=history&product_id=<?php echo $product->id; ?>&stock=<?php echo $_GET["stock"];?>" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-time"></i> Historial</a>
+<?php }?>    
+<a href="index.php?view=history&product_id=<?php echo $product->id; ?>&stock=<?php echo $_GET["stock"];?>" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-time"></i> Historial</a>
 		</td>
 	</tr>
 	<?php endforeach;?>

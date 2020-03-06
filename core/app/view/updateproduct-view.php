@@ -19,16 +19,17 @@ if(count($_POST)>0){
   
 	if(isset($_POST["description"])){ 
 		$description=$_POST["description"];
-	  }else if (isset($_POST["description_1"])) {
+	  }
+	if (isset($_POST["description_1"])) {
 		$description=$_POST["description_1"];
 	  };
   
 	$product->description = $description;
+	$product->comment = $_POST["comment"];
 	$product->price_in = $_POST["price_in"];
 	$product->state = $_POST["state"];
 	$product->funding = $_POST["funding"];
 	$product->stock = $_POST["stock"];
-	$product->unit_id = $_POST["unit"];
 	$product->user_responsable = $_POST["asing"];
 	$date_expire="\"\"";
 	if(isset($_POST["date_expire"])){ $date_expire=$_POST["date_expire"];}
@@ -48,22 +49,27 @@ if(count($_POST)>0){
 	if(isset($_POST["inventary_in"])){ $inventary_in=$_POST["inventary_in"];}
 	$product->inventary_in=$inventary_in;
 	
+	if($_FILES["file"]['name']!=""){
+    
+		$file = new Upload();
+		$file_url = $file->File($_FILES["file"],$_POST["barcode"]);
+		$product->file_url=$file_url;
+		//echo '<pre>';
+		//print_r($file_url);
+		//echo '</pre>';
+	  }
+	  else{
+		
+		$product->file_url="NULL";
+	
+	  }
   
 
 	
 	$product->update();
 	//print_r($product->update());
 
-	if(isset($_FILES["image"])){
-		$image = new Upload($_FILES["image"]);
-		if($image->uploaded){
-			$image->Process("storage/products/");
-			if($image->processed){
-				$product->image = $image->file_dst_name;
-				$product->update_image();
-			}
-		}
-	}
+	
 
 	setcookie("prdupd","true");
 	print "<script>window.location='index.php?view=editproduct&id=$_POST[product_id]';</script>";

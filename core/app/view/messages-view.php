@@ -1,6 +1,8 @@
 <?php if(isset($_GET["opt"]) && $_GET["opt"]=="all"):
 $inbox = MessageData::getInboxByUserId($_SESSION["user_id"]);
 ?>
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>

@@ -4,7 +4,10 @@ require 'plugins/PHPexcel/PHPExcel.php';
 require 'plugins/PHPexcel/PHPExcel/IOFactory.php';
 
 $product = ProductData::getById($_GET["id"]);
-$unit = unitsData::getById($product->unit_id);
+$person = personData::getById($product->asing);
+    $asing = $person->name." ".$person->lastname;
+    $asing1 = $person->name."".$person->lastname;
+$unit = unitsData::getById($person->program);
 $user = UserData::getById($product->user_id);
 $accounts = PasswordData::getByProductId($_GET["id"]);
 
@@ -18,7 +21,7 @@ $accounts = PasswordData::getByProductId($_GET["id"]);
   $objPHPExcel->setActiveSheetIndex(0);
   
   //Modificamos los valoresde las celdas
-  $objPHPExcel->getActiveSheet()->SetCellValue('D4', $product->asing);
+  $objPHPExcel->getActiveSheet()->SetCellValue('D4', $asing);
   $objPHPExcel->getActiveSheet()->SetCellValue('F4', $unit->name_unit);
   $objPHPExcel->getActiveSheet()->SetCellValue('D5', $user->name." ".$user->lastname);
   $objPHPExcel->getActiveSheet()->SetCellValue('F5', date('d-m-Y'));
@@ -43,7 +46,7 @@ $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
   
 	//$objWriter->save("Archivo_salida.xlsx");
   
-  $objWriter->save("docs/Asignaciones/Asignacion_".$product->asing."_".$product->barcode.".xlsx");
+  $objWriter->save("docs/Asignaciones/Asignacion_".$asing1."_".$product->barcode.".xlsx");
 
 
 

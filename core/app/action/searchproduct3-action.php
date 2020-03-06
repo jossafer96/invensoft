@@ -38,9 +38,33 @@ $q= OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
 	<tr class="<?php if($q<=$product->inventary_min){ echo "danger"; }?>">
 		<td style="width:80px;"><?php echo $product->barcode; ?></td>
 		<td><?php echo $product->name; ?></td>
-		<td><?php echo $product->$unit_name; ?></td>
-		<td><?php echo $product->user_responsable; ?></td>
-		<td><b><?php echo $product->asing; ?></b></td>
+		<td><?php 
+		if ($product->asing!=0) {
+			$id_asing=$product->asing;
+			$user1 = PersonData::getById($id_asing);
+			echo $user1->getUnit()->name_unit;
+		  }elseif ($product->asing==0) {
+		   echo 'Sin definir';
+		  }
+		 ?></td>
+		<td><?php  if (is_numeric($product->user_responsable)) {
+        $user2 = PersonData::getById($product->user_responsable);
+        echo $user2->name." ".$user2->lastname;
+      }else {
+    echo $product->user_responsable;}  ?></td>
+		<td><b><?php 
+		if ($product->asing!=NULL) {
+			if($product->asing==0){
+				echo 'Disponible';
+			}else{
+			$person = personData::getById($product->asing);
+			echo $person->name." ".$person->lastname;
+			}
+		 
+		}else {
+			echo 'Disponible';
+		}
+		?></b></td>
 		<td>
 			<?php echo $q; ?>
 		</td>

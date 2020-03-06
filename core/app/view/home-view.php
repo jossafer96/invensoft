@@ -2,7 +2,7 @@
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
 <?php
 
-if(Core::$user->kind==3){ Core::redir("./?view=sell"); }
+
 
 
   $dateB = new DateTime(date('Y-m-d'));
@@ -31,11 +31,37 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
     <section class="content">
 <div class="row">
   <div class="col-md-12" style='text-align: center;'>
-  
+
+<?php if(Core::$user->kind==1){?>  
   <a href="./?view=newproduct" class="btn btn-lg btn-primary" style="margin-left: 20px;margin-bottom: 10px;">Nuevo Producto</a>
   <a href="./?view=inventary&stock=<?php echo StockData::getPrincipal()->id; ?>" class="btn btn-lg btn-info" style="margin-left: 20px;margin-bottom: 10px;">Inventario Principal</a>
   <a href="./?view=reports" class="btn btn-lg btn-success" style="margin-left: 20px;margin-bottom: 10px;">Crear un Reporte</a>
   <a href="./?view=settings" class="btn btn-lg btn-warning" style="margin-left: 20px;margin-bottom: 10px;">Configuracion</a>
+  
+  <?php }?>
+
+  <?php if(Core::$user->kind==2){?>  
+  
+  
+    <a href="./?view=inventary&stock=<?php echo StockData::getPrincipal()->id; ?>" class="btn btn-lg btn-info" style="margin-left: 20px;margin-bottom: 10px;">Inventario Principal</a>
+    <a href="./?view=byreceive" class="btn btn-lg btn-primary" style="margin-left: 20px;margin-bottom: 10px;">Productos/Equipos a Recibir</a>
+    <a href="./?view=bydeliver" class="btn btn-lg btn-success" style="margin-left: 20px;margin-bottom: 10px;">Productos/Equipos a Entregar</a>
+  <a href="./?view=selectstock" class="btn btn-lg btn-warning" style="margin-left: 20px;margin-bottom: 10px;">Traspasar</a>
+  
+  <?php }?>
+
+  <?php if(Core::$user->kind==3){?>  
+  
+  
+  <a href="./?view=products" class="btn btn-lg btn-info" style="margin-left: 20px;margin-bottom: 10px;">Inventario</a>
+  <a href="./?view=newproduct" class="btn btn-lg btn-primary" style="margin-left: 20px;margin-bottom: 10px;">Nuevo Producto</a>
+  <a href="./?view=re" class="btn btn-lg btn-success" style="margin-left: 20px;margin-bottom: 10px;">Reabastecer</a>
+<a href="./?view=asing" class="btn btn-lg btn-warning" style="margin-left: 20px;margin-bottom: 10px;">Asignar</a>
+
+<?php }?>
+
+  
+  
   </div>
   </div>
 
@@ -51,7 +77,9 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
                 <div class="icon">
                 <ion-icon name="filing"></ion-icon>
                 </div>
-                <a href="#" class="small-box-footer">Mas Informacion <i class="fa fa-arrow-circle-right"></i></a>
+                
+                <a href="<?php if(Core::$user->kind==1){ echo "./?view=products";}?>" class="small-box-footer">Mas Informacion <i class="fa fa-arrow-circle-right"></i></a>
+               
               </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -64,7 +92,9 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
                 <div class="icon">
                 <ion-icon name="people"></ion-icon> 
                 </div>
-                <a href="#" class="small-box-footer">Mas Informacion <i class="fa fa-arrow-circle-right"></i></a>
+                
+                <a href="<?php if(Core::$user->kind==1){ echo "./?view=clients";}?>"  class="small-box-footer">Mas Informacion <i class="fa fa-arrow-circle-right"></i></a>
+                
               </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -78,7 +108,9 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
                 <div class="icon">
                 <ion-icon name="finger-print"></ion-icon>
                 </div>
-                <a href="#" class="small-box-footer">Mas Informacion <i class="fa fa-arrow-circle-right"></i></a>
+              
+                <a href="<?php if(Core::$user->kind==1){ echo "./?view=users";}?>" class="small-box-footer">Mas Informacion <i class="fa fa-arrow-circle-right"></i></a>
+                
               </div>
             </div><!-- ./col -->
         
@@ -121,6 +153,7 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
 <div class="box-body">
 <table class="table table-bordered datatable table-hover">
 	<thead>
+    <th>N°</th>
     <th>Fecha</th>
     <th>Equipo</th>
     <th>Operacion Realizada</th>
@@ -128,8 +161,11 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
     <th >Codigo Equipo</th>
 		
 	</thead>
-	<?php foreach($operations as $operation):?>
+  <?php 
+  $n=1;
+  foreach($operations as $operation):?>
 	<tr>
+    <td><?php echo $n; ?></td>
   <td><?php echo $operation->created_at; ?></td>
                       <td><?php echo $operation->name; ?></td>
                       <td><span class="badge badge-success"><?php echo $operation->description_operation; ?></span></td>
@@ -138,8 +174,11 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
                       <td>
                         <div  data-height="20"><?php echo $operation->barcode; ?></div>
                       </td>
-	</tr>
-	<?php endforeach;?>
+  </tr>
+  
+  <?php 
+$n++;
+endforeach;?>
 </table>
 </div>
   </div><!-- /.box-body -->

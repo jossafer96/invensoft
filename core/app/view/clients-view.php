@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
 <section class="content">
 <div class="row">
 	<div class="col-md-12">
@@ -14,7 +16,7 @@
   </ul>
 </div>
 </div>
-		<h1>Directorio de Clientes</h1>
+		<h1>Directorio de Colaboradores</h1>
 <br>
 		<?php
 

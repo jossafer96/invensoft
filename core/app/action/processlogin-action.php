@@ -26,8 +26,10 @@ if($found==true) {
 //	setcookie('userid',$userid);
 //	print $_SESSION['userid'];
 	print "Cargando ... $user";
+	
 	print "<script>window.location='index.php?view=home';</script>";
 }else {
+	setcookie("prdupd1","true");
 	print "<script>window.location='index.php?view=login';</script>";
 }
 

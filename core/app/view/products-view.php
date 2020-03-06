@@ -1,24 +1,17 @@
-        <!-- Content Header (Page header) -->
+
+     <!-- Content Header (Page header) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
         <section class="content-header">
+       
           <h1>
-            Productos
+            Catalogo de Productos/Equipo
           </h1>
-          <ol class="breadcrumb">
-            <li><a href="./"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Productos</li>
-            
-          </ol>
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-
-<div class="row">
-	<div class="col-md-12" >
+          <div class="col-md-12" >
 <div class="btn-group  pull-right">
-	<a href="index.php?view=newproduct" class="btn btn-default">Agregar Producto</a>
+<?php if(Core::$user->kind==3||Core::$user->kind==1){?> 
+  <a href="index.php?view=newproduct" class="btn  btn-success ">Agregar Producto</a>
+  <?php }?>
 <div class="btn-group pull-right">
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
@@ -31,6 +24,13 @@
   </ul>
 </div>
 </div>
+        </section>
+       
+        <!-- Main content -->
+        <section class="content">
+   
+<div class="row">
+
 <div class="clearfix"></div>
 <br>
 
@@ -39,20 +39,19 @@
 $products = ProductData::getAllActive();
 if(count($products)>0){
 ?>
-<div id="box" class="box" style="display:none">
-  <div class="box-header">
-    <h3 class="box-title">Productos</h3>
 
-  </div><!-- /.box-header -->
-  <div class="box-body " >
+<div  class="box" >
+
+  <div  class="box-body " >
 <div class="box-body" >
 <table id="example"  class="uk-table uk-table-hover uk-table-striped">
   
 	<thead >
-  <th style="padding-right: 50px;">N°</th>
+  <th style="padding-right: 40px;">N°</th>
     <th style="padding-right: 50px;">Codigo</th>
     <th style="padding-right: 100px;">Equipo/Producto</th>
-    <th style="padding-right: 100px;">Asignado</th>
+    <th style="padding-right: 100px;">Estado</th>
+    <th style="padding-right: 200px;">Asignado</th>
     <th style="padding-right: 100px;">Unidad/Proyecto</th>
     <th style="padding-right: 100px;">Precio</th>
     <th style="padding-right: 100px;">Fondos</th>
@@ -60,9 +59,9 @@ if(count($products)>0){
     <th style="padding-right: 100px;">Marca</th>
     <th style="padding-right: 100px;">Modelo</th>
     <th style="padding-right: 100px;">S/N</th>
-    <th style="padding-right: 100px;">Responsable</th>
+    <th style="padding-right: 150px;">Responsable</th>
     <th style="padding-right: 250px;">Descripcion</th>
-    
+    <th style="padding-right: 200px;">Comentarios/Observaciones</th>
 		<th>Acciones</th>
 	</thead>
   
@@ -74,6 +73,8 @@ if(count($products)>0){
   <td><?php echo $x; ?></td>
     <td style="font-weight: bolder;cursor:pointer"><a onclick="Abrirmodal(<?php echo $product->id; ?>);"><?php echo $product->barcode; ?></a></td>
     <td><?php echo $product->name; ?></td>
+    <td><?php $state = StateData::getById($product->state);
+          echo $state->name_state; ?></td>
     <td><?php 
         if ($product->asing!=0) {
           $id_asing=$product->asing;
@@ -84,11 +85,16 @@ if(count($products)>0){
         }
     ?></td>
     <td>
-    <?php if($product->unit_id!=null){
-      echo $product->getUnit()->name_unit;
-      }else{ 
-      echo "<center>----</center>"; 
-      };?>
+    <?php 
+        if ($product->asing!=0) {
+          $id_asing=$product->asing;
+          $user1 = PersonData::getById($id_asing);
+          echo $user1->getUnit()->name_unit;
+        }elseif ($product->asing==0) {
+         echo 'Sin definir';
+        }
+    ?>
+
     </td>
     <td>L. <?php echo number_format($product->price_in,2,'.',','); ?></td>
     <td><?php  echo $product->funding;?></td>
@@ -102,12 +108,20 @@ if(count($products)>0){
     <td><?php echo $product->brand ?></td>
     <td><?php echo $product->model ?></td>
     <td><?php echo $product->serial ?></td>
-    <td><?php echo $product->user_responsable; ?></td>
+    <td><?php 
+      if (is_numeric($product->user_responsable)) {
+        $user2 = PersonData::getById($product->user_responsable);
+        echo $user2->name." ".$user2->lastname;
+      }else {
+    echo $product->user_responsable;} ?></td>
     <td><?php echo $product->description ?></td>
-		<td style="width:90px;">
+    <td><?php echo $product->comment ?></td>
+    <td style="width:90px;">
+    <?php if(Core::$user->kind==3||Core::$user->kind==1){?>  
 		<a href="index.php?view=editproduct&id=<?php echo $product->id; ?>" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
 		<a href="index.php?view=delproduct&id=<?php echo $product->id; ?>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
-		</td>
+    <?php }?>
+  </td>
 	</tr>
   <?php 
     $x+=1;

@@ -28,7 +28,7 @@ $states = StateData::getAll();
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Codigo*</label>
     <div class="col-md-4">
-      <input readonly type="text" style='font-size:30px;font-weight:bolder;text-align: center;background-color: #ecf0f5;' name="barcode" id="product_code" class="form-control" id="barcode" placeholder="------">
+      <input required readonly type="text" style='font-size:30px;font-weight:bolder;text-align: center;background-color: #ecf0f5;' name="barcode" id="product_code" class="form-control" id="barcode" placeholder="------">
     </div>
     <i>Elegir primero la categoria y subcategoria para poder generar codigo automaticamente</i>
   </div>
@@ -36,7 +36,7 @@ $states = StateData::getAll();
   <div class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">Categoria</label>
     <div class="col-md-10">
-    <select  name="category_id" id="category_id" class="form-control" onchange="codenext(this.value);pagoOnChange(this);">
+    <select required  name="category_id" id="category_id" class="form-control" onchange="codenext(this.value);pagoOnChange(this);">
     <option value="">-- NINGUNA --</option>
     <?php foreach($categories as $category):?>
       <option value="<?php echo $category->id;?>"><?php echo $category->name;?></option>
@@ -47,7 +47,7 @@ $states = StateData::getAll();
   <div  class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">SubCategoria</label>
     <div class="col-md-10">
-    <select  name="subcategory_id" id="subcategory_id" class="form-control" onchange="codeFinal(this.value)">
+    <select required  name="subcategory_id" id="subcategory_id" class="form-control" onchange="codeFinal(this.value)">
     <option value="">-- NINGUNA --</option>
     </select>    
     </div>
@@ -87,21 +87,27 @@ $states = StateData::getAll();
   <div  class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Descripcion</label>
     <div class="col-md-10">
-      <textarea rows="3" name="description_1" class="form-control" id="description_1" placeholder="Descripcion del Producto"></textarea>
+      <textarea rows="5" name="description_1" class="form-control" id="description_1" placeholder="Descripcion del Producto"></textarea>
     </div>
   </div>
-
+  
+  </div>
+  <div  class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Comentario/ <br> Observacion</label>
+    <div class="col-md-10">
+      <textarea rows="5" name="comment" class="form-control" id="comment" placeholder="Comentario u observacion acerca del producto"></textarea>
+    </div>
   </div>
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Precio*</label>
     <div class="col-md-10">
-      <input type="text" name="price_in" required class="form-control" id="price_in" placeholder="Precio de compra">
+      <input required type="text" name="price_in" required class="form-control" id="price_in" placeholder="Precio de compra">
     </div>
   </div>
   <div class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">Estado*</label>
     <div class="col-md-10">
-    <select name="state" class="form-control">
+    <select required name="state" class="form-control">
     <option value="">-- SELECCIONE UNO --</option>
     <?php foreach($states as $state):?>
       <option value="<?php echo $state->id;?>"><?php echo $state->name_state;?></option>
@@ -118,7 +124,7 @@ $states = StateData::getAll();
   <div class="form-group col-lg-6" >
     <label for="inputEmail1" class="col-lg-2 control-label">Almacen</label>
     <div class="col-md-10">
-    <select name="stock" class="form-control">
+    <select required name="stock" class="form-control">
     <option value="">-- SELECCIONE UNO --</option>
     <?php foreach($stocks as $stock):?>
       <option value="<?php echo $stock->id;?>"><?php echo $stock->name;?></option>
@@ -126,21 +132,15 @@ $states = StateData::getAll();
       </select>    
     </div>
   </div>
-  <div class="form-group col-lg-6" >
-    <label for="inputEmail1" class="col-lg-3 control-label">Unidad/Programa</label>
-    <div class="col-md-9">
-    <select name="unit" class="form-control">
-    <option value="">-- SELECCIONE UNO --</option>
-    <?php foreach($units as $unit):?>
-      <option value="<?php echo $unit->unit_id;?>"><?php echo $unit->name_unit;?></option>
-    <?php endforeach;?>
-      </select>    
-      </div>
-  </div>
+
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Responsable</label>
     <div class="col-md-10">
-      <input type="text" name="asing" required class="form-control" id="asing" placeholder="Persona asignada">
+    <div class="" style="font-size: 1.9em;">
+  <input required id="responsable_name" name="responsable_name" style="width: 100%" class="form-control" />
+  <input type="hidden" name="asing" id="asing">
+</div>
+   
     </div>
   </div>
   <div class="form-group col-lg-6">
@@ -187,6 +187,14 @@ $states = StateData::getAll();
       <input type="text" name="inventary_in" class="form-control" id="inventary_in" placeholder="Numero de Equipo/Producto Inicial">
     </div>
   </div>
+  <div class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Adjunto</label>
+    <div class="col-md-10">
+    <input type="file" name="file" class="form-control" id="file">
+    <p class="help-block">PDF, Fotos, Doc </p>
+    </div>
+  
+  </div>
 
   <div class="form-group col-lg-12">
     <div class="col-lg-offset-2 col-lg-10">
@@ -217,6 +225,8 @@ $states = StateData::getAll();
     
 });
 
+ 
+ 
 </script>
 <script>
   document.getElementById("date_expire").disabled=true;
@@ -362,4 +372,33 @@ $states = StateData::getAll();
       }
 }
 </script>
+<script>
+  $(document).ready(function(){
+    <?php
+		$users = PersonData::getColaborators();
+		?>
+function log( message ) {
+      $( "#asing" ).val(message);
+      //alert(message);
+    }
+
+    var availableColaborators = [
+  <?php foreach($users as $product):
+
+    echo "{label: '".$product->name." ".$product->lastname."', id: '".$product->id."'},";
+
+  endforeach; ?>
+];
+$( "#responsable_name" ).autocomplete({
+  source: availableColaborators,
+      minLength: 2,
+      select: function( event, ui ) {
+        log(  ui.item.id );
+      }
+    });
+  });
+
+
+
+  </script>
 </section>

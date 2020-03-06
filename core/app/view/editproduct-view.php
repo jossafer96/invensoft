@@ -105,7 +105,12 @@ if($product!=null):
     </div>
   </div>
   </div>
-
+  <div  class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Comentario/ <br> Observacion</label>
+    <div class="col-md-10">
+      <textarea rows="5" name="comment" class="form-control" id="comment" placeholder="Comentario u observacion acerca del producto"><?php echo $product->comment;?></textarea>
+    </div>
+  </div>
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Precio*</label>
     <div class="col-md-10">
@@ -148,25 +153,24 @@ if($product!=null):
       </select>    
     </div>
   </div>
-  <div class="form-group col-lg-6" >
-    <label for="inputEmail1" class="col-lg-3 control-label">Unidad/Programa</label>
-    <div class="col-md-9">
-    <select name="unit" class="form-control">
-    <option value="">-- SELECCIONE UNO --</option>
-    <?php foreach($units as $unit):
-     if ($product->unit_id==$unit->unit_id) {?>
-      <option value="<?php echo $unit->unit_id;?>" selected><?php echo $unit->name_unit;?></option>
-    <?php }else{ ?>
-      <option value="<?php echo $unit->unit_id;?>"><?php echo $unit->name_unit;?></option>
-    <?php } endforeach;?>
-      </select>    
-      </div>
-  </div>
+
 
   <div class="form-group col-lg-6">
     <label for="inputEmail1" class="col-lg-2 control-label">Responsable</label>
     <div class="col-md-10">
-      <input type="text" name="asing" value="<?php echo $product->user_responsable;?>" required class="form-control" id="asing" placeholder="Persona asignada">
+    <div class="" style="font-size: 1.9em;">
+  <input required value="<?php 
+        if ($product->asing!=0) {
+          $id_asing=$product->asing;
+          $user = PersonData::getById($id_asing);
+          echo $user->name." ".$user->lastname;
+        }elseif ($product->asing==0) {
+         echo 'Disponible';
+        }
+    ?>" id="responsable_name" name="responsable_name" style="width: 100%" class="form-control" />
+  <input type="hidden" value="<?php echo $stock->asing;?>" name="asing" id="asing">
+</div>
+   
     </div>
   </div>
 
@@ -244,7 +248,14 @@ if($product!=null):
       <input value="<?php echo $product->inventary_in;?>" type="text" name="inventary_in" class="form-control" id="inventary_in" placeholder="Numero de Equipo/Producto Inicial">
     </div>
   </div>
-
+  <div class="form-group col-lg-6">
+    <label for="inputEmail1" class="col-lg-2 control-label">Adjunto</label>
+    <div class="col-md-10">
+    <input type="file" name="file" class="form-control" id="file">
+    <p class="help-block">PDF, Fotos, Doc </p>
+    </div>
+  
+  </div>
   <div class="form-group">
     <div class="col-lg-offset-3 col-lg-8">
     <input type="hidden" name="product_id" value="<?php echo $product->id; ?>">
@@ -431,4 +442,33 @@ pagoOnChange(id_cat);
       document.getElementById("date_warranty").disabled=false;
    <?php  };?>
 </script>
+<script>
+  $(document).ready(function(){
+    <?php
+		$users = PersonData::getColaborators();
+		?>
+function log( message ) {
+      $( "#asing" ).val(message);
+      //alert(message);
+    }
+
+    var availableColaborators = [
+  <?php foreach($users as $product):
+
+    echo "{label: '".$product->name." ".$product->lastname."', id: '".$product->id."'},";
+
+  endforeach; ?>
+];
+$( "#responsable_name" ).autocomplete({
+  source: availableColaborators,
+      minLength: 2,
+      select: function( event, ui ) {
+        log(  ui.item.id );
+      }
+    });
+  });
+
+
+
+  </script>
 </section>

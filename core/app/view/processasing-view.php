@@ -70,7 +70,6 @@ $_SESSION["errors"] = $errors;
 				$asing->id=$productUlt->id;
 				$asing->user_id=$productUlt->user_id;
 				$asing->product_id=$productUlt->product_id;
-				
 				$asing->finish_at="NOW()";
 				$update= $asing->update();
 				$asing1 = new AsingsData();

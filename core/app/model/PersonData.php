@@ -14,6 +14,7 @@ class PersonData {
 		$this->created_at = "NOW()";
 		$this->credit_limit = "NULL";
 	}
+	public function getUnit(){ return unitsData::getById($this->program);}
 
 	public function add_client(){
 		$sql = "insert into person (no,name,lastname,address1,email1,phone1,is_active_access,password,kind,position,program,created_at) ";

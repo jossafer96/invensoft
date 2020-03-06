@@ -2,74 +2,29 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>ASJ | Panel de Administracion</title>
+    <title>ASJ | INVENTARIO</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Favicon -->
     <link rel="shortcut icon" href="plugins/dist/img/icono2.ico" />	
     <!-- Bootstrap 3.3.4 -->
     <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Ionicons 2.0.0 -->
-    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Jquery -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- Theme style -->
     <link href="plugins/dist/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <!-- Calendar style -->
     <link href="plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
+    
     <link href="plugins/dist/css/skins/skin-blue.css" rel="stylesheet" type="text/css" />
+    <!-- Tables style -->
     <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
-   
-    <style media="screen">
-    .login-box-body{
-      border: solid 2px;
-      border-radius: 10px 10px 10px 10px;
-    }
 
-    </style>
-
-    <style>
-    .uk-grid{
-    
-    
-    overflow-x: auto;
-}
-      .spinner{
-        margin: 40%;
-    margin-top: 35vh;
-    width: 80px;
-    height: 80px;
-    border: 8px solid rgba(201, 91, 88, 0);
-    border-left-color: #8e2d39;
-			border-radius: 50px;
-			animation: spin 1s infinite linear;
-		}
-		@keyframes spin{
-			to {
-				transform: rotate(360deg);
-			}
-    }
-    .ss_input {
-  position: absolute;
-  background-color: transparent;
-  width: 100%;
-  border: 0;
-}
-
-.select-search {
- width: 35%;
-  position: relative;
-  z-index: 2;
-}
-
-.select-search > select {
-  width: 100%;
-  position: relative;
-  z-index: -1;
-}
-    </style>
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />  
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -78,48 +33,49 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
         
-<script src="plugins/morris/raphael-min.js"></script>
-<script src="plugins/morris/morris.js"></script>
+  <script src="plugins/morris/raphael-min.js"></script>
+  <script src="plugins/morris/morris.js"></script>
   <link rel="stylesheet" href="plugins/morris/morris.css">
   <link rel="stylesheet" href="plugins/morris/example.css">
-          <script src="plugins/jspdf/jspdf.min.js"></script>
-          <script src="plugins/jspdf/jspdf.plugin.autotable.js"></script>
+  <script src="plugins/jspdf/jspdf.min.js"></script>
+  <script src="plugins/jspdf/jspdf.plugin.autotable.js"></script>
+
           <?php if(isset($_GET["view"]) && $_GET["view"]=="sell"):?>
-<script type="text/javascript" src="plugins/jsqrcode/llqrcode.js"></script>
-<script type="text/javascript" src="plugins/jsqrcode/webqr.js"></script>
+  <script type="text/javascript" src="plugins/jsqrcode/llqrcode.js"></script>
+  <script type="text/javascript" src="plugins/jsqrcode/webqr.js"></script>
           <?php endif;?>
 
   </head>
 
-  <body class="<?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>  skin-blue sidebar-mini <?php else:?>login-page<?php endif; ?>" >
+  <body  class="<?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>  skin-blue sidebar-mini <?php else:?>login-page<?php endif; ?>" >
     
     <div class="wrapper">
       <!-- Main Header -->
       <?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>
       <header class="main-header">
         <!-- Logo -->
-        <a href="./" class="logo">
+        <a href="./" class="logo" style="text-decoration:none;">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>I</b>A</span>
+          <span class="logo-mini"><b style="font-weight: 700;">I</b>A</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>INVENTARIO</b>ASJ</span>
+          <span class="logo-lg" ><b style="font-weight: 700;">INVENTARIO</b>ASJ</span>
         </a>
 
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <a style="text-decoration:none;" href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
           </a>
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
-<?php
-if(isset($_SESSION["user_id"])):
-$msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
-?>
-<li class="dropdown messages-menu">
+          <?php
+          if(isset($_SESSION["user_id"])):
+          $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
+          ?>
+            <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
               <span class="label label-success"><?php echo count($msgs);?></span>
@@ -151,7 +107,7 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
               <li class="footer"><a href="./?view=messages&opt=all">Todos los mensajes</a></li>
             </ul>
           </li>
-<?php endif;?>
+        <?php endif;?>
               <!-- User Account Menu -->
               <li class="dropdown user user-menu">
                 <!-- Menu Toggle Button -->
@@ -159,10 +115,10 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
                   <!-- The user image in the navbar-->
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
                   <span class=""><?php if(isset($_SESSION["user_id"]) ){ echo UserData::getById($_SESSION["user_id"])->name;
-                  if(Core::$user->kind==1){ echo " (Administrador)"; }
+                  if(Core::$user->kind==1){ echo "(Administrador)"; }
                   else if(Core::$user->kind==2){ echo " (Almacenista)"; }
-                  else if(Core::$user->kind==3){ echo " (Vendedor)"; }
-
+                  else if(Core::$user->kind==3){ echo " (Oficial B/S)"; }
+                  else if(Core::$user->kind==4){ echo " (Contador)"; }
                   }else if (isset($_SESSION["client_id"])){ echo PersonData::getById($_SESSION["client_id"])->name." (Cliente)" ;}?> <b class="caret"></b> </span>
 
                 </a>
@@ -190,8 +146,8 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
 
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-<!--
-<div class="user-panel">
+            <!--
+            <div class="user-panel">
             <div class="pull-left image">
               <img src="1.jpg" class="img-circle" alt="User Image" />
             </div>
@@ -206,12 +162,12 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
           <ul class="sidebar-menu">
             <li class="header">ADMINISTRACION DEL SISTEMA</li>
             <?php if(isset($_SESSION["user_id"])):?>
-                        <li><a href="./index.php?view=home"><i class='fa fa-dashboard'></i> <span>Dashboard</span></a></li>
-<?php if(Core::$user->kind==1||Core::$user->kind==2):?>
-  
-                        <li>
-                          <a href="./index.php?view=alerts"><i class='fa fa-bell-o'></i> 
-                            <span>Alertas</span>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="home")){ echo "active"; }?>"><a href="./index.php?view=home"><i class='fa fa-dashboard'></i> <span>Dashboard</span></a></li>
+                <?php if(Core::$user->kind!=4):?>
+                        <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="alerts")){ echo "active"; }?>">
+                        <a href="./index.php?view=alerts">
+                        <i class='fa fa-bell-o'></i> 
+                        <span>Alertas</span>
                             
                             <?php
                             $found=0;
@@ -220,126 +176,133 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
                               $q= OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
                               if( $q==0 ||  $q<=$product->inventary_min){
                                 $found+=1;
-
+                              }
                             }
-  
-                              }
-                              if ($found!=0) {
-                               echo '<small class="label pull-right bg-red">';
-                                echo $found;
-                                echo '</small>';
-                              }
+                            if ($found!=0) {
+                              echo '<small class="label pull-right bg-red">';
+                              echo $found;
+                              echo '</small>';
+                            }
                                
                            ?>
                             
-                          </a>
-                        </li>
-                        
-<?php endif; ?>
-            <li><a href="./?view=sell"><i class='fa fa-usd'></i> <span>Vender</span></a></li>
+                        </a>
+                        </li>      
+                  <?php endif; ?>
+           
             <!--<li><a href="./?view=cotizations"><i class='fa fa-square-o'></i> <span>Cotizaciones</span></a></li>-->
-            <li>
+            <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="calendar")){ echo "active"; }?>">
               <a href="./?view=calendar">
                 <i class="fa fa-calendar"></i> <span>Calendario</span>
-                <small class="label pull-right bg-red">3</small>
+                <small class="label pull-right bg-green">new</small>
               </a>
             </li>
-            <li class="treeview">
-              <a href="#"><i class='fa fa-wrench'></i> <span>Herramientas</span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-                <li><a href="./?view=contacts">Contactos</a></li>
-                <li><a href="./?view=messages&opt=all">Mensajes</a></li>
-              </ul>
-            </li>
-            <li class="treeview <?php if(isset($_GET["view"]) && ($_GET["view"]=="sells"||$_GET["view"]=="bydeliver" ||$_GET["view"]=="bycob")){ echo "active"; }?>"   >
+            <?php if(Core::$user->kind!=2):?>
+            <li class="treeview <?php if(isset($_GET["view"]) && ($_GET["view"]=="sell"||$_GET["view"]=="sells"||$_GET["view"]=="sellscredit"||$_GET["view"]=="bydeliver" ||$_GET["view"]=="bycob")){ echo "active"; }?>"   >
               <a href="#"><i class='fa fa-shopping-cart'></i> <span>Ventas</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="./?view=sells">Ventas</a></li>
-<?php if(Core::$user->kind==1):?>
-       <li><a href="./?view=sellscredit">Ventas credito</a></li>
-   <?php endif; ?>
-                <li><a href="./?view=bydeliver">Por Entregar</a></li>
-                <li><a href="./?view=bycob">Por Cobrar</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="sell")){ echo "active"; }?>"><a href="./?view=sell">Vender</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="sells")){ echo "active"; }?>"><a href="./?view=sells">Ver Ventas</a></li>
+                <?php if(Core::$user->kind==1):?>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="sellscredit")){ echo "active"; }?>"><a href="./?view=sellscredit">Ventas credito</a></li>
+                <?php endif; ?>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="bydeliver")){ echo "active"; }?>"><a href="./?view=bydeliver">Por Entregar</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="bycob")){ echo "active"; }?>"><a href="./?view=bycob">Por Cobrar</a></li>
               </ul>
             </li>
-            <?php if(Core::$user->kind==3):?>
-            <li><a href="./?view=inventary&stock=<?php echo StockData::getPrincipal()->id;?>"><i class='fa fa-area-chart'></i> <span>Inventario</span></a></li>
+            <?php endif; ?>
+
+          
+          <?php if(Core::$user->kind!=2 && Core::$user->kind!=4 ):?>
+          <li class="treeview <?php if(isset($_GET["view"]) && ($_GET["view"]=="re"||$_GET["view"]=="res"||$_GET["view"]=="byreceive"||$_GET["view"]=="topay")){ echo "active"; }?>">
+            <a href="#"><i class='fa fa-clock-o'></i> <span>Compras</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+              <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="re")){ echo "active"; }?>"><a href="./?view=re">Nueva </a></li>
+              <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="res")){ echo "active"; }?>"><a href="./?view=res">Compras</a></li>
+              <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="byreceive")){ echo "active"; }?>"><a href="./?view=byreceive">Por Recibir</a></li>
+              <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="topay")){ echo "active"; }?>"><a href="./?view=topay">por Pagar</a></li>
+            </ul>
+          </li>
           <?php endif; ?>
-
-
-            <?php if(Core::$user->kind==1 || Core::$user->kind==2):?>
-            <li class="treeview">
-              <a href="#"><i class='fa fa-clock-o'></i> <span>Compras</span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-                <li><a href="./?view=re">Nueva *</a></li>
-                <li><a href="./?view=res">Compras</a></li>
-                <li><a href="./?view=byreceive">Por Recibir</a></li>
-          <li><a href="./?view=topay">por Pagar</a></li>
-              </ul>
-            </li>
-            <?php if(Core::$user->kind==1):?>
-                        <li class="treeview">
+            <?php if(Core::$user->kind!=4):?>
+              <li class="treeview <?php if(isset($_GET["view"]) && ($_GET["view"]=="products"||$_GET["view"]=="categories"||$_GET["view"]=="subcategories"||$_GET["view"]=="programs"||$_GET["view"]=="password"||$_GET["view"]=="clients"||$_GET["view"]=="providers")){ echo "active"; }?>">
               <a href="#"><i class='fa fa-database'></i> <span>Catalogos</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="./?view=products">Productos</a></li>
-                <li><a href="./?view=categories">Categorias</a></li>
-                <li><a href="./?view=subcategories">SubCategorias</a></li>
-                <li><a href="./?view=programs">Unidad/Programa</a></li>
-                <li><a href="./?view=password">Cuentas/Contraseñas</a></li>
-                <li><a href="./?view=clients">Colaborador/Empleado</a></li>
-                <li><a href="./?view=providers">Proveedores</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="products")){ echo "active"; }?>"><a href="./?view=products">Productos</a></li>
+                <?php if(Core::$user->kind==1):?>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="categories")){ echo "active"; }?>"><a href="./?view=categories">Categorias</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="subcategories")){ echo "active"; }?>"><a href="./?view=subcategories">SubCategorias</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="programs")){ echo "active"; }?>"><a href="./?view=programs">Unidad/Programa</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="password")){ echo "active"; }?>"><a href="./?view=password">Cuentas/Contraseñas</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="clients")){ echo "active"; }?>"><a href="./?view=clients">Colaborador/Empleado</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="providers")){ echo "active"; }?>"><a href="./?view=providers">Proveedores</a></li>
+                <?php endif; ?>
+                <?php if(Core::$user->kind==3):?>
+               
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="providers")){ echo "active"; }?>"><a href="./?view=providers">Proveedores</a></li>
+                <?php endif; ?>
               </ul>
             </li>
-
-            <li class="treeview">
+            <?php endif; ?>
+            <?php if(Core::$user->kind!=2&&Core::$user->kind!=3):?>
+            <li class="treeview <?php if(isset($_GET["view"]) && ($_GET["view"]=="balance"||$_GET["view"]=="spends"||$_GET["view"]=="smallbox"||$_GET["view"]=="box")){ echo "active"; }?>">
               <a href="#"><i class='fa fa-briefcase'></i> <span>Finanzas</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <!--<li><a href="./?view=credit">Credito</a></li>-->
-                <li><a href="./?view=balance">Balance</a></li>
-                <li><a href="./?view=spends">Gastos</a></li>
-                <li><a href="./?view=smallbox&opt=all">Caja Chica</a></li>
-                <li><a href="./?view=box">Caja</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="balance")){ echo "active"; }?>"><a href="./?view=balance">Balance</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="spends")){ echo "active"; }?>"><a href="./?view=spends">Gastos</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="smallbox")){ echo "active"; }?>"><a href="./?view=smallbox&opt=all">Caja Chica</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="box")){ echo "active"; }?>"><a href="./?view=box">Caja</a></li>
               </ul>
             </li>
-          <?php endif; ?>
-            <li class="treeview">
+            <?php endif; ?>
+            <?php if(Core::$user->kind!=4):?>
+            <li class="treeview <?php if(isset($_GET["view"]) && ($_GET["view"]=="inventary"||$_GET["view"]=="stocks"||$_GET["view"]=="asing"||$_GET["view"]=="selectstock")){ echo "active"; }?>">
               <a href="#"><i class='fa fa-area-chart'></i> <span>Inventario</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="./?view=inventary&stock=<?php echo StockData::getPrincipal()->id;?>">Inventario Principal</a></li>
-                <li><a href="./?view=re">Abastecer</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="inventary")){ echo "active"; }?>"><a href="./?view=inventary&stock=<?php echo StockData::getPrincipal()->id;?>">Inventario Principal</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="asing")){ echo "active"; }?>"><a href="./?view=asing">Asignar Equipo</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="selectstock")){ echo "active"; }?>"><a href="./?view=selectstock">Traspasar</a></li>
             <?php if(Core::$user->kind==1):?>
-                <li><a href="./?view=stocks">Inventarios</a></li>
-                <li><a href="./?view=asing">Asignar Equipo</a></li>
-                <li><a href="./?view=selectstock">Traspasar</a></li>
-                <li><a href="./?view=dev">Devolucion</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="stocks")){ echo "active"; }?>"><a href="./?view=stocks">Inventarios</a></li>
+                
+                
               <?php endif; ?>
               </ul>
             </li>
+            <?php endif; ?>
+            <li class="treeview <?php if(isset($_GET["view"]) && ($_GET["view"]=="contacts"||$_GET["view"]=="messages")){ echo "active"; }?>">
+              <a href="#"><i class='fa fa-wrench'></i> <span>Herramientas</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="contacts")){ echo "active"; }?>"><a href="./?view=contacts">Contactos</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="messages")){ echo "active"; }?>"><a href="./?view=messages&opt=all">Mensajes</a></li>
+              </ul>
+            </li>
             <?php if(Core::$user->kind==1):?>
-                        <li class="treeview">
+                        <li class="treeview <?php if(isset($_GET["view"]) && ($_GET["view"]=="reports"||$_GET["view"]=="sellreports"||$_GET["view"]=="resreport"||$_GET["view"]=="paymentreport"||$_GET["view"]=="popularproductsreport")){ echo "active"; }?>">
               <a href="#"><i class='fa fa-file-text-o'></i> <span>Reportes</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="./?view=reports">Inventario</a></li>
-                <li><a href="./?view=sellreports">Ventas</a></li>
-                <li><a href="./?view=resreport">Compras</a></li>
-                <li><a href="./?view=paymentreport">Reporte de pagos</a></li>
-                <li><a href="./?view=popularproductsreport">Productos Populares</a></li>
+                <li  class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="reports")){ echo "active"; }?>"><a href="./?view=reports">Inventario</a></li>
+                <li  class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="sellreports")){ echo "active"; }?>"><a href="./?view=sellreports">Ventas</a></li>
+                <li  class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="resreport")){ echo "active"; }?>"><a href="./?view=resreport">Compras</a></li>
+                <li  class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="paymentreport")){ echo "active"; }?>"><a href="./?view=paymentreport">Reporte de pagos</a></li>
+                <li  class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="popularproductsreport")){ echo "active"; }?>"><a href="./?view=popularproductsreport">Productos Populares</a></li>
               </ul>
             </li>
+            
 
-
-            <li class="treeview">
+            <li class="treeview  <?php if(isset($_GET["view"]) && ($_GET["view"]=="users"||$_GET["view"]=="settings"||$_GET["view"]=="import")){ echo "active"; }?>">
               <a href="#"><i class='fa fa-cog'></i> <span>Administracion</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="./?view=users">Usuarios</a></li>
-                <li><a href="./?view=settings">Configuracion</a></li>
-                <li><a href="./?view=import">Importar Datos</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="users")){ echo "active"; }?>"><a href="./?view=users">Usuarios</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="settings")){ echo "active"; }?>"><a href="./?view=settings">Configuracion</a></li>
+                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="import")){ echo "active"; }?>"><a href="./?view=import">Importar Datos</a></li>
 
 
               </ul>
             </li>
           <?php endif; ?>
-          <?php endif; ?>
+          
             <?php elseif(isset($_SESSION["client_id"])):?>
             <li><a href="./index.php?view=clienthome"><i class='fa fa-dashboard'></i> <span>Dashboard</span></a></li>
             <li><a href="./?view=cotizations"><i class='fa fa-square-o'></i> <span>Cotizaciones</span></a></li>
@@ -363,20 +326,21 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
       <?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>
         
       <div  class="content-wrapper">
-      <div id="loader" style="margin: 0;padding: 0;display:none;align-items: center;justify-content: center;height: 100vh; background: #00000059;z-index: 1;position: absolute;width: 100%;
-    ;">
-          <div class="spinner">
+      <div  id="loader" class="overlay">
+      <div class="spinner">
 
-          </div>
-        </div>
+      </div>
+      
+      </div>
+    
         <?php View::load("index");?>
       </div><!-- /.content-wrapper -->
 
         <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 6.1
+          <b>Version</b> 1.0
         </div>
-        <strong>Copyright &copy; 2019 <a href="" target="_blank">InvenSoft</a></strong>
+        <strong><a  >Asociacion para una Sociedad mas Justa</a></strong>
       </footer>
       <?php else:?>
         <?php if(isset($_GET["view"]) && $_GET["view"]=="clientaccess"):?>
@@ -423,11 +387,11 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
           </div><!-- /.login-title -->
       <center><h4>Usuario</h4></center>
         <form action="./?action=processlogin" method="post">
-          <div class="form-group has-feedback">
-            <input type="text" name="username" required class="form-control" placeholder="Usuario"/>
+          <div class="form-group has-feedback <?php if(isset($_COOKIE["prdupd1"])): echo 'has-error'; setcookie("prdupd1","",time()-18600); endif; ?>">
+            <input type="text" name="username" required class="form-control " placeholder="Usuario"/>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
-          <div class="form-group has-feedback">
+          <div class="form-group has-feedback <?php if(isset($_COOKIE["prdupd1"])): echo 'has-error'; setcookie("prdupd1","",time()-18600); endif; ?>">
             <input type="password" name="password" required class="form-control" placeholder="Password"/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
@@ -435,8 +399,11 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
 
             <div class="col-xs-12">
               <button type="submit" class="btn btn-primary btn-block btn-flat"><span class="glyphicon glyphicon-send"></span> Acceder al sistema</button>
-
-              <a href="./?view=clientaccess" class="btn btn-default btn-block btn-flat"><i class="fa fa-arrow-right"></i> Acceso como cliente  </a>
+              <br>
+              <?php if(isset($_COOKIE["prdupd1"])):?>
+                <p class="alert alert-danger">Usuario o Contraseña incorrecta.</p>
+              <?php setcookie("prdupd1","",time()-18600); endif; ?>
+              <!--<a href="./?view=clientaccess" class="btn btn-default btn-block btn-flat"><i class="fa fa-arrow-right"></i> Acceso como cliente  </a>-->
             </div><!-- /.col -->
           </div>
         </form>
@@ -491,6 +458,7 @@ $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]);
         }
     }
         });
+        $("#loader").hide();
       });
     </script>
     <!-- Optionally, you can add Slimscroll and FastClick plugins.

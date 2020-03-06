@@ -34,11 +34,12 @@ if(count($products)>0){
 	<thead>
 		<th>Codigo</th>
 		<th>Nombre</th>
-		<th>Unidad</th>
+		<th>Descripcion</th>
+		<th>Comentarios</th>
 		<th>Precio unitario</th>
 		<th>En inventario</th>
 		<th>Cantidad</th>
-		<th style="width:100px;"></th>
+		<th style="width:100px;">Acciones</th>
 	</thead>
 	<?php
 $products_in_cero=0;
@@ -49,8 +50,9 @@ $q= OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
 	<tr class="<?php if($q<=$product->inventary_min){ echo "danger"; }?>">
 		<td style="width:80px;"><?php echo $product->barcode; ?></td>
 		<td><?php echo $product->name; ?></td>
-		<td><?php echo $product->unit; ?></td>
-		<td><b>$<?php echo $product->price_in; ?></b></td>
+		<td style="width:350px;"><?php echo $product->description; ?></td>
+		<td><?php echo $product->comment; ?></td>
+		<td><b>L. <?php echo $product->price_in; ?></b></td>
 		<td>
 			<?php echo $q; ?>
 		</td>
@@ -90,7 +92,7 @@ $total = 0;
 <thead>
 	<th style="width:30px;">Codigo</th>
 	<th style="width:30px;">Cantidad</th>
-	<th style="width:30px;">Unidad</th>
+	<th>Descripcion</th>
 	<th>Producto</th>
 	<th style="width:30px;">Precio Unitario</th>
 	<th style="width:30px;">Precio Total</th>
@@ -100,9 +102,9 @@ $total = 0;
 $product = ProductData::getById($p["product_id"]);
 ?>
 <tr >
-	<td><?php echo $product->id; ?></td>
+	<td><?php echo $product->barcode; ?></td>
 	<td ><?php echo $p["q"]; ?></td>
-	<td><?php echo $product->unit; ?></td>
+	<td><?php echo $product->description; ?></td>
 	<td><?php echo $product->name; ?></td>
 	<td><b>$ <?php echo number_format($product->price_in,2,",","."); ?></b></td>
 	<td><b>$ <?php  $pt = $product->price_in*$p["q"]; $total +=$pt; echo number_format($pt,2,",","."); ?></b></td>
