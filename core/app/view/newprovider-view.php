@@ -1,11 +1,11 @@
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-12" style="padding: 3rem;">
 	<h1>Nuevo Proveedor</h1>
 	<br>
 		<form class="form-horizontal" method="post" id="addproduct" action="index.php?view=addprovider" role="form">
 
   <div class="form-group">
-    <label for="inputEmail1" class="col-lg-2 control-label">RFC/RUT*</label>
+    <label for="inputEmail1" class="col-lg-2 control-label">RTN*</label>
     <div class="col-md-6">
       <input type="text" name="no" class="form-control" id="no" placeholder="RFC/RUT">
     </div>
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="inputEmail1" class="col-lg-2 control-label">Apellido*</label>
+    <label for="inputEmail1" class="col-lg-2 control-label">Nombre Comercial*</label>
     <div class="col-md-6">
       <input type="text" name="lastname" required class="form-control" id="lastname" placeholder="Apellido">
     </div>

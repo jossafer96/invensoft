@@ -1,3 +1,5 @@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
 <?php if(isset($_GET["opt"]) && $_GET["opt"]=="all"):
 
 $ops = SavingData::getAll();
@@ -13,14 +15,14 @@ $outs = SavingData::SumByKind(2);
       <div class="row">
         <div class="col-md-7">
 <h1>Caja chica</h1>
-<a href="./?view=smallbox&opt=new" class="btn btn-default">Nueva Operacion</a><br><br>
+<a href="./?view=smallbox&opt=new" class="btn btn-success">Nueva Operacion</a><br><br>
         </div>
         <div class="col-lg-5 col-xs-6">
           <!-- small box -->
           <br>
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>$ <?php echo number_format($ins->s-$outs->s,2,".",",");?></h3>
+              <h3 style="color: white">L. <?php echo number_format($ins->s-$outs->s,2,".",",");?></h3>
 
               <p>Disponible</p>
             </div>
@@ -51,7 +53,7 @@ $outs = SavingData::SumByKind(2);
 	<td><?php echo $op->id;?></td>
 	<td><?php echo $op->concept;?></td>		
 	<td><?php echo $op->description;?></td>		
-	<td>$ <?php echo $op->amount;?></td>		
+	<td>L. <?php echo number_format($op->amount,2,".",","); ?></td>		
   <td><?php if($op->kind==1){echo "Entrada";}else{ echo "Salida"; }?></td>    
 	<td><?php echo $op->date_at;?></td>		
 	<td style="width:160px;">
@@ -102,8 +104,8 @@ $outs = SavingData::SumByKind(2);
   <div class="form-group">
     <label for="exampleInputEmail1">Monto</label>
 <div class="input-group">
-  <span class="input-group-addon">$</span>
-  <input type="text" class="form-control"  placeholder="Monto $" name="amount">
+  <span class="input-group-addon">L.</span>
+  <input type="text" class="form-control"  placeholder="Monto Lps." name="amount">
 </div>
   </div>
   <button type="submit" class="btn btn-primary">Agregar Salida</button>
@@ -140,8 +142,8 @@ $x = SavingData::getById($_GET["id"]);
   <div class="form-group">
     <label for="exampleInputEmail1">Monto</label>
 <div class="input-group">
-  <span class="input-group-addon">$</span>
-  <input type="text" class="form-control" value="<?php echo $x->amount;?>"  placeholder="Monto $" name="amount">
+  <span class="input-group-addon">L.</span>
+  <input type="text" class="form-control" value="<?php echo $x->amount;?>"  placeholder="Monto Lps." name="amount">
 </div>
   </div>
   <input type="hidden" name="id" value="<?php echo $x->id; ?>">

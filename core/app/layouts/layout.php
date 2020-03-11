@@ -203,9 +203,9 @@
               <ul class="treeview-menu">
                 <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="sell")){ echo "active"; }?>"><a href="./?view=sell">Vender</a></li>
                 <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="sells")){ echo "active"; }?>"><a href="./?view=sells">Ver Ventas</a></li>
-                <?php if(Core::$user->kind==1):?>
+              <!--  <?php if(Core::$user->kind==1):?>
                 <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="sellscredit")){ echo "active"; }?>"><a href="./?view=sellscredit">Ventas credito</a></li>
-                <?php endif; ?>
+                <?php endif; ?>-->
                 <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="bydeliver")){ echo "active"; }?>"><a href="./?view=bydeliver">Por Entregar</a></li>
                 <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="bycob")){ echo "active"; }?>"><a href="./?view=bycob">Por Cobrar</a></li>
               </ul>
@@ -238,7 +238,7 @@
                 <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="providers")){ echo "active"; }?>"><a href="./?view=providers">Proveedores</a></li>
                 <?php endif; ?>
                 <?php if(Core::$user->kind==3):?>
-               
+                  <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="password")){ echo "active"; }?>"><a href="./?view=password">Cuentas/Contraseñas</a></li>
                 <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="providers")){ echo "active"; }?>"><a href="./?view=providers">Proveedores</a></li>
                 <?php endif; ?>
               </ul>
@@ -296,7 +296,7 @@
               <ul class="treeview-menu">
                 <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="users")){ echo "active"; }?>"><a href="./?view=users">Usuarios</a></li>
                 <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="settings")){ echo "active"; }?>"><a href="./?view=settings">Configuracion</a></li>
-                <li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="import")){ echo "active"; }?>"><a href="./?view=import">Importar Datos</a></li>
+                <!--<li class="<?php if(isset($_GET["view"]) && ($_GET["view"]=="import")){ echo "active"; }?>"><a href="./?view=import">Importar Datos</a></li>-->
 
 
               </ul>

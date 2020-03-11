@@ -7,14 +7,16 @@ class OperationData {
 		$this->name = "";
 		$this->product_id = "";
 		$this->q = "";
+		$this->price_in = "";
+		$this->price_out = "NULL";
 		$this->cut_id = "";
 		$this->operation_type_id = "";
 		$this->created_at = "NOW()";
 	}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (price_in,stock_id,product_id,q,operation_type_id,sell_id,created_at,description_operation,user_operation) ";
-		$sql .= "value ($this->price_in,$this->stock_id,$this->product_id,$this->q,$this->operation_type_id,$this->sell_id,$this->created_at,\"$this->description_operation\",$this->user)";
+		$sql = "insert into ".self::$tablename." (price_in,price_out,stock_id,product_id,q,operation_type_id,sell_id,created_at,description_operation,user_operation) ";
+		$sql .= "value ($this->price_in,$this->price_out,$this->stock_id,$this->product_id,$this->q,$this->operation_type_id,$this->sell_id,$this->created_at,\"$this->description_operation\",$this->user)";
 		//echo "<script type='text/javascript'>alert('$sql');</script>";
 		return Executor::doit($sql);
 		//print_r($sql);

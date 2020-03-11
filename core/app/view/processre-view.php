@@ -11,7 +11,7 @@ $process = true;
 			$sell->user_id = $_SESSION["user_id"];
 			$sell->p_id = $_POST["p_id"];
 			$sell->d_id = $_POST["d_id"];
-			$sell->total = $_POST["total"];
+			$sell->total = $_POST["money"];
 			$sell->stock_to_id = $_POST["stock_id"];
 			$sell->person_id=$_POST["client_id"]!=""?$_POST["client_id"]:"NULL";
 
@@ -31,8 +31,7 @@ $process = true;
 			$description_operation_start= 'Reabastecimiento de equipo '.$product->name;
 			$op->description_operation = $description_operation_start;
 			$op->user=$user_id;
-			$op->price_in = $product->price_in;
-			$op->price_out = $product->price_out;
+			$op->price_in = $_POST["money"];
 			$op->stock_id = $_POST["stock_id"];
 			 $op->product_id = $c["product_id"] ;
 			 $op->operation_type_id=$operation_type; // 1 - entrada

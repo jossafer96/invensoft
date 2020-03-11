@@ -1,16 +1,15 @@
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Calendar
-            <small>Control panel</small>
+            Calendario
           </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Calendar</li>
-          </ol>
         </section>
-
+        <ol class="breadcrumb">
+          <li><a href="./?view=home">Inicio</a></li>
+          <li class="active">Calendario</li>
+        </ol>
         <!-- Main content -->
         <section class="content">
           <div class="row">

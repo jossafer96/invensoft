@@ -1,16 +1,15 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
-<?php
 
-if(Core::$user->kind==3){ Core::redir("./?view=sell"); }
-
-?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
           
-          <h2 style="margin-bottom: 0px" class="box-title">Alerta de Inventario - <?php echo StockData::getPrincipal()->name; ?></h2>
+          <h1 style="margin-bottom: 0px" class="box-title">Alerta de Inventario - <?php echo StockData::getPrincipal()->name; ?></h1>
         </section>
-
+        <ol class="breadcrumb">
+          <li><a href="./?view=home">Inicio</a></li>
+          <li class="active">Alertas</li>
+        </ol>
         <!-- Main content -->
         <section class="content">
 

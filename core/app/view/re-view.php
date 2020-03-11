@@ -94,8 +94,8 @@ $total = 0;
 	<th style="width:30px;">Cantidad</th>
 	<th>Descripcion</th>
 	<th>Producto</th>
-	<th style="width:30px;">Precio Unitario</th>
-	<th style="width:30px;">Precio Total</th>
+	<th style="width:150px;">Precio Unitario</th>
+	<th style="width:150px;">Precio Total</th>
 	<th ></th>
 </thead>
 <?php foreach($_SESSION["reabastecer"] as $p):
@@ -178,30 +178,14 @@ $clients = DData::getAll();
   </div>
 
 <div class="form-group">
-    <label for="inputEmail1" class="col-lg-2 control-label">Efectivo</label>
+    <label for="inputEmail1" class="col-lg-2 control-label">Precio de compra UNITARIO</label>
     <div class="col-lg-10">
       <input type="text" name="money" required class="form-control" id="money" placeholder="Efectivo">
     </div>
   </div>
   <div class="row">
 <div class="col-md-6 col-md-offset-6">
-<div class="box box-primary">
-<table class="table table-bordered">
-<tr>
-	<td><p>Subtotal</p></td>
-	<td><p><b>$ <?php echo number_format($total*(1 - ($iva_val/100) ),2,'.',','); ?></b></p></td>
-</tr>
-<tr>
-	<td><p><?php echo $iva_name." (".$iva_val."%) ";?></p></td>
-	<td><p><b>$ <?php echo number_format($total*($iva_val/100),2,'.',','); ?></b></p></td>
-</tr>
-<tr>
-	<td><p>Total</p></td>
-	<td><p><b>$ <?php echo number_format($total,2,'.',','); ?></b></p></td>
-</tr>
 
-</table>
-</div>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <div class="checkbox">
@@ -225,15 +209,7 @@ $clients = DData::getAll();
 </div>
 <script>
 	$("#processsell").submit(function(e){
-		money = $("#money").val();
-		if(money<<?php echo $total;?>){
-			alert("No se puede efectuar la operacion");
-			e.preventDefault();
-		}else{
-			go = confirm("Cambio: $"+(money-<?php echo $total;?>));
-			if(go){}
-				else{e.preventDefault();}
-		}
+		
 	});
 </script>
 </div>

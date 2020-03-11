@@ -71,11 +71,11 @@ $user = $sell->getUser();
     $product  = $operation->getProduct();
 ?>
 <tr>
-  <td><?php echo $product->id ;?></td>
+  <td><?php echo $product->barcode ;?></td>
   <td><?php echo $operation->q ;?></td>
   <td><?php echo $product->name ;?></td>
-  <td>$ <?php echo number_format($operation->price_out,2,".",",") ;?></td>
-  <td><b>$ <?php echo number_format($operation->q*$operation->price_out,2,".",",");$total+=$operation->q*$operation->price_out;?></b></td>
+  <td>$ <?php echo number_format($operation->price_in,2,".",",") ;?></td>
+  <td><b>$ <?php echo number_format($operation->q*$operation->price_in,2,".",",");$total+=$operation->q*$operation->price_in;?></b></td>
 </tr>
 <?php
   }
@@ -89,21 +89,21 @@ $user = $sell->getUser();
 <table class="table table-bordered">
   <tr>
     <td><h4>Descuento:</h4></td>
-    <td><h4>$ <?php echo number_format($sell->discount,2,'.',','); ?></h4></td>
+    <td><h4>L. <?php echo number_format($sell->discount,2,'.',','); ?></h4></td>
   </tr>
   <tr>
     <td><h4>Subtotal:</h4></td>
-    <td><h4>$ <?php echo number_format($total,2,'.',','); ?></h4></td>
+    <td><h4>L. <?php echo number_format($total,2,'.',','); ?></h4></td>
   </tr>
-  <tr>
+  <tr><b>
     <td><h4>Total:</h4></td>
-    <td><h4>$ <?php echo number_format($total-  $sell->discount,2,'.',','); ?></h4></td>
+    <td><h4><b>L. <?php echo number_format($total -  $sell->discount,2,'.',','); ?></b></h4></td>
   </tr>
 </table>
 </div>
 
-<?php if($sell->person_id!=""):
-$credit=PaymentData::sumByClientId($sell->person_id)->total;
+<!--<?php if($sell->person_id!=""):
+$credit = PaymentData::sumByClientId($sell->person_id)->total;
 
 ?>
 <div class="box box-primary">
@@ -118,7 +118,7 @@ $credit=PaymentData::sumByClientId($sell->person_id)->total;
   </tr>
 </table>
 </div>
-<?php endif;?>
+<?php endif;?>-->
 </div>
 </div>
 

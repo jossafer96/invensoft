@@ -24,10 +24,13 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
 }
 ?>
   <section class="content-header">
-    <h1>ASJ INVENTARIO</h1>
-    <h4>Almacen principal: <?php echo StockData::getPrincipal()->name;  ?></h4>
-  </section>
+    <h1>ASJ Inventario</h1>
 
+  </section>
+  <ol class="breadcrumb">
+          <li><a href="./?view=home">Inicio</a></li>
+          <li class="active">Dashboard</li>
+        </ol>
     <section class="content">
 <div class="row">
   <div class="col-md-12" style='text-align: center;'>

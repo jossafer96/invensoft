@@ -55,16 +55,16 @@ $iva_val = ConfigurationData::getByPreffix("imp-val")->val;
 
 			<div class="col-md-3">
 				<input type="hidden" name="view" value="sell">
-				<input type="text" id="product_code" name="product_code" class="form-control" placeholder="Codigo de Barra">
+				<input type="text" id="product_code" name="product_code" class="form-control" placeholder="Codigo">
 			</div>
 
 
 			<div class="col-md-1">
 			<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Buscar</button>
 			</div>
-      <div class="col-md-1">
+      <!--<div class="col-md-1">
       <button type="button" id="readqr" class="btn btn-default"><i class="fa fa-qrcode"></i> Buscar por QR</button>
-      </div>
+      </div>-->
 
 		</div>
 		</form>
@@ -191,22 +191,22 @@ $total = 0;
 <thead>
 	<th style="width:30px;">Codigo</th>
 	<th style="width:30px;">Cantidad</th>
-	<th style="width:30px;">Unidad</th>
+	<th>Descripcion</th>
 	<th>Producto</th>
-	<th style="width:30px;">Precio Unitario</th>
-	<th style="width:30px;">Precio Total</th>
+	<th style="width:150px;">Precio Unitario</th>
+	<th style="width:150px;">Precio Total</th>
 	<th ></th>
 </thead>
 <?php foreach($_SESSION["cart"] as $p):
 $product = ProductData::getById($p["product_id"]);
 ?>
 <tr >
-	<td><?php echo $product->id; ?></td>
+	<td><?php echo $product->barcode; ?></td>
 	<td ><?php echo $p["q"]; ?></td>
-	<td><?php echo $product->unit; ?></td>
+	<td><?php echo $product->description; ?></td>
 	<td><?php echo $product->name; ?></td>
-	<td><b>$ <?php echo number_format($product->price_out,2,".",","); ?></b></td>
-	<td><b>$ <?php  $pt = $product->price_out*$p["q"]; $total +=$pt; echo number_format($pt,2,".",","); ?></b></td>
+	<td><b>L. <?php echo number_format($product->price_in,2,".",","); ?></b></td>
+	<td><b>L. <?php  $pt = $product->price_in*$p["q"]; $total +=$pt; echo number_format($pt,2,".",","); ?></b></td>
 	<td style="width:30px;"><a href="index.php?view=clearcart&product_id=<?php echo $product->id; ?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancelar</a></td>
 </tr>
 
@@ -229,7 +229,7 @@ $product = ProductData::getById($p["product_id"]);
     <label class="control-label">Cliente</label>
     <div class="col-lg-12">
     <?php 
-$clients = PersonData::getClients();
+$clients = PersonData::getColaborators();
     ?>
     <select name="client_id" id="client_id" class="form-control">
     <option value="">-- NINGUNO --</option>
@@ -321,7 +321,7 @@ $clients = DData::getAll();
       <div class="checkbox">
         <label>
 		<a href="index.php?view=clearcart" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancelar</a>
-        <button class="btn btn-primary"><i class="glyphicon glyphicon-usd"></i><i class="glyphicon glyphicon-usd"></i> Finalizar Venta</button>
+        <button class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i>  Finalizar Venta</button>
         </label>
       </div>
     </div>
@@ -334,42 +334,42 @@ $clients = DData::getAll();
     client = $("#client_id").val();
 		money = $("#money").val();
     if(money!=""){
-    if(p!=4){
-		if(money<(<?php echo $total;?>-discount)){
-			alert("Efectivo insificiente!");
-			e.preventDefault();
-		}else{
-			if(discount==""){ discount=0;}
-			go = confirm("Cambio: $"+(money-(<?php echo $total;?>-discount ) ) );
-			if(go){}
-				else{e.preventDefault();}
-		}
-    }else if(p==4){ // usaremos credito
-      if(client!=""){
-        // procedemos
-        cli=null;
-        <?php 
-        foreach(PersonData::getClients() as $cli){
-          echo " cli[$cli->id]=$cli->has_credit ;";
-        }
-        ?>
-
-        if(cli[client]==1){
-          // si el cliente tiene credito entonces procedemos a hacer la venta a credito :D
-
-        }else{
-          // el cliente no tiene credito
-          alert("El cliente seleccionado no cuenta con credito!");
+      if(p!=4){
+        if(money<(<?php echo $total;?>-discount)){
+          alert("Efectivo insificiente!");
           e.preventDefault();
-
+        }else{
+          if(discount==""){ discount=0;}
+          go = confirm("Cambio: $"+(money-(<?php echo $total;?>-discount ) ) );
+          if(go){}
+            else{e.preventDefault();}
         }
-      }else{
-        // 
-        alert("Debe seleccionar un cliente!");
-        e.preventDefault();
-      }
+      }else if(p==4){ // usaremos credito
+        if(client!=""){
+          // procedemos
+          cli=null;
+          <?php 
+          foreach(PersonData::getColaborators() as $cli){
+            echo " cli[$cli->id]=$cli->has_credit ;";
+          }
+          ?>
 
-    }
+          if(cli[client]==1){
+            // si el cliente tiene credito entonces procedemos a hacer la venta a credito :D
+
+          }else{
+            // el cliente no tiene credito
+            alert("El cliente seleccionado no cuenta con credito!");
+            e.preventDefault();
+
+          }
+        }else{
+          // 
+          alert("Debe seleccionar un cliente!");
+          e.preventDefault();
+        }
+
+      }
   }else{
     alert("Campo de pago vacio")
     e.preventDefault();

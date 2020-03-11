@@ -28,8 +28,9 @@
 <div class="box-body">
 			<table class="table table-bordered datatable table-hover">
 			<thead>
-			<th>RFC/RUT</th>
-			<th>Nombre completo</th>
+			<th>RTN</th>
+			<th>Nombre</th>
+			<th>Nombre Comercial</th>
 			<th>Direccion</th>
 			<th>Email</th>
 			<th>Telefono</th>
@@ -40,7 +41,8 @@
 				?>
 				<tr>
 				<td><?php echo $user->no; ?></td>
-				<td><?php echo $user->name." ".$user->lastname; ?></td>
+				<td><?php echo $user->name ?></td>
+				<td><?php echo $user->lastname; ?></td>
 				<td><?php echo $user->address1; ?></td>
 				<td><?php echo $user->email1; ?></td>
 				<td><?php echo $user->phone1; ?></td>

@@ -45,7 +45,7 @@ $q= OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
 		<td style="width:250px;"><form method="post" action="index.php?view=addtocart">
 		<input type="hidden" name="product_id" value="<?php echo $product->id; ?>">
 
-<div class="input-group">
+	<div class="input-group">
 		<input type="" class="form-control" required name="q" placeholder="Cantidad ...">
       <span class="input-group-btn">
 		<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Agregar</button>
@@ -66,7 +66,7 @@ $q= OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
 
 	<?php
 }else{
-	echo "<br><p class='alert alert-danger'>No se encontro el producto</p>";
+	echo "<br><p class='alert alert-danger'>No se encontro el producto/equipo</p>";
 }
 ?>
 <hr><br>

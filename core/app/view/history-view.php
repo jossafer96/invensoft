@@ -15,7 +15,7 @@ $operations = OperationData::getAllByProductIdAndStock($product->id,$stock->id);
     <li><a href="report/history-word.php?id=<?php echo $product->id;?>&stock_id=<?php echo $_GET["stock"];?>">Word 2007 (.docx)</a></li>
   </ul>
 </div>
-<h1><?php echo $product->name;; ?> <small>Historial</small></h1>
+<h1><?php echo $product->name; ?> <small>Historial</small></h1>
 <ol class="breadcrumb">
   <li><a href="./?view=home">Inicio</a></li>
   <li><a href="./?view=stocks">Almacenes</a></li>
@@ -37,13 +37,13 @@ $itotal = OperationData::GetInputQByStock($product->id,$stock->id);
 
 	?>
 
-<div class="small-box bg-aqua">
+<div class="small-box bg-green">
                 <div class="inner">
                   <h3><?php echo $itotal; ?></h3>
                   <p>Entradas</p>
                 </div>
                 <div class="icon">
-                  <i class="fa fa-usd"></i>
+                  <i class="fa  fa-arrow-circle-up"></i>
                 </div>
               </div>
 
@@ -59,13 +59,13 @@ $total = OperationData::GetQByStock($product->id,$stock->id);
 
 
 	?>
-<div class="small-box bg-green">
+<div class="small-box bg-yellow">
                 <div class="inner">
                   <h3><?php echo $total; ?></h3>
                   <p>Disponible</p>
                 </div>
                 <div class="icon">
-                  <i class="fa fa-cube"></i>
+                  <i class="fa fa-cubes"></i>
                 </div>
               </div>
 
@@ -82,13 +82,13 @@ $ototal = -1*OperationData::GetOutputQYesF($product->id);
 
 	?>
 
-<div class="small-box bg-yellow">
+<div class="small-box bg-red">
                 <div class="inner">
                   <h3><?php echo $ototal; ?></h3>
                   <p>Salidas</p>
                 </div>
                 <div class="icon">
-                  <i class="fa fa-shopping-cart"></i>
+                  <i class="fa  fa-arrow-circle-down"></i>
                 </div>
               </div>
 </div>
