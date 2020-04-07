@@ -10,8 +10,7 @@
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="report/clients-word.php">Word 2007 (.docx)</a></li>
-<li><a onclick="thePDF()" id="makepdf" class="">PDF (.pdf)</a>
+<li><a onclick="thePDF()" id="makepdf" class="">Descargar PDF (.pdf)</a>
 
   </ul>
 </div>
@@ -89,11 +88,11 @@ var doc = new jsPDF('p', 'pt');
         doc.text("Usuario: <?php echo Core::$user->name." ".Core::$user->lastname; ?>  -  Fecha: <?php echo date("d-m-Y h:i:s");?> ", 40, 90);
 var columns = [
     {title: "Id", dataKey: "id"}, 
-    {title: "RFC/RUT", dataKey: "no"}, 
+    {title: "ID", dataKey: "no"}, 
     {title: "Nombre completo", dataKey: "name"}, 
     {title: "Direccion", dataKey: "address"}, 
     {title: "Email", dataKey: "email"}, 
-    {title: "Telefono", dataKey: "phone"}, 
+    {title: "Puesto", dataKey: "position"}, 
 ];
 var rows = [
   <?php foreach($users as $product):
@@ -104,7 +103,7 @@ var rows = [
       "name": "<?php echo $product->name." ".$product->lastname; ?>",
       "address": "<?php echo $product->address1; ?>",
       "email": "<?php echo $product->email1; ?>",
-      "phone": "<?php echo $product->phone1; ?>",
+      "position": "<?php echo $product->position; ?>",
       },
  <?php endforeach; ?>
 ];

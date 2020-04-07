@@ -18,17 +18,13 @@ $stock = StockData::getById($_GET["stock"]);
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="report/inventary-word.php?stock_id=<?php echo $stock->id; ?>">Word 2007 (.docx)</a></li>
-    <li><a href="report/inventary-xlsx.php?stock_id=<?php echo $stock->id; ?>">Excel 2007 (.xlsx)</a></li>
-<li><a onclick="thePDF()" id="makepdf" class="">PDF (.pdf)</a>
+ <!--   <li><a href="report/inventary-word.php?stock_id=<?php echo $stock->id; ?>">Word 2007 (.docx)</a></li>
+    <li><a href="report/inventary-xlsx.php?stock_id=<?php echo $stock->id; ?>">Excel 2007 (.xlsx)</a></li>-->
+<li><a onclick="thePDF()" id="makepdf" class="">Descargar PDF (.pdf)</a>
   </ul>
 </div>
-		<h1><i class="glyphicon glyphicon-stats"></i> Inventario <small><?php echo $stock->name; ?></small></h1>
-<ol class="breadcrumb">
-  <li><a href="./?view=home">Inicio</a></li>
-  <li><a href="./?view=stocks">Almacenes</a></li>
-  <li><a href="./?view=inventary&stock=<?php echo $stock->id; ?>"><?php echo $stock->name;?></a></li>
-</ol>
+		<h1> Inventario <small><?php echo $stock->name; ?></small></h1>
+
 
 
 <?php

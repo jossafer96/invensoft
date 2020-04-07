@@ -13,7 +13,7 @@
   <a href="index.php?view=newproduct" class="btn  btn-success ">Agregar Producto</a>
   <?php }?>
 <div class="btn-group pull-right">
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+  <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
@@ -21,7 +21,7 @@
     <li><a href="report/products-xlsx.php">Excel (.xlsx)</a></li>
 <li><a onclick="thePDF()" id="makepdf" class="">PDF (.pdf)</a>
 
-  </ul>
+  </ul>-->
 </div>
 </div>
         </section>

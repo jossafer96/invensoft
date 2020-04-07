@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="UTF-8">
-    <title>ASJ | INVENTARIO</title>
+  <meta lang="es">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <title>ASJ | INVENTARIO</title>
+    
     <!-- Favicon -->
     <link rel="shortcut icon" href="plugins/dist/img/icono2.ico" />	
     <!-- Bootstrap 3.3.4 -->
@@ -24,7 +27,7 @@
     <!-- Tables style -->
     <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
 
-    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />  
+    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -327,11 +330,16 @@
         
       <div  class="content-wrapper">
       <div  id="loader" class="overlay">
-      <div class="spinner">
 
-      </div>
-      
-      </div>
+<div class="spinner">
+
+
+
+</div>
+
+
+
+</div>
     
         <?php View::load("index");?>
       </div><!-- /.content-wrapper -->

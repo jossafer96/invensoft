@@ -31,7 +31,9 @@ $process = true;
 			$description_operation_start= 'Reabastecimiento de equipo '.$product->name;
 			$op->description_operation = $description_operation_start;
 			$op->user=$user_id;
-			$op->price_in = $_POST["money"];
+			$price=$_POST["money"];
+			$quantity=$c["q"];
+			$op->price_in = $price;
 			$op->stock_id = $_POST["stock_id"];
 			 $op->product_id = $c["product_id"] ;
 			 $op->operation_type_id=$operation_type; // 1 - entrada
@@ -41,59 +43,6 @@ $process = true;
 			$add = $op->add();			 		
 
 		}
-////////////////// generando el mensaje
-		$subject = "[".$s[1]."] Nuevo reabastecimiento en el inventario";
-		$message = "<p>Se ha realizado un reabastecimiento en el inventario con Id = ".$s[1]."</p>";
-$person_th="";
-$person_td="";
-if($_POST["client_id"]!=""){
-	$person = PersonData::getById($_POST["client_id"]);
-	$person_th="<td>Proveedor</td>";
-	$person_td="<td>".$person->name." ".$person->lastname."</td>";
-}
-
-
-		$message .= "<table border='1'><tr>
-		<td>Id</td>
-		$person_th
-		<td>Almacen</td>
-		<td>Estado de pago</td>
-		<td>Estado de entrega</td>
-		<td>Total</td>
-		</tr>
-<tr>
-		<td>".$s[1]."</td>
-		$person_td
-		<td>".StockData::getById($sell->stock_to_id)->name."</td>
-		<td>".PData::getById($sell->p_id)->name."</td>
-		<td>".DData::getById($sell->d_id)->name."</td>
-		<td> $".number_format($sell->total,2,".",",")."</td>
-		</tr>
-		</table>";
-		$message.="<h3 style='color:#333;'>Resumen</h3>";
-		$message.="<table border='1'><thead><th>Id</th><th>Codigo</th><th>Cantidad</th><th>Unidad</th><th>Producto</th><th>P.U</th><th>P. Total</th></thead>";
-		foreach($cart as  $c){
-			$message.="<tr>";
-		$product = ProductData::getById($c["product_id"]);
-		$message.="<td>".$product->id."</td>";
-		$message.="<td>".$product->barcode."</td>";
-		$message.="<td>".$c["q"]."</td>";
-		$message.="<td>".$product->unit."</td>";
-		$message.="<td>".$product->name."</td>";
-		$message.="<td>$ ".number_format($product->price_in,2,".",",")."</td>";
-		$message.="<td>$ ".number_format($c["q"]*$product->price_in,2,".",",")."</td>";
-		$message.="</tr>";
-		}
-		$message.="</table>";
-//////////////////
-		if($subject!=""&&$message!=""){
-				$m = new MailData();
-				$m->open();
-			    $m->mail->Subject = $subject;
-			    $m->message = "<p>$message</p>";
-			    $m->mail->IsHTML(true);
-			    $m->send();
-			}
 //////////////////
 
 

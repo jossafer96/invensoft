@@ -143,25 +143,26 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
         <div class="col-md-12">
 
         <?php
-
-              $operations = OperationData::getHistory();
-                if(count($operations)>0){
+                            
+           
+                if(count(ProductData::getAll())>0){
+                  $operations = OperationData::getHistory();
             ?>
         <div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Historial</h3>
+          <div class="box-header">
+            <h3 class="box-title">Historial</h3>
 
-  </div><!-- /.box-header -->
-  <div class="box-body no-padding">
-<div class="box-body">
-<table class="table table-bordered datatable table-hover">
-	<thead>
-    <th>N°</th>
-    <th>Fecha</th>
-    <th>Equipo</th>
-    <th>Operacion Realizada</th>
-    <th>Realizado por</th>
-    <th >Codigo Equipo</th>
+          </div><!-- /.box-header -->
+        <div class="box-body no-padding">
+        <div class="box-body">
+        <table class="table table-bordered datatable table-hover">
+          <thead>
+            <th>N°</th>
+            <th>Fecha</th>
+            <th>Equipo</th>
+            <th>Operacion Realizada</th>
+            <th>Realizado por</th>
+            <th >Codigo Equipo</th>
 		
 	</thead>
   <?php 
@@ -169,18 +170,19 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
   foreach($operations as $operation):?>
 	<tr>
     <td><?php echo $n; ?></td>
-  <td><?php echo $operation->created_at; ?></td>
-                      <td><?php echo $operation->name; ?></td>
-                      <td><span class="badge badge-success"><?php echo $operation->description_operation; ?></span></td>
-                      <td><?php echo $operation->user_operation; ?></td>
-                        
-                      <td>
-                        <div  data-height="20"><?php echo $operation->barcode; ?></div>
-                      </td>
+    <td><?php echo $operation->created_at; ?></td>
+    <td><?php echo $operation->name; ?></td>
+    <td>
+      <span class="badge badge-success"><?php echo $operation->description_operation; ?></span>
+    </td>
+    <td><?php echo $operation->user_operation; ?></td>
+    <td>
+      <div  data-height="20"><?php echo $operation->barcode; ?></div>
+    </td>
   </tr>
   
   <?php 
-$n++;
+  $n++;
 endforeach;?>
 </table>
 </div>
@@ -192,8 +194,8 @@ endforeach;?>
 }else{
 ?>
 <div class="alert alert-info">
-  <h2>No hay productos</h2>
-  <p>No se han agregado productos a la base de datos, puedes agregar uno dando click en el boton <b>"Agregar Producto"</b>.</p>
+  <h2 style="color: white"> <b> No hay productos</b></h2>
+  <p>No se han agregado productos a la base de datos, puedes agregar uno dando click en el boton <b>"Nuevo Producto"</b>.</p>
 </div>
 <?php
 }

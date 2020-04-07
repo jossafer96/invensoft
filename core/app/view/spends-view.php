@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 <div class="btn-group pull-right">
-	<a href="index.php?view=newspend" class="btn btn-default"><i class='fa fa-th-list'></i> Nuevo Gasto</a>
+	<a href="index.php?view=newspend" class="btn btn-success"><i class='fa fa-th-list'></i> Nuevo Gasto</a>
 </div>
 		<h1>Gastos</h1>
 <br>
@@ -30,7 +30,7 @@
 				?>
 				<tr>
 				<td><?php echo $user->name; ?></td>
-				<td>$ <?php echo number_format($user->price,2,".",","); ?></td>
+				<td>L. <?php echo number_format($user->price,2,".",","); ?></td>
 				<td><?php echo $user->created_at; ?></td>
 				<td style="width:130px;"><a href="index.php?view=editspend&id=<?php echo $user->id;?>" class="btn btn-warning btn-xs">Editar</a> <a href="index.php?action=delspend&id=<?php echo $user->id;?>" class="btn btn-danger btn-xs">Eliminar</a></td>
 				</tr>
@@ -40,7 +40,7 @@
 			}
 
 echo "</table>";
-echo "<div class='box-body'><h1>Gasto Total : $".number_format($total,2,".",",")."</div></h1>";
+echo "<div class='box-body'><h1>Gasto Total : L. ".number_format($total,2,".",",")."</div></h1>";
 echo "</div>";
 
 		}else{

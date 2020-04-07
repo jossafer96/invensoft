@@ -4,8 +4,7 @@
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="report/onesell-word.php?id=<?php echo $_GET["id"];?>">Word 2007 (.docx)</a></li>
-<li><a onclick="thePDF()" id="makepdf" class=""><i class="fa fa-download"></i> Descargar PDF</a>
+<li><a style="cursor: pointer" onclick="thePDF()" id="makepdf" class=""> Descargar PDF (.pdf)</a></li>
   </ul>
 </div>
 <h1>Resumen de Venta</h1>
@@ -74,8 +73,8 @@ $user = $sell->getUser();
   <td><?php echo $product->barcode ;?></td>
   <td><?php echo $operation->q ;?></td>
   <td><?php echo $product->name ;?></td>
-  <td>$ <?php echo number_format($operation->price_in,2,".",",") ;?></td>
-  <td><b>$ <?php echo number_format($operation->q*$operation->price_in,2,".",",");$total+=$operation->q*$operation->price_in;?></b></td>
+  <td>L. <?php echo number_format($operation->price_in,2,".",",") ;?></td>
+  <td><b>L. <?php echo number_format($operation->q*$operation->price_in,2,".",",");$total+=$operation->q*$operation->price_in;?></b></td>
 </tr>
 <?php
   }
@@ -87,13 +86,14 @@ $user = $sell->getUser();
 <div class="col-md-4">
 <div class="box box-primary">
 <table class="table table-bordered">
-  <tr>
-    <td><h4>Descuento:</h4></td>
-    <td><h4>L. <?php echo number_format($sell->discount,2,'.',','); ?></h4></td>
-  </tr>
+
   <tr>
     <td><h4>Subtotal:</h4></td>
     <td><h4>L. <?php echo number_format($total,2,'.',','); ?></h4></td>
+  </tr>
+  <tr>
+    <td><h4>Descuento:</h4></td>
+    <td><h4>L. <?php echo number_format($sell->discount,2,'.',','); ?></h4></td>
   </tr>
   <tr><b>
     <td><h4>Total:</h4></td>
@@ -102,23 +102,7 @@ $user = $sell->getUser();
 </table>
 </div>
 
-<!--<?php if($sell->person_id!=""):
-$credit = PaymentData::sumByClientId($sell->person_id)->total;
 
-?>
-<div class="box box-primary">
-<table class="table table-bordered">
-  <tr>
-    <td><h4>Saldo anterior:</h4></td>
-    <td><h4>$ <?php echo number_format($credit-$total,2,'.',','); ?></h4></td>
-  </tr>
-  <tr>
-    <td><h4>Saldo Actual:</h4></td>
-    <td><h4>$ <?php echo number_format($credit,2,'.',','); ?></h4></td>
-  </tr>
-</table>
-</div>
-<?php endif;?>-->
 </div>
 </div>
 
@@ -143,7 +127,14 @@ var columns = [
 
 var columns2 = [
 //    {title: "Reten", dataKey: "reten"},
-    {title: "", dataKey: "clave"}, 
+    {title: "DETALLES", dataKey: "clave"}, 
+    {title: "", dataKey: "valor"}, 
+//    ...
+];
+
+var columns3 = [
+//    {title: "Reten", dataKey: "reten"},
+    {title: "RESUMEN", dataKey: "clave"}, 
     {title: "", dataKey: "valor"}, 
 //    ...
 ];
@@ -154,11 +145,11 @@ var rows = [
   ?>
 
     {
-      "code": "<?php echo $product->id; ?>",
+      "code": "<?php echo $product->barcode; ?>",
       "q": "<?php echo $operation->q; ?>",
       "product": "<?php echo $product->name; ?>",
-      "pu": "$ <?php echo number_format($operation->price_out,2,".",","); ?>",
-      "total": "$ <?php echo number_format($operation->q*$operation->price_out,2,".",","); ?>",
+      "pu": "L. <?php echo number_format($operation->price_in,2,".",","); ?>",
+      "total": "L. <?php echo number_format($operation->q*$operation->price_in,2,".",","); ?>",
       },
  <?php endforeach; ?>
 ];
@@ -181,18 +172,17 @@ $person = $sell->getPerson();
 ];
 
 var rows3 = [
-
-    {
-      "clave": "Descuento",
-      "valor": "$ <?php echo number_format($sell->discount,2,'.',',');; ?>",
+  {
+      "clave": "Subtotal",
+      "valor": "L. <?php echo number_format($sell->total,2,'.',',');; ?>",
       },
     {
-      "clave": "Subtotal",
-      "valor": "$ <?php echo number_format($sell->total,2,'.',',');; ?>",
+      "clave": "Descuento",
+      "valor": "L. <?php echo number_format($sell->discount,2,'.',',');; ?>",
       },
     {
       "clave": "Total",
-      "valor": "$ <?php echo number_format($sell->total-$sell->discount,2,'.',',');; ?>",
+      "valor": "L. <?php echo number_format($sell->total-$sell->discount,2,'.',',');; ?>",
       },
 ];
 
@@ -238,7 +228,7 @@ doc.autoTable(columns, rows, {
     }
 });
 
-doc.autoTable(columns2, rows2, {
+doc.autoTable(columns3, rows3, {
     theme: 'grid',
     overflow:'linebreak',
     styles: {

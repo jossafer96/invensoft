@@ -59,27 +59,18 @@ $_SESSION["errors"] = $errors;
 			$sell->p_id = $_POST["p_id"];
 			$sell->d_id = $_POST["d_id"];
 			$sell->iva=  $iva_val;
-			$sell->total = $_POST["total"];
-			$sell->discount = $_POST["discount"];
+			$sell->total = $_POST["total1"];
+			if ($_POST["discount"]=='') {
+				$sell->discount = 0;
+			}else{
+				$sell->discount = $_POST["discount"];
+			}
+			
 			$sell->stock_to_id = StockData::getPrincipal()->id;
 			$sell->person_id=$_POST["client_id"]!=""?$_POST["client_id"]:"NULL";
-
+			//print_r($sell);
 			$s = $sell->add();
 
-			 /// si es credito....
-			 if($_POST["p_id"]==4){
-			 	$payment = new PaymentData();
-			 	$payment->sell_id = $s[1];
-			 	$payment->val = ($_POST["total"]-$_POST["discount"]);
-			 	$payment->person_id = $_POST["client_id"];
-			 	$payment->add();
-			 	if($_POST["money"]>0){
-					$payment2 = new PaymentData();
-				 	$payment2->val = -1*$_POST["money"];
-				 	$payment2->person_id = $_POST["client_id"];
-				 	$payment2->add_payment();
-			 	}
-			 }
 
 		foreach($cart as  $c){
 			$operation_type = "salida";
@@ -88,7 +79,7 @@ $_SESSION["errors"] = $errors;
 			$product = ProductData::getById($c["product_id"]);
 			$op = new OperationData();
 			$op->price_in = $product->price_in;
-			$op->price_out = $product->price_out;
+			$op->price_out = $_POST["money"]/$c["q"];
 			$op->product_id = $c["product_id"] ;
 			$op->description_operation='Venta de '.$c["q"].' Equipo/Producto';
 			$op->user=$_SESSION["user_id"];
@@ -99,14 +90,14 @@ $_SESSION["errors"] = $errors;
 			if(isset($_POST["is_oficial"])){
 				$op->is_oficial = 1;
 			}
-
+			//print_r($op);
 			$add = $op->add();	
-				 		
+			//print_r($add)	 		
 
 
 
 ////////////////// generando el mensaje
-		$subject = "[".$s[1]."] Nueva venta en el inventario";
+		/*$subject = "[".$s[1]."] Nueva venta en el inventario";
 		$message = "<p>Se ha realizado una venta con Id = ".$s[1]."</p>";
 $person_th="";
 $person_td="";
@@ -149,9 +140,9 @@ if($_POST["client_id"]!=""){
 		$message.="<td>$ ".number_format($c["q"]*$product->price_out,2,".",",")."</td>";
 		$message.="</tr>";
 		}
-		$message.="</table>";
+		$message.="</table>";*/
 //////////////////
-		if($subject!=""&&$message!=""){
+	/*	if($subject!=""&&$message!=""){
 				$m = new MailData();
 				$m->open();
 				// enviamos una copia del correo para el cliente
@@ -160,12 +151,12 @@ if($_POST["client_id"]!=""){
 			    $m->message = "<p>$message</p>";
 			    $m->mail->IsHTML(true);
 			    $m->send();
-			}
+			}*/
 //////////////////
 
 
 
-
+/*
 $qx = OperationData::getQByStock($product->id,StockData::getPrincipal()->id);
 $subject="";
 $message="";
@@ -195,7 +186,7 @@ if($qx<=$product->inventary_min && $last){
 			    $m->message = "<p>$message</p>";
 			    $m->mail->IsHTML(true);
 			    $m->send();
-			}
+			}*/
 //////////////////
 
 

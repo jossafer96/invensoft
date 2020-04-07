@@ -19,9 +19,10 @@ if($_POST["is_oficial"]=="1"){
 }
 $op->stock_id =$_POST["stock_id"];
 $op->price_in ='NULL';
-$add = $op->add();
+print_r($op);
+//$add = $op->add();
 if($op->is_oficial==1){
- print "<script>window.location='index.php?view=history&product_id=$_POST[product_id]&stock=$_POST[stock_id]';</script>";
+ //print "<script>window.location='index.php?view=history&product_id=$_POST[product_id]&stock=$_POST[stock_id]';</script>";
 }else{
   //[disabled] print "<script>window.location='index.php?view=historyn&product_id=$_POST[product_id]';</script>";
 

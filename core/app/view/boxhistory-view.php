@@ -3,12 +3,12 @@
 	<div class="col-md-12">
 <!-- Single button -->
 <div class="btn-group pull-right">
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+  <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
     <li><a href="report/boxhistory-word.php">Word 2007 (.docx)</a></li>
-  </ul>
+  </ul>-->
 </div>
 		<h1><i class='fa fa-archive'></i> Historial de Caja</h1>
 		<div class="clearfix"></div>
@@ -47,7 +47,7 @@ $operations = OperationData::getAllProductsBySellId($sell->id);
 		$total += $sell->total-$sell->discount;
 }
 		$total_total += $total;
-		echo "<b>$ ".number_format($total,2,".",",")."</b>";
+		echo "<b>L. ".number_format($total,2,".",",")."</b>";
 
 ?>			
 
@@ -58,7 +58,7 @@ $operations = OperationData::getAllProductsBySellId($sell->id);
 <?php endforeach; ?>
 </table>
 </div>
-<h1>Total: <?php echo "$ ".number_format($total_total,2,".",","); ?></h1>
+<h1>Total: <?php echo "L. ".number_format($total_total,2,".",","); ?></h1>
 	<?php
 }else {
 

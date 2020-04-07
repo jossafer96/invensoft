@@ -46,7 +46,7 @@ $operations = OperationData::getAllProductsBySellId($sell->id);
 
 <?php
 		$total_total += $sell->total-$sell->discount;
-		echo "<b>$ ".number_format($sell->total-$sell->discount,2,".",",")."</b>";
+		echo "<b>L. ".number_format($sell->total-$sell->discount,2,".",",")."</b>";
 
 ?>			
 

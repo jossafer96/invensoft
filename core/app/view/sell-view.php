@@ -194,7 +194,7 @@ $total = 0;
 	<th>Descripcion</th>
 	<th>Producto</th>
 	<th style="width:150px;">Precio Unitario</th>
-	<th style="width:150px;">Precio Total</th>
+	<th style="width:250px;">Precio Total de Compra</th>
 	<th ></th>
 </thead>
 <?php foreach($_SESSION["cart"] as $p):
@@ -216,7 +216,7 @@ $product = ProductData::getById($p["product_id"]);
 <form method="post" class="form-horizontal" id="processsell" action="index.php?view=processsell">
 <h2>Resumen</h2>
 <div class="row">
-<div class="col-md-3">
+<div class="col-md-2">
     <label class="control-label">Almacen</label>
     <div class="col-lg-12">
     <h4 class=""><?php 
@@ -225,13 +225,13 @@ $product = ProductData::getById($p["product_id"]);
     </div>
   </div>
 
-<div class="col-md-3">
+<div class="col-md-4">
     <label class="control-label">Cliente</label>
     <div class="col-lg-12">
     <?php 
 $clients = PersonData::getColaborators();
     ?>
-    <select name="client_id" id="client_id" class="form-control">
+    <select name="client_id" id="client_id" class="form-control" require>
     <option value="">-- NINGUNO --</option>
     <?php foreach($clients as $client):?>
     	<option value="<?php echo $client->id;?>"><?php echo $client->name." ".$client->lastname;?></option>
@@ -239,18 +239,8 @@ $clients = PersonData::getColaborators();
     	</select>
     </div>
   </div>
-<div class="col-md-3">
-    <label class="control-label">Descuento</label>
-    <div class="col-lg-12">
-      <input type="text" name="discount" class="form-control" required value="0" id="discount" placeholder="Descuento">
-    </div>
-  </div>
- <div class="col-md-3">
-    <label class="control-label">Efectivo</label>
-    <div class="col-lg-12">
-      <input type="text" name="money" value="0" class="form-control" id="money" placeholder="Efectivo">
-    </div>
-  </div>
+
+
   </div>
 <div class="row">
 
@@ -260,7 +250,7 @@ $clients = PersonData::getColaborators();
     <?php 
 $clients = PData::getAll();
     ?>
-    <select name="p_id" id="p_id" class="form-control">
+    <select name="p_id" id="p_id" class="form-control" require>
     <?php foreach($clients as $client):?>
     	<option value="<?php echo $client->id;?>"><?php echo $client->name;?></option>
     <?php endforeach;?>
@@ -274,7 +264,7 @@ $clients = PData::getAll();
     <?php 
 $clients = DData::getAll();
     ?>
-    <select name="d_id" class="form-control">
+    <select name="d_id" class="form-control" require>
     <?php foreach($clients as $client):?>
     	<option value="<?php echo $client->id;?>"><?php echo $client->name;?></option>
     <?php endforeach;?>
@@ -285,27 +275,51 @@ $clients = DData::getAll();
 </div>
 
 
-      <input type="hidden" name="total" value="<?php echo $total; ?>" class="form-control" placeholder="Total">
+      
       <div class="clearfix"></div>
 <br>
   <div class="row">
-<div class="col-md-6 col-md-offset-6">
+<div class="col-md-6 ">
 <div class="box box-primary">
 <table class="table table-bordered">
 <tr>
 	<td><p>Subtotal</p></td>
-	<td><p><b>$ <?php echo number_format($total*(1 - ($iva_val/100) ),2,'.',','); ?></b></p></td>
+	<td>
+      <div class="input-group">
+      <span class="input-group-addon"><b>L.</b></span>
+      <input type="text" readonly class="form-control" style="font-weight: bolder;font-size: 25px; " id="subtotal" name="subtotal" value="<?php echo number_format($total*(1 - ($iva_val/100) ),2,'.',','); ?>">
+      </div>  
+</td>
 </tr>
 <tr>
 	<td><p><?php echo $iva_name." (".$iva_val."%) ";?></p></td>
-	<td><p><b>$ <?php echo number_format($total*($iva_val/100),2,'.',','); ?></b></p></td>
+	<td>
+      <div class="input-group">
+      <span class="input-group-addon"><b>L.</b></span>
+      <input type="text" readonly class="form-control" style="font-weight: bolder;font-size: 25px; " id="isv" name="isv" value="<?php echo number_format($total*($iva_val/100),2,'.',','); ?>">
+      </div>  
+  </td>
+</tr>
+<tr>
+	<td><p>Descuentos</p></td>
+	<td><div class="input-group">
+      <span class="input-group-addon"><b>L.</b></span>
+      <input type="text" readonly class="form-control" style="font-weight: bolder;font-size: 25px; " id="disc" name="disc" >
+      </div>
+  </td>
 </tr>
 <tr>
 	<td><p>Total</p></td>
-	<td><p><b>$ <?php echo number_format($total,2,'.',','); ?></b></p></td>
+	<td><div class="input-group">
+      <span class="input-group-addon"><b>L.</b></span>
+      <input type="hidden"  id="total1" name="total1" value="<?php echo number_format($total); ?>">
+      <input type="text" readonly class="form-control" style="font-weight: bolder;font-size: 25px; " id="total" name="total" value="<?php echo number_format($total); ?>">
+      </div>
+  </td>
 </tr>
 
 </table>
+
 </div>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
@@ -316,7 +330,39 @@ $clients = DData::getAll();
       </div>
     </div>
   </div>
-<div class="form-group">
+
+</form>
+</div>
+<div class="col-md-6 ">
+  <div class="box box-primary">
+  <table class="table table-bordered">
+<tr>
+	<td><p>Descuento</p></td>
+	<td>
+                    <div class="input-group ">
+                    <span class="input-group-addon"><b>L.</b></span>
+                    <input type="text" style="font-weight: bolder;font-size: 25px; " class="form-control" id="discount" name="discount" >
+                    <span class="input-group-btn">
+                      <button class="btn btn-info btn-flat" type="button" id="recalc">Recalcular</button>
+                    </span>
+                  </div> 
+</td>
+</tr>
+<tr>
+	<td><p>Efectivo</p></td>
+	<td>
+      <div class="input-group">
+      <span class="input-group-addon"><b>L.</b></span>
+      <input type="text"  class="form-control" style="font-weight: bolder;font-size: 25px; " id="money" name="money" require >
+      </div>  
+  </td>
+</tr>
+
+
+</table>
+
+  </div>
+  <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <div class="checkbox">
         <label>
@@ -326,8 +372,37 @@ $clients = DData::getAll();
       </div>
     </div>
   </div>
-</form>
+</div>
+</div>
+
+<?php endif; ?>
+
+</div>
+
 <script>
+/*$("#money").keyup(function(){
+  var value = $("#money").val();
+  var isv = <?php echo $iva_val?>*value*0.01;
+  $("#subtotal").val(value-isv);
+  $("#isv").val(isv);
+  $("#total").val(value);
+});*/
+
+$("#recalc").click(function(){
+  var value = <?php echo $total?>-$("#discount").val();
+  $("#total").val(value);
+  var isv = <?php echo $iva_val?>*value*0.01;
+  $("#isv").val(isv);
+  $("#subtotal").val(value-isv);
+  $("#disc").val(-$("#discount").val());
+  
+  
+});
+
+
+  
+
+
 	$("#processsell").submit(function(e){
 		discount = $("#discount").val();
     p = $("#p_id").val();
@@ -350,7 +425,7 @@ $clients = DData::getAll();
           cli=null;
           <?php 
           foreach(PersonData::getColaborators() as $cli){
-            echo " cli[$cli->id]=$cli->has_credit ;";
+            echo " cli[$cli->id]=$cli->is_active_access ;";
           }
           ?>
 
@@ -376,10 +451,4 @@ $clients = DData::getAll();
   }
 	});
 </script>
-</div>
-</div>
-
-<?php endif; ?>
-
-</div>
 </section>

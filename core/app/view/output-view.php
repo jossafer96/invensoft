@@ -11,7 +11,7 @@ $product = ProductData::getById($_GET['product_id']);
     
 
 
-<br><form class="form-horizontal" method="post" action="index.php?view=processoutput" role="form">
+<br><form class="form-horizontal" method="post" id="processoutput" action="index.php?view=processoutput" role="form">
 <div class="form-group">
     <label for="inputEmail1" class="col-lg-2 control-label">Codigo</label>
     <div class="col-lg-10">
@@ -35,7 +35,7 @@ $product = ProductData::getById($_GET['product_id']);
     <div class="col-lg-10">
       <input type="text" value="<?php 
         $q=OperationData::getQ($product->id);
-    echo $q; ?>" readonly="readonly" class="form-control"  >
+    echo $q; ?>" readonly="readonly" class="form-control" name="disp" id="disp" >
     </div>
   </div>
    <div class="form-group">
@@ -47,7 +47,7 @@ $product = ProductData::getById($_GET['product_id']);
   <div class="form-group">
     <label for="inputEmail1" class="col-lg-2 control-label">Cantidad</label>
     <div class="col-lg-10">
-      <input type="float" required name="q" class="form-control" id="inputEmail1" placeholder="Cantidad de productos">
+      <input type="float" required name="q" id="q" class="form-control" id="inputEmail1" placeholder="Cantidad de productos">
     </div>
   </div>
 
@@ -72,3 +72,29 @@ $product = ProductData::getById($_GET['product_id']);
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br>
 <?php endif; ?>
+<script>
+  	$("#processoutput").submit(function(e){
+		total = $("#q").val();
+    disp = $("#disp").val();
+
+    if(total!=""){
+      if(total>0){
+        if(total>disp){
+          alert("Cantidad no disponible!");
+          e.preventDefault();
+        }else{
+          if(discount==""){ discount=0;}
+          go = confirm("Quiere realizar esta accion?");
+          if(go){}
+            else{e.preventDefault();}
+        }
+      }else{ // usaremos credito
+        alert("Dato no valido!");
+          e.preventDefault();
+      }
+  }else{
+    alert("Campo de cantidad vacio")
+    e.preventDefault();
+  }
+	});
+</script>

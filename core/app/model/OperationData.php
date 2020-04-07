@@ -11,6 +11,8 @@ class OperationData {
 		$this->price_out = "NULL";
 		$this->cut_id = "";
 		$this->operation_type_id = "";
+		$this->total = "";
+		$this->user_operation = "";
 		$this->created_at = "NOW()";
 	}
 

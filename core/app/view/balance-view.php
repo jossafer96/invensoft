@@ -124,10 +124,10 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)):
 <?php// foreach($operations as $operation):?>
 	<tr>
 		<td><?php echo date("Y-m-d",$i); ?></td>
-		<td>$ <?php echo number_format($operations[0]->t,2,'.',','); ?></td>
-		<td>$ <?php echo number_format($res[0]->tot,2,'.',','); ?></td>
-		<td>$ <?php echo number_format($spends[0]->t,2,'.',','); ?></td>
-		<td>$ <?php echo number_format($operations[0]->t-($spends[0]->t+$res[0]->tot),2,'.',','); ?></td>
+		<td>L. <?php echo number_format($operations[0]->t,2,'.',','); ?></td>
+		<td>L. <?php echo number_format($res[0]->tot,2,'.',','); ?></td>
+		<td>L. <?php echo number_format($spends[0]->t,2,'.',','); ?></td>
+		<td style="font-weight: bolder;">L. <?php echo number_format($operations[0]->t-($spends[0]->t+$res[0]->tot),2,'.',','); ?></td>
 	</tr>
 <?php
 $restotal+= ($res[0]->tot);
@@ -142,12 +142,12 @@ $spendtotal+= ($spends[0]->t);
 </div>
 			 <?php endif; ?>
 			<?php endfor;?>
-	<tr>
-		<td>Total</td>
-		<td>$ <?php echo number_format($selltotal,2,'.',','); ?></td>
-		<td>$ <?php echo number_format($restotal,2,'.',','); ?></td>
-		<td>$ <?php echo number_format($spendtotal,2,'.',','); ?></td>
-		<td>$ <?php echo number_format($selltotal-($spendtotal+$restotal),2,'.',','); ?></td>
+	<tr style="font-size: 30px;font-weight: bolder;">
+		<td >Total</td>
+		<td>L. <?php echo number_format($selltotal,2,'.',','); ?></td>
+		<td>L. <?php echo number_format($restotal,2,'.',','); ?></td>
+		<td>L. <?php echo number_format($spendtotal,2,'.',','); ?></td>
+		<td>L. <?php echo number_format($selltotal-($spendtotal+$restotal),2,'.',','); ?></td>
 	</tr>
 </table>
 </div>

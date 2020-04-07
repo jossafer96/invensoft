@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" rel="stylesheet" type="text/css" />
 <section class="content">
 <div class="row">
 	<div class="col-md-12">
@@ -6,9 +8,7 @@
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="report/topay-word.php">Word 2007 (.docx)</a></li>
-    <li><a href="report/topay-xlsx.php">Excel 2007 (.xlsx)</a></li>
-<li><a onclick="thePDF()" id="makepdf" class="">PDF (.pdf)</a></li>
+<li><a onclick="thePDF()" id="makepdf" class="">Descargar PDF (.pdf)</a></li>
 
   </ul>
 </div>
@@ -28,28 +28,31 @@ if(count($products)>0){
 	?>
 <br>
 <div class="box box-primary">
-<table class="table table-bordered table-hover	">
+<div class="box-header">
+<h3 class="box-title">Compras por Pagar</h3></div>
+<div class="box-body">
+<table class="table table-bordered table-hover table-responsive datatable	">
 	<thead>
-		<th></th>
+		<th>Ver</th>
 		<th>Folio</th>
 		<th>Producto</th>
 		<th>Pago</th>
 		<th>Entrega</th>
-
 		<th>Total</th>
 		<th>Fecha</th>
-		<th></th>
+		<th>Acciones</th>
 	</thead>
 	<?php foreach($products as $sell):?>
 
 	<tr>
-		<td style="width:30px;"><a href="index.php?view=onere&id=<?php echo $sell->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+		<td style="width:30px;"><a href="index.php?view=onere&id=<?php echo $sell->id; ?>" class="btn btn-xs btn-success">Detalles</a></td>
 		<td>#<?php echo $sell->id; ?></td>
 		<td>
 
 <?php
 $operations = OperationData::getAllProductsBySellId($sell->id);
-echo count($operations);
+$product = ProductData::getById($operations[0]->product_id);
+echo $product->barcode;
 ?>
 </td>
 <td><?php echo $sell->getP()->name; ?></td>
@@ -61,20 +64,22 @@ $total=0;
 		$product  = $operation->getProduct();
 		$total += $operation->q*$product->price_in;
 	}
-		echo "<b>$ ".number_format($total,2,".",",")."</b>";
+		echo "<b>L. ".number_format($total,2,".",",")."</b>";
 ?>			
 
 		</td>
 		<td><?php echo $sell->created_at; ?></td>
-		<td style="width:120px;">
+		<td style="width:200px;">
 				<a href="./?action=pay1&id=<?php echo $sell->id; ?>" class="btn btn-xs btn-primary">Pagar</a>
-<a href="index.php?view=delre&id=<?php echo $sell->id; ?>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a></td>
+<a href="index.php?view=delre&id=<?php echo $sell->id; ?>" class="btn btn-xs btn-danger">Eliminar</a></td>
 	</tr>
 
 <?php endforeach; ?>
 
 </table>
 </div>
+</div>
+	</div>
 
 	<?php
 }else{
@@ -117,7 +122,7 @@ var rows = [
       "client": "<?php if($sell->person_id!=null){$c= $sell->getPerson();echo $c->name." ".$c->lastname;} ?>",
       "total": "<?php
 $total= $sell->total-$sell->discount;
-		echo "$ ".number_format($total,2,".",",");
+		echo "L. ".number_format($total,2,".",",");
 ?>	",
       "p": "<?php echo $sell->getP()->name; ?>",
       "d": "<?php echo $sell->getD()->name; ?>",

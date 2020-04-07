@@ -12,8 +12,6 @@
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="report/sells-word.php">Word 2007 (.docx)</a></li>
-    <li><a href="report/sells-xlsx.php">Excel 2007 (.xlsx)</a></li>
 <li><a onclick="thePDF()" id="makepdf" class="">PDF (.pdf)</a></li>
   </ul>
 </div>
@@ -50,7 +48,7 @@ if(count($products)>0){
 <div class="box-body">
 <table class="table table-bordered table-hover table-responsive datatable	">
 	<thead>
-		<th></th>
+		<th>Ver</th>
 		<th>Folio</th>	
 		<th>Pago</th>
 		<th>Entrega</th>
@@ -59,7 +57,7 @@ if(count($products)>0){
 		<th>Vendedor</th>
 		<th>Almacen</th>
 		<th>Fecha</th>
-		<th></th>
+		<th>Acciones</th>
 	</thead>
 	<?php foreach($products as $sell):
 	$operations = OperationData::getAllProductsBySellId($sell->id);
@@ -67,7 +65,7 @@ if(count($products)>0){
 
 	<tr>
 		<td style="width:30px;">
-		<a href="index.php?view=onesell&id=<?php echo $sell->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+		<a href="index.php?view=onesell&id=<?php echo $sell->id; ?>" class="btn btn-xs btn-success">Detalles</a></td>
 		<td>#<?php echo $sell->id; ?></td>
 
 <td><?php echo $sell->getP()->name; ?></td>
@@ -76,7 +74,7 @@ if(count($products)>0){
 
 <?php
 $total= $sell->total-$sell->discount;
-		echo "<b>$ ".number_format($total,2,".",",")."</b>";
+		echo "<b>L. ".number_format($total,2,".",",")."</b>";
 
 ?>			
 		</td>
@@ -86,7 +84,7 @@ $total= $sell->total-$sell->discount;
 		<td><?php echo $sell->created_at; ?></td>
 		<td style="width:30px;">
 <?php if(isset($_SESSION["user_id"])):?>
-		<a href="index.php?view=delsell&id=<?php echo $sell->id; ?>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+		<a href="index.php?view=delsell&id=<?php echo $sell->id; ?>" class="btn btn-xs btn-danger">Eliminar</a>
 <?php endif;?>
 		</td>
 	</tr>
@@ -141,7 +139,7 @@ var rows = [
       "client": "<?php if($sell->person_id!=null){$c= $sell->getPerson();echo $c->name." ".$c->lastname;} ?>",
       "total": "<?php
 $total= $sell->total-$sell->discount;
-		echo "$ ".number_format($total,2,".",",");
+		echo "L. ".number_format($total,2,".",",");
 ?>	",
       "p": "<?php echo $sell->getP()->name; ?>",
       "d": "<?php echo $sell->getD()->name; ?>",

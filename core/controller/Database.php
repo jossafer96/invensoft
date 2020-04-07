@@ -4,6 +4,7 @@ class Database {
 	public static $con;
 	function Database(){
 		$this->user="root";$this->pass="";$this->host="localhost";$this->ddbb="asjinv";
+		//$this->user="omniabox_inv";$this->pass="4sj2020%%INVENTARIO";$this->host="omniabox.org";$this->ddbb="omniabox_asjinv";
 	}
 
 	function connect(){

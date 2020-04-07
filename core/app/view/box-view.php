@@ -19,42 +19,96 @@ $total_total = 0;
 <div class="box box-primary">
 <table class="table table-bordered table-hover	">
 	<thead>
-		<th></th>
+		<th>N°</th>
 		<th>Producto</th>
-		<th>Total</th>
+		<th>Cantidad</th>
+		<th>Total Compra</th>
+		<th>Total Venta</th>
 		<th>Almacen</th>
 		<th>Fecha</th>
+		<th>Usuario</th>
 	</thead>
-	<?php foreach($products as $sell):?>
+	<?php 
+	$n=1;
+	foreach($products as $sell):?>
 
 	<tr>
-		<td style="width:30px;">
-</td>
+		<td style="width:30px;"><?php echo $n ?></td>
 		<td>
 
 <?php
 $operations = OperationData::getAllProductsBySellId($sell->id);
-echo count($operations);
+if ($operations!=null) {
+	//print_r($operations[0]);
+	$products = ProductData::getById($operations[0]->product_id);
+	echo $products->barcode;
+}else{
+	echo '-';
+}
+
 ?>
+
+
 </td>
+		<td>
+
+		<?php
+				if ($operations!=null) {
+					//print_r($operations[0]);
+					echo $operations[0]->q;
+				}else{
+					echo '-';
+				}
+				
+
+		?>			
+
+		</td>
+		<td>
+
+		<?php
+				
+				echo "<b>L. ".number_format($sell->total,2,".",",")."</b>";
+
+		?>			
+
+		</td>
 		<td>
 
 <?php
 		$total_total += $sell->total-$sell->discount;
-		echo "<b>$ ".number_format($sell->total-$sell->discount,2,".",",")."</b>";
+		echo "<b>L. ".number_format($sell->total-$sell->discount,2,".",",")."</b>";
 
 ?>			
 
 		</td>
 		<td><?php echo $sell->getStockTo()->name; ?></td>
 		<td><?php echo $sell->created_at; ?></td>
+		<td>
+
+		<?php
+				if ($operations!=null) {
+					//print_r($operations[0]);
+					$person = UserData::getById($operations[0]->user_operation);
+					//print_r($person);
+					echo $person->name.' '.$person->lastname;
+				}else{
+					echo '-';
+				}
+				
+
+		?>			
+
+		</td>
 	</tr>
 
-<?php endforeach; ?>
+<?php 
+$n++;
+endforeach; ?>
 
 </table>
 </div>
-<h1>Total: <?php echo "$ ".number_format($total_total,2,".",","); ?></h1>
+<h1>Total: <?php echo "L. ".number_format($total_total,2,".",","); ?></h1>
 	<?php
 }else {
 

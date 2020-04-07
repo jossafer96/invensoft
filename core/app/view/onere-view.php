@@ -75,15 +75,15 @@ $user = $sell->getUser();
 	<td><?php echo $product->barcode ;?></td>
 	<td><?php echo $operation->q ;?></td>
 	<td><?php echo $product->name ;?></td>
-	<td>$ <?php echo number_format($operation->price_in,2,".",",") ;?></td>
-	<td><b>$ <?php echo number_format($operation->q*$operation->price_in,2,".",",");$total+=$operation->q*$operation->price_in;?></b></td>
+	<td>L. <?php echo number_format($operation->price_in,2,".",",") ;?></td>
+	<td><b>L. <?php echo number_format($operation->q*$operation->price_in,2,".",",");$total+=$operation->q*$operation->price_in;?></b></td>
 </tr>
 <?php
 	}
 	?>
 </table>
 </div>
-<br><br><h1>Total: $ <?php echo number_format($total,2,'.',','); ?></h1>
+<br><br><h1>Total: L. <?php echo number_format($total,2,'.',','); ?></h1>
 	<?php
 
 ?>	
